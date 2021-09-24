@@ -1,18 +1,19 @@
 public class Teacher extends Person{
-    private String subject;
-    public Teacher(String name, boolean sex, int level, String subject){
+    private Mission currentMission;
+    public Teacher(String name){
         setMaxMana(500);
-        setMana(500);
-        setLevel(level);
+        setMana(getMaxMana());
         setName(name);
-        setSex(sex);
-        setSubject(subject);
     }
 
-    public String getSubject(){
-        return subject;
+    //getters & setters
+    public Mission getCurrentMission(){
+        return currentMission;
     }
-    public void setSubject(String subject){
-        this.subject = subject;
+
+    public  void setCurrentMission(Mission currentMission){
+        this.currentMission = currentMission;
     }
+
+
 }
