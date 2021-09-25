@@ -16,6 +16,7 @@ public class Student extends Person{
         setLevel(1);
         setName(name);
         setSex(sex);
+        setMaxLevel(2);
     }
 
     //getters & setters

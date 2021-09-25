@@ -15,6 +15,23 @@ public class Mission {
         this.student = student;
     }
 
+    //setters & getters
+
+    public String getQuestion(){
+        return question;
+    }
+    public void setQuestion(String question){
+        this.question = question;
+    }
+
+    public String getAnswer(){
+        return answer;
+    }
+    public void setAnswer(String answer){
+        this.answer = answer;
+    }
+
+    //methods
     public boolean open(){
         if(student.getLevel() >= missionNumber){
             System.out.println("Welcome to the " + missionNumber + " mission 8).\n" +
@@ -29,6 +46,7 @@ public class Mission {
     }
 
     public boolean startMission(){
+        student.enterMission(this);
         int maxAttempt = 3;
         int attempt = 0;
         String studentAnswer;
@@ -38,6 +56,7 @@ public class Mission {
             if (studentAnswer.toLowerCase().equals(answer)) {
                 System.out.println("Correct!!");
                 student.setMana(student.getMana() + 10);
+                teacher.setMana(teacher.getMana()-10);
                 return true;
             } else {
                 System.out.println("Noooo( Try again");

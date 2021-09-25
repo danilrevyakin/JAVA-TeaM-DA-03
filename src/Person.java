@@ -4,7 +4,7 @@ public class Person {
     private boolean sex;
     private int level;
     private int maxMana;
-
+    private int maxLevel;
 
     //getters & setters
 
@@ -25,6 +25,15 @@ public class Person {
         if(level <= 0) System.out.println("We can't lose level!!");
         else
             this.level = level;
+    }
+
+    public int getMaxLevel(){
+        return maxLevel;
+    }
+    public void setMaxLevel(int maxLevel){
+        if(maxLevel <= 0) System.out.println("Level can't be less than 1");
+        else
+            this.maxLevel = maxLevel;
     }
 
     public String getName(){

@@ -2,7 +2,11 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public void printMenu(){
+    public static void hello(){
+        System.out.println("Hello, friend! Welcome to \"IASA\" game.\nToday you.....");
+    }
+
+    public static void printMenu(){
         System.out.println("Start MENU:\n" +
                 "1. New Game\n" +
                 "2. Continue\n" +
@@ -10,12 +14,12 @@ public class Menu {
                 "4. Quite game");
     }
 
-    public int getMenuItem(int item){
+    public static  int getMenuItem(){
         int n;
         Scanner in = new Scanner(System.in);
 
         do{
-            System.out.println("Enter menu item: ");
+            System.out.print("Enter menu item: ");
             n = in.nextInt();
         }while(n > 4 || n < 1);
 
