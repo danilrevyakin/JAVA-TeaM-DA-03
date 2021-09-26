@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Student extends Person{
+public class Student extends Person implements Serializable {
 
     private Mission currentMission;
-
+    public int score = 0;
     public Student(){
         setMaxMana(100);
         setMana(50);
