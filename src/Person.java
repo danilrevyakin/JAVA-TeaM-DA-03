@@ -59,6 +59,6 @@ public class Person {
 
     //methods
     public void info(){
-        System.out.println("Name: " + name + "\nSex: " + sex + "\nLevel: "+ level + "Mana: " + mana);
+        System.out.println("\n" + name +  " (level: "+ level + "; mana: " + mana + "): ");
     }
 }

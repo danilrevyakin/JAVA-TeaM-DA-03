@@ -15,7 +15,7 @@ public class Map {
         int missinNumber = 0;
 
         while (missinNumber <= 0 || missinNumber > missions.length){
-            System.out.print("Choose mission(1 - " + missions.length + "): ");
+            System.out.print("\nChoose mission(1 - " + missions.length + "): ");
             missinNumber = in.nextInt();
         }
 

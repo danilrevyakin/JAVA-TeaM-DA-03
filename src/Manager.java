@@ -9,13 +9,14 @@ public class Manager {
     public static boolean game() {
         if (!inGame) {
             Menu.hello();
-            Menu.printMenu();
-            int item = Menu.getMenuItem();
+            int range =  Menu.printStartMenu();
+            int item = Menu.getMenuItem(range);
 
             if(item == 1){
                 player = Game.createStudent();
                 gameMap.generateMissions(player);
                 inGame = true;
+                gameMap.openMission();
             }
             else if(item == 4) return false;
             else System.out.println("Sorry, I haven't finished writing the code yet");
@@ -23,7 +24,18 @@ public class Manager {
 
         while (inGame) {
             //System.out.println("In Game");
-            gameMap.openMission();
+            if(player.getMana() <= 0){
+                System.out.println("YOU DIED");
+                return false;
+            }
+
+            player.info();
+            int range = Menu.printGameMenu();
+            int item = Menu.getMenuItem(range);
+
+            if(item == 1) gameMap.openMission();
+            if(item == 2) System.out.println("Save game");
+            if (item == 3) return false;
         }
 
         return true;
