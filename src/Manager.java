@@ -54,6 +54,7 @@ public class Manager {
             player = Game.createStudent();
             inGame = true;
             PlayersList.add(player);
+
         }
         else if(item == 2){
             if(!menu.select_game.available){
@@ -98,7 +99,9 @@ public class Manager {
             menu.select_game.available = true;
             menu.score.available = true;
             gameMap.generateMissions(player);
+            player.info();
             gameMap.openMission();
+
             while (inGame){
                 inGame = inGameMenu();
             }

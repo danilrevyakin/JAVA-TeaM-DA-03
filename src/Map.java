@@ -6,7 +6,7 @@ public class Map {
     public void generateMissions(Student student){
         missions = new Mission[student.getMaxLevel()];
         for(int i = 0; i < student.getMaxLevel(); i++){
-            missions[i] = Game.createMissions(student);
+            missions[i] = Game.createMission(student, i+1);
         }
     }
 

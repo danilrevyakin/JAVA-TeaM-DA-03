@@ -32,9 +32,9 @@ public class Game {
        return teacher;
     }
 
-    public static Mission createMissions(Student student){
+    public static Mission createMission(Student student, int missionsNum){
         Teacher teacher = createTeacher(student);
-        Mission newMission = new Mission(student, teacher, student.getLevel());
+        Mission newMission = new Mission(student, teacher, missionsNum);
         int nN = (int)(Math.random()*questions[student.getLevel()-1].length);
         newMission.setQuestion(questions[student.getLevel()-1][nN]);
         newMission.setAnswer(answers[student.getLevel()-1][nN]);

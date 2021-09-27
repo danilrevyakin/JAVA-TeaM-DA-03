@@ -33,15 +33,11 @@ public class Mission {
 
     //methods
     public boolean open(){
-        if(student.getLevel() >= missionNumber){
+
             System.out.println("Welcome to the " + missionNumber + " mission 8).\n" +
                     "Your teacher is " + teacher.getName());
             isOpen = true;
-        }
-        else{
-            System.out.println("Your level is too low for this mission 8(");
-            isOpen = false;
-        }
+
         return isOpen;
     }
 
@@ -52,6 +48,7 @@ public class Mission {
         String studentAnswer;
         System.out.println("Your task: " + question);
         while(attempt < maxAttempt) {
+            System.out.print(">> ");
             studentAnswer = student.giveAnswer();
             if (studentAnswer.toLowerCase().equals(answer)) {
                 System.out.println("Correct!!");
