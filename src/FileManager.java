@@ -46,6 +46,9 @@ public class FileManager {
         return result;
     }
     static public boolean saveGame(Vector<Student> players){
+        if(players == null){
+            return true;
+        }
         boolean result = true;
         try {
             FileOutputStream outFile = new FileOutputStream(file_players_name);
