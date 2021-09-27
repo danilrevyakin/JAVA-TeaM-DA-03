@@ -5,6 +5,7 @@ import java.util.Vector;
 
 public class Manager {
     private static boolean inGame = false;
+    private static boolean inMenu = false;
     private static Menu menu;
     private static Student player;
     private static Map gameMap = new Map();
@@ -17,41 +18,52 @@ public class Manager {
         menu = new Menu();
         if(PlayersList == null){
             PlayersList = new Vector<>(5);
-            menu.continue_game.available = false;
+            menu.select_game.available = false;
             menu.score.available = false;
         }
     }
     public void start() throws FileNotFoundException {
-        inGame = true;
+        inMenu = true;
         Menu.hello();
-        while (inGame) {
+        while (inMenu) {
             inMainMenu();
-            if(player.getMana() <= 0){
+            if(player != null && player.getMana() <= 0){
                 System.out.println("YOU DIED");
             }
+
         }
     }
     private boolean inGameMenu(){
         int range = Menu.printGameMenu();
         int item = Menu.getMenuItem(range);
         player.info();
-        if(item == 1) gameMap.openMission();
-        if (item == 2) return false;
-        return true;
+        if(item == 1){
+            gameMap.openMission();
+            return true;
+        }
+        return false;
+
     }
     private void inMainMenu(){
+        if(player != null){
+            System.out.println("Current account: " + player.getName());
+        }
         int range =  Menu.printMainMenu();
         int item = Menu.getMenuItem(range);
-        if(item == 1){
+        if(item == 1 && menu.new_game.available){
             player = Game.createStudent();
             inGame = true;
             PlayersList.add(player);
         }
         else if(item == 2){
+            if(!menu.select_game.available){
+                System.out.println("\nPlease create your own account first");
+                return;
+            }
             System.out.println("\nPlease, select your account");
             for (int i = 0; i < PlayersList.size(); ++i) {
                 Student one = PlayersList.elementAt(i);
-                System.out.println("#" + (i + 1) + " Name: " + one.getName() + "score: " + one.getLevel());
+                System.out.println("#" + (i + 1) + " Name: " + one.getName() + " level: " + one.getLevel());
             }
             System.out.println("Back to menu: 0");
             int choice = -1;
@@ -68,19 +80,27 @@ public class Manager {
 
         }
         else if(item == 3){
-            System.out.println("Your score is " + player.score);
+            if(player == null || !menu.score.available){
+                System.out.println("\nPlease, select your account or create new");
+            }else {
+                System.out.println("Your score is " + player.score);
+            }
         }
-        else if(item == 4){
-            inGame = false;
+        else if(item == 4 && menu.quit.available){
+            inMenu = false;
             FileManager.saveGame(PlayersList);
             return;
         }
-        if((item == 1) || (item == 2)){
-            menu.continue_game.available = true;
+        if((item == 1 && menu.new_game.available)
+                || (item == 2 && menu.select_game.available)){
+            inGame = true;
+            menu.select_game.available = true;
             menu.score.available = true;
             gameMap.generateMissions(player);
             gameMap.openMission();
-            inGameMenu();
+            while (inGame){
+                inGame = inGameMenu();
+            }
         }
     }
 }
