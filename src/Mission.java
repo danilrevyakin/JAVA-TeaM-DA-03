@@ -56,11 +56,14 @@ public class Mission {
             if (studentAnswer.toLowerCase().equals(answer)) {
                 System.out.println("Correct!!");
                 student.setMana(student.getMana() + 10);
+                student.score += 10;
                 teacher.setMana(teacher.getMana()-10);
                 return true;
             } else {
-                System.out.println("Noooo( Try again");
+                if(attempt == 2) System.out.println("You lose (");
+                else System.out.println("Noooo( Try again: ");
                 student.setMana(student.getMana() - 5);
+                student.score -= 5;
             }
             attempt++;
         }
