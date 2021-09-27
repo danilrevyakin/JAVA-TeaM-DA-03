@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.LinkedList;
 
-public class Menu {
+public class Menu { 
     public item new_game;
     public item select_game;
     public item score;

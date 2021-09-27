@@ -65,6 +65,7 @@ public class Manager {
                 Student one = PlayersList.elementAt(i);
                 System.out.println("#" + (i + 1) + " Name: " + one.getName() + " level: " + one.getLevel());
             }
+
             System.out.println("Back to menu: 0");
             int choice = -1;
             while(choice < 0 || choice > PlayersList.size()){
