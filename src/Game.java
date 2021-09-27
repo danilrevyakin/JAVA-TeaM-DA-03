@@ -35,7 +35,7 @@ public class Game {
     public static Mission createMissions(Student student){
         Teacher teacher = createTeacher(student);
         Mission newMission = new Mission(student, teacher, student.getLevel());
-        int nN = (int)Math.random()*questions[student.getLevel()-1].length;
+        int nN = (int)(Math.random()*questions[student.getLevel()-1].length);
         newMission.setQuestion(questions[student.getLevel()-1][nN]);
         newMission.setAnswer(answers[student.getLevel()-1][nN]);
 
