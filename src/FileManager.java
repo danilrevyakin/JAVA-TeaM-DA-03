@@ -1,11 +1,13 @@
 import java.io.*;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Vector;
+import java.util.Scanner;
 
 public class FileManager {
     static public String file_players_name = "src//student_src//list_of_players.dat";
+    static public String file_questions = "src//question_src//list_of_questions.dat";
 
-    static public Vector<Student> init_old_Players() throws FileNotFoundException {
+    static public Vector<Student> init_old_Players() {
         Vector<Student> players = new Vector<>(30);
         File tmpDir = new File(file_players_name);
         if(!tmpDir.exists()){
@@ -24,14 +26,37 @@ public class FileManager {
                 }
             }
             //inFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return players;
+    }
+
+    static public ArrayList<Questions> initQuestions(){
+        ArrayList<Questions> questionsAndAnswers = new ArrayList<>();
+        File tmpDir = new File(file_questions);
+        if(!tmpDir.exists()){
+            if(!create_file(file_questions)) System.out.println("Unsuccessful creature");
+            return null;
+        }else if(tmpDir.length() <= 0) return null;
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(tmpDir);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (true){
+            assert scanner != null;
+            if (!scanner.hasNextLine()) break;
+            scanner.useDelimiter("\n");
+                String q = scanner.next();
+                String a = scanner.next();
+                questionsAndAnswers.add(new Questions(q,a));
+            }
+            scanner.close();
+
+        return questionsAndAnswers;
     }
 
     static private boolean create_file(String name){
@@ -58,9 +83,6 @@ public class FileManager {
                 objOutput.writeObject(one);
             }
             //outFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            result = false;
         } catch (IOException e) {
             e.printStackTrace();
             result = false;

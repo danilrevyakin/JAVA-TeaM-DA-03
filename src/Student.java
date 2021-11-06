@@ -2,19 +2,22 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class Student extends Person implements Serializable {
-
+    private final int MAX_MANA = 100;
+    private final int MANA = 50;
+    private final int LEVEL = 1;
     private Mission currentMission;
     public int score = 0;
+
     public Student(){
-        setMaxMana(100);
-        setMana(50);
-        setLevel(1);
+        setMaxMana(MAX_MANA);
+        setMana(MANA);
+        setLevel(LEVEL);
     }
 
     public Student(String name, boolean sex){
-        setMaxMana(100);
-        setMana(50);
-        setLevel(1);
+        setMaxMana(MAX_MANA);
+        setMana(MANA);
+        setLevel(LEVEL);
         setName(name);
         setSex(sex);
         setMaxLevel(2);

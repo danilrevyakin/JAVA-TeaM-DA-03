@@ -33,6 +33,7 @@ public class Manager {
 
         }
     }
+    //Add to Menu class
     private boolean inGameMenu(){
         int range = Menu.printGameMenu();
         int item = Menu.getMenuItem(range);

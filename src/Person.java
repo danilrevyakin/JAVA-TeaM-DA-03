@@ -15,9 +15,7 @@ public class Person implements Serializable {
     }
     public void setMana(int mana){
         if(mana < 0) this.mana = 0;
-        if(mana > maxMana) this.mana = maxMana;
-        else
-            this.mana = mana;
+        this.mana = Math.min(mana, maxMana);
     }
 
     public int getLevel(){

@@ -1,14 +1,13 @@
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Game {
 
-    private  static String[][] teachersNames = {{"Y. Bokhonov", "V. Statckevich", "B. Snizhko", "O. Beznosic", "V. Romanov;"},
+    private  static final String[][] teachersNames = {{"Y. Bokhonov", "V. Statckevich", "B. Snizhko", "O. Beznosic", "V. Romanov;"},
                                 {"V. Stickanov", "V. Artuhov", "A. Verbitskiy", "V. High"}};
-    private  static String[][] questions = {{"x^2 + 2x + 1 = 0", "log2(256)", "lim(x+2/x) (x -> +inf)"},
-                            {"2dx + 2dy = 5", "d(ln(7x))/dx"}};
-    private  static String[][] answers =  {{"-1", "8", "1"},
-            {"dy = 5", "1/7x"}};
 
+    private  static ArrayList<Questions> questionSet;
 
     public static Student createStudent(){
         String name;
@@ -28,16 +27,17 @@ public class Game {
 
     public static Teacher createTeacher(Student student){
        int nN = (int) (Math.random() * teachersNames[student.getLevel()-1].length);
-       Teacher teacher = new Teacher(teachersNames[student.getLevel()-1][nN]);
-       return teacher;
+       return new Teacher(teachersNames[student.getLevel()-1][nN]);
     }
 
     public static Mission createMission(Student student, int missionsNum){
         Teacher teacher = createTeacher(student);
         Mission newMission = new Mission(student, teacher, missionsNum);
-        int nN = (int)(Math.random()*questions[student.getLevel()-1].length);
-        newMission.setQuestion(questions[student.getLevel()-1][nN]);
-        newMission.setAnswer(answers[student.getLevel()-1][nN]);
+        questionSet = FileManager.initQuestions();
+        int nN = (int)(Math.random()*questionSet.size());
+        newMission.setQuestion(questionSet.get(nN).getQuestion());
+        newMission.setAnswer(questionSet.get(nN).getAnswer());
+        questionSet.remove(nN);
 
         return newMission;
     }

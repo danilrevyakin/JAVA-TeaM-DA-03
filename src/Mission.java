@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class Mission {
     private int missionNumber;
-    private Teacher teacher;
-    private Student student;
+    private final Teacher teacher;
+    private final Student student;
     private boolean isOpen;
     private String question;
     private String answer;

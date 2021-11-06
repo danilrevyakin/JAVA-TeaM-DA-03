@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+//Раскидать по другим классам
 public class Map {
     public Mission[] missions;
 
