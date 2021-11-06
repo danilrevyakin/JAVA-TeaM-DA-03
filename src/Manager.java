@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -22,7 +23,7 @@ public class Manager {
             menu.score.available = false;
         }
     }
-    public void start() throws FileNotFoundException {
+    public void start() throws IOException {
         inMenu = true;
         Menu.hello();
         while (inMenu) {
@@ -45,7 +46,7 @@ public class Manager {
         return false;
 
     }
-    private void inMainMenu(){
+    private void inMainMenu() throws IOException {
         if(player != null){
             System.out.println("Current account: " + player.getName());
         }

@@ -1,9 +1,13 @@
 x^2 + 2x + 1 = 0
 -1
+1 XOR 0
+1
 log2(256)
 8
 lim(x+2/x) (x -> +inf)
 1
+cos(x) + i*sin(x)
+e^i*x
 2dx + 2dy = 5
 dy = 5
 d(ln(7x))/dx

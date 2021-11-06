@@ -1,13 +1,11 @@
-import java.util.Collections;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Game {
-
-    private  static final String[][] teachersNames = {{"Y. Bokhonov", "V. Statckevich", "B. Snizhko", "O. Beznosic", "V. Romanov;"},
-                                {"V. Stickanov", "V. Artuhov", "A. Verbitskiy", "V. High"}};
-
-    private  static ArrayList<Questions> questionSet;
+    private static ArrayList<Questions> questionSet;
+    private static Vector<String> teacherSet;
 
     public static Student createStudent(){
         String name;
@@ -25,13 +23,14 @@ public class Game {
     }
 
 
-    public static Teacher createTeacher(Student student){
-       int nN = (int) (Math.random() * teachersNames[student.getLevel()-1].length);
-       return new Teacher(teachersNames[student.getLevel()-1][nN]);
+    public static Teacher createTeacher() throws IOException {
+        teacherSet = FileManager.initTeachers();
+       int nN = (int) (Math.random() * teacherSet.size());
+       return new Teacher(teacherSet.get(nN));
     }
 
-    public static Mission createMission(Student student, int missionsNum){
-        Teacher teacher = createTeacher(student);
+    public static Mission createMission(Student student, int missionsNum) throws IOException {
+        Teacher teacher = createTeacher();
         Mission newMission = new Mission(student, teacher, missionsNum);
         questionSet = FileManager.initQuestions();
         int nN = (int)(Math.random()*questionSet.size());

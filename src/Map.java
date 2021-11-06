@@ -1,10 +1,11 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 //Раскидать по другим классам
 public class Map {
     public Mission[] missions;
 
-    public void generateMissions(Student student){
+    public void generateMissions(Student student) throws IOException {
         missions = new Mission[student.getMaxLevel()];
         for(int i = 0; i < student.getMaxLevel(); i++){
             missions[i] = Game.createMission(student, i+1);
