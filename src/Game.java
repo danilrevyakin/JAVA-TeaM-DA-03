@@ -36,6 +36,7 @@ public class Game {
         int nN = (int)(Math.random()*questionSet.size());
         newMission.setQuestion(questionSet.get(nN).getQuestion());
         newMission.setAnswer(questionSet.get(nN).getAnswer());
+        newMission.setChoices(questionSet.get(nN).getChoices());
         questionSet.remove(nN);
 
         return newMission;

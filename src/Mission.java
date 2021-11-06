@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class Mission {
     private boolean isOpen;
     private String question;
     private String answer;
+    private ArrayList<String> choices;
 
     public Mission(Student student, Teacher teacher, int missionNumber){
         this.missionNumber = missionNumber;
@@ -15,20 +17,18 @@ public class Mission {
         this.student = student;
     }
 
-    //setters & getters
+    //setters
 
-    public String getQuestion(){
-        return question;
-    }
     public void setQuestion(String question){
         this.question = question;
     }
 
-    public String getAnswer(){
-        return answer;
-    }
     public void setAnswer(String answer){
         this.answer = answer;
+    }
+
+    public void setChoices(ArrayList<String> choices){
+        this.choices = choices;
     }
 
     //methods
@@ -47,8 +47,12 @@ public class Mission {
         int attempt = 0;
         String studentAnswer;
         System.out.println("Your task: " + question);
+        System.out.print("Choices: ");
+        for (String choice : choices) {
+            System.out.print(choice + "  ");
+        }
         while(attempt < maxAttempt) {
-            System.out.print(">> ");
+            System.out.print("\n>> ");
             studentAnswer = student.giveAnswer();
             if (studentAnswer.toLowerCase().equals(answer)) {
                 System.out.println("Correct!!");

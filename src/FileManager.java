@@ -55,7 +55,12 @@ public class FileManager {
             scanner.useDelimiter("\n");
                 String q = scanner.next();
                 String a = scanner.next();
-                questionsAndAnswers.add(new Questions(q,a));
+                String[] c = new String[4];
+                c[0] = a;
+                for (int i = 1; i < c.length; i++){
+                    c[i] = scanner.next();
+                }
+                questionsAndAnswers.add(new Questions(q,a,c));
             }
             scanner.close();
 
