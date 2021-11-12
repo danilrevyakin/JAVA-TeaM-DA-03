@@ -32,26 +32,23 @@ public class MissionManager {
 
     public boolean startMission(Student student, Mission mission, Teacher teacher){
         consoleView.open(mission,teacher);
-        final int MAX_ATTEMPT = 3;
-        int attempt = 0;
         String studentAnswer;
         consoleView.quiz(mission);
 
-        while(attempt < MAX_ATTEMPT) {
+        while(student.getHealth() > 0) {
             studentAnswer = studentManager.giveAnswer();
             if (studentAnswer.toLowerCase().equals(mission.getAnswer())) {
-                consoleView.correctAnswer();
-                student.setMana(student.getMana() + 10);
-                student.score += 10;
-                teacher.setMana(teacher.getMana() - 10);
+                student.correctStudentAnswer();
+                teacher.correctStudentAnswer();
+
+                if (teacher.getHealth() > 0) consoleView.correctAnswerOutput(teacher);
+
                 return true;
             } else {
-                if(attempt == 2) consoleView.defeat();
-                else consoleView.tryAgain();
-                student.setMana(student.getMana() - 5);
-                student.score -= 5;
+                student.wrongStudentAnswer();
+                teacher.wrongStudentAnswer();
+                return true;
             }
-            attempt++;
         }
         return false;
     }

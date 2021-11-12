@@ -1,24 +1,99 @@
 package model;
+import view.ConsoleView;
+
 import java.io.Serializable;
 
 public class Student extends Person implements Serializable {
     private final int MAX_MANA = 100;
-    private final int MANA = 50;
-    private final int LEVEL = 1;
+    private final int MAX_LEVEL = 10;
+    private final int MAX_HEALTH = 50;
+    private int mana = 50;
+    private int level = 1;
     public int score = 0;
+    private final int DEFAULT_HP = 50;
+    private final ConsoleView consoleView = new ConsoleView();
 
     public Student(){
-        setMaxMana(MAX_MANA);
-        setMana(MANA);
-        setLevel(LEVEL);
+        setMana(mana);
+        setLevel(level);
+        setHealth(DEFAULT_HP);
+        setScore(score);
     }
 
     public Student(String name, boolean sex){
-        setMaxMana(MAX_MANA);
-        setMana(MANA);
-        setLevel(LEVEL);
+        setMana(mana);
+        setLevel(level);
         setName(name);
         setSex(sex);
-        setMaxLevel(2);
+        setHealth(DEFAULT_HP);
+        setScore(score);
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getMaxMana() {
+        return MAX_MANA;
+    }
+
+    public int getMaxLevel(){
+        return MAX_LEVEL;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int setLevel(int level){
+        return this.level = level;
+    }
+
+    public int setMana(int mana){
+        return this.mana = mana;
+    }
+
+    public void correctStudentAnswer(){
+        setMana(getMana() + 10);
+        setScore(getScore() + 10);
+        setHealth(MAX_HEALTH);
+
+        if (getScore() >= 50){
+            setLevel(getLevel() + 1);
+            setScore(getScore() - 50);
+        }
+
+        if(getLevel() >= getMaxLevel()){
+            consoleView.victory();
+        }
+
+        if (getMana() >= getMaxMana()){
+            setMana(MAX_MANA);
+        }
+    }
+
+    public void wrongStudentAnswer(){
+        setHealth(getHealth() - 10);
+        setMana(getMana() - 10);
+
+        if(getHealth() <= 0){
+            consoleView.studentDefeat();
+        }
+
+        if (getMana() < 0){
+            setMana(0);
+        }
+
+        if(getHealth() > 0){
+            consoleView.tryAgain(getHealth());
+        }
     }
 }

@@ -31,8 +31,8 @@ public class Manager {
         consoleView.helloFriend();
         while (inMenu) {
             inMainMenu();
-            if(player != null && player.getMana() <= 0){
-                consoleView.defeat();
+            if(player != null && player.getHealth() <= 0){
+                inMenu = false;
             }
         }
     }
@@ -53,6 +53,7 @@ public class Manager {
         else if(item == 2){
             if(!menu.select_game.available){
                 menuView.createAccFirstWarning();
+                inGame = false;
             }
             menuView.selectAccount(PlayersList);
             int choice = menuView.enterAccount(PlayersList);
@@ -83,22 +84,31 @@ public class Manager {
             missionManager.openMission(player,teacher);
 
             while (inGame){
-                inGame = inGameMenu(player);
+                inGame = inGameMenu(player, teacher);
             }
         }
     }
 
-    public boolean inGameMenu(Student player) throws IOException {
+    //Bag
+    public boolean inGameMenu(Student player, Teacher teacher) throws IOException {
+        if (player.getHealth() <= 0){
+            PlayersList.remove(player);
+            return false;
+        }
         menuView.printGameMenu();
         int item = menuView.getMenuItem();
 
         consoleView.getPersonalInfo(player);
         if(item == 1){
-            Teacher teacher = teacherManager.createTeacher();
+
+            if (teacher.getHealth() > 0){
             missionManager.openMission(player,teacher);
+            }else{
+                inGameMenu(player, teacherManager.createTeacher());
+            }
             return true;
         }
-        return false;
 
+        return false;
     }
 }
