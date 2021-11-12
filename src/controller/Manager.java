@@ -2,7 +2,6 @@ package controller;
 import model.*;
 import view.*;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.Vector;
 
 public class Manager {
@@ -11,13 +10,13 @@ public class Manager {
     private final MissionManager missionManager = new MissionManager();
     private final FileManager fileManager = new FileManager();
     private final ConsoleView consoleView = new ConsoleView();
+    private final MenuView menuView = new MenuView();
 
     private boolean inGame = false;
     private boolean inMenu = false;
     private final Menu menu = new Menu();
     private Student player;
     private Vector<Student> PlayersList;
-    private final Scanner in = new Scanner(System.in);
 
     public Manager() {
         PlayersList = fileManager.init_old_Players();
@@ -29,22 +28,22 @@ public class Manager {
     }
     public void start() throws IOException {
         inMenu = true;
-        consoleView.hello();
+        consoleView.helloFriend();
         while (inMenu) {
             inMainMenu();
             if(player != null && player.getMana() <= 0){
                 consoleView.defeat();
             }
-
         }
     }
 
     private void inMainMenu() throws IOException {
         if(player != null){
-            System.out.println("Current account: " + player.getName());
+            menuView.currentAcc(player);
         }
-        int range =  consoleView.printMainMenu();
-        int item = menu.getMenuItem(range);
+        menuView.printMainMenu();
+        int item = menuView.getMenuItem();
+
         if(item == 1 && menu.new_game.available){
             player = studentManager.createStudent();
             inGame = true;
@@ -53,21 +52,10 @@ public class Manager {
         }
         else if(item == 2){
             if(!menu.select_game.available){
-                System.out.println("\nPlease create your own account first");
-                return;
+                menuView.createAccFirstWarning();
             }
-            System.out.println("\nPlease, select your account");
-            for (int i = 0; i < PlayersList.size(); ++i) {
-                Student one = PlayersList.elementAt(i);
-                System.out.println("#" + (i + 1) + " Name: " + one.getName() + " level: " + one.getLevel());
-            }
-
-            System.out.println("Back to menu: 0");
-            int choice = -1;
-            while(choice < 0 || choice > PlayersList.size()){
-                System.out.println("Enter: ");
-                choice = in.nextInt();
-            }
+            menuView.selectAccount(PlayersList);
+            int choice = menuView.enterAccount(PlayersList);
 
             if(choice == 0){
                 item = 0;
@@ -77,11 +65,7 @@ public class Manager {
 
         }
         else if(item == 3){
-            if(player == null || !menu.score.available){
-                System.out.println("\nPlease, select your account or create new");
-            }else {
-                System.out.println("Your score is " + player.score);
-            }
+           menuView.myScoreInfo(player,menu);
         }
         else if(item == 4 && menu.quit.available){
             inMenu = false;
@@ -99,8 +83,22 @@ public class Manager {
             missionManager.openMission(player,teacher);
 
             while (inGame){
-                inGame = menu.inGameMenu(player);
+                inGame = inGameMenu(player);
             }
         }
+    }
+
+    public boolean inGameMenu(Student player) throws IOException {
+        menuView.printGameMenu();
+        int item = menuView.getMenuItem();
+
+        consoleView.getPersonalInfo(player);
+        if(item == 1){
+            Teacher teacher = teacherManager.createTeacher();
+            missionManager.openMission(player,teacher);
+            return true;
+        }
+        return false;
+
     }
 }
