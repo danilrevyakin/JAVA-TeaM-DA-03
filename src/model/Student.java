@@ -5,7 +5,6 @@ public class Student extends Person implements Serializable {
     private final int MAX_MANA = 100;
     private final int MANA = 50;
     private final int LEVEL = 1;
-    private Mission currentMission;
     public int score = 0;
 
     public Student(){
