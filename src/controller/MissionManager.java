@@ -30,6 +30,7 @@ public class MissionManager {
         return missions;
     }
 
+
     public boolean startMission(Student student, Mission mission, Teacher teacher){
         consoleView.open(mission,teacher);
         String studentAnswer;
@@ -38,15 +39,18 @@ public class MissionManager {
         while(student.getHealth() > 0) {
             studentAnswer = studentManager.giveAnswer();
             if (studentAnswer.toLowerCase().equals(mission.getAnswer())) {
-                student.correctStudentAnswer();
-                teacher.correctStudentAnswer();
-
+                //Polymorphism
+                for(Person player : mission.getPlayers()){
+                    player.correctStudentAnswer();
+                }
                 if (teacher.getHealth() > 0) consoleView.correctAnswerOutput(teacher);
 
                 return true;
             } else {
-                student.wrongStudentAnswer();
-                teacher.wrongStudentAnswer();
+                //Polymorphism
+                for(Person player : mission.getPlayers()){
+                    player.wrongStudentAnswer();
+                }
                 return true;
             }
         }

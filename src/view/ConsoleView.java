@@ -19,6 +19,33 @@ public class ConsoleView implements Serializable {
                 "; health: " + person.getHealth() + "; mana: " +  person.getMana() + "): ");
     }
 
+    //Student data
+    public String setStudentName(){
+        Scanner in = new Scanner(System.in);
+        String name;
+        do {
+            System.out.print("Enter name: ");
+            name = in.nextLine();
+        }while(name == null || name.trim().isEmpty());
+        return name;
+    }
+
+    public boolean setStudentSex(){
+        Scanner in = new Scanner(System.in);
+        boolean sex = true;
+        System.out.print("Enter sex(1 - man; 0 - women): ");
+        short sexS = in.nextShort();
+        if(sexS == 0) sex = false;
+        return sex;
+    }
+
+    public String giveAnswer(){
+        String answer;
+        Scanner in = new Scanner(System.in);
+        answer = in.nextLine();
+        return answer;
+    }
+
     public void choosingMission(Vector<Mission> missions){
         System.out.print("\nChoose mission(1 - " + missions.size() + "): ");
     }

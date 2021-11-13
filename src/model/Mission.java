@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Mission {
     private int missionNumber;
+    private final int playersNumber = 2;
+    private ArrayList<Person> Players = new ArrayList<>(playersNumber);
     private final Teacher teacher;
     private final Student student;
     private String question;
@@ -16,6 +18,8 @@ public class Mission {
         this.missionNumber = missionNumber;
         this.teacher = teacher;
         this.student = student;
+        Players.add(student);
+        Players.add(teacher);
     }
 
     //getters & setters
@@ -47,4 +51,6 @@ public class Mission {
     public String getAnswer() {
         return answer;
     }
+
+    public ArrayList<Person> getPlayers(){return Players;}
 }
