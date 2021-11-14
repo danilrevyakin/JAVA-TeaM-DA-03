@@ -2,55 +2,55 @@ package model;
 
 import controller.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Mission {
+public class Mission implements Serializable{
     private int missionNumber;
     private final int playersNumber = 2;
-    private ArrayList<Person> Players = new ArrayList<>(playersNumber);
-    private final Teacher teacher;
-    private final Student student;
-    private String question;
-    private String answer;
-    private ArrayList<String> choices;
-
+    private ArrayList<Person> People = new ArrayList<>(playersNumber);
+    private Teacher teacher;
+    public static final String MISSION_COMPLETED = "c";
+    public static final String MISSION_FAILED = "f";
+    public static final String MISSION_IN_PROGRESS = "p";
+    public static final String MISSION_NOT_OPEN = "n";
+    private String stateMission = MISSION_NOT_OPEN;
+    
     public Mission(Student student, Teacher teacher, int missionNumber){
         this.missionNumber = missionNumber;
         this.teacher = teacher;
-        this.student = student;
-        Players.add(student);
-        Players.add(teacher);
+        People.add(student);
+        People.add(teacher);
     }
-
+    
+    public boolean mission_available() {
+    	if(stateMission != MISSION_COMPLETED && stateMission != MISSION_FAILED) return true; 		
+    	return false;
+    }
+    
     //getters & setters
-
-    public void setQuestion(String question){
-        this.question = question;
+    public String getState() {
+    	return stateMission;
     }
-
-    public void setAnswer(String answer){
-        this.answer = answer;
+    public void setComplated() {
+    	stateMission = MISSION_COMPLETED;
     }
-
-    public void setChoices(ArrayList<String> choices){
-        this.choices = choices;
+    public void set_in_Progress() {
+    	stateMission = MISSION_IN_PROGRESS;
     }
-
+    public void setFailed() {
+		stateMission = MISSION_FAILED;
+	}
     public int getMissionNumber(){
         return missionNumber;
     }
-
-    public String getQuestion() {
-        return question;
+    public Question giveQuestion() {
+    	return teacher.give_Question();
     }
-
-    public ArrayList<String> getChoices() {
-        return choices;
+    public Teacher getTeacher() {
+    	return this.teacher;
     }
+    public ArrayList<Person> getPeople(){return People;}
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public ArrayList<Person> getPlayers(){return Players;}
+	
 }

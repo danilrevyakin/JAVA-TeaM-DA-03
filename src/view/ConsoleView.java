@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class ConsoleView implements Serializable {
-    public boolean open(Mission mission, Teacher teacher){
+public class ConsoleView implements Serializable { // it is not must implements Serializable
+    public boolean open(Mission mission){
 
         System.out.println("Welcome to the " + mission.getMissionNumber() + " mission 8).\n" +
-                "Your teacher is " + teacher.getName() + " (" + teacher.getHealth() + "HP)");
+                "Your teacher is " + mission.getTeacher().getName() + " (" + mission.getTeacher().getHealth() + "HP)");
 
         return true;
     }
@@ -21,15 +21,17 @@ public class ConsoleView implements Serializable {
 
     //Student data
     public String setStudentName(){
-        Scanner in = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         String name;
         do {
             System.out.print("Enter name: ");
-            name = in.nextLine();
+            name = scanner.nextLine();
         }while(name == null || name.trim().isEmpty());
         return name;
     }
-
+    public void Teachers_out_of_Index() {
+    	System.out.println("Teachers_out_of_Index: maybe class MissionManager method generateMissions");
+    }
     public boolean setStudentSex(){
         Scanner in = new Scanner(System.in);
         boolean sex = true;
@@ -38,7 +40,9 @@ public class ConsoleView implements Serializable {
         if(sexS == 0) sex = false;
         return sex;
     }
-
+    public void has_no_mission() {
+    	System.out.println("Sorry, but you has no available mission");
+    }
     public String giveAnswer(){
         String answer;
         Scanner in = new Scanner(System.in);
@@ -47,7 +51,14 @@ public class ConsoleView implements Serializable {
     }
 
     public void choosingMission(Vector<Mission> missions){
-        System.out.print("\nChoose mission(1 - " + missions.size() + "): ");
+    	int size_missions = missions.size();
+    	System.out.println();
+    	for(Mission mission: missions) {
+    		if(mission.mission_available()) {
+    			System.out.println("#" + mission.getMissionNumber() + ". " + mission.getTeacher().getName());
+    		}
+    	}
+        System.out.print("\nChoose mission number: ");
     }
 
     public int missinNumScanner(int missinNum){
@@ -56,10 +67,10 @@ public class ConsoleView implements Serializable {
         return missinNum;
     }
 
-    public void quiz(Mission mission){
-        System.out.println("Your task: " + mission.getQuestion());
+    public void quiz(Question question){
+        System.out.println("Your task: " + question.getQuestion());
         System.out.print("Choices: ");
-        for (String choice : mission.getChoices()) {
+        for (String choice : question.getChoices()) {
             System.out.print(choice + "  ");
         }
         System.out.print("\n");

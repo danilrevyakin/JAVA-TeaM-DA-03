@@ -8,9 +8,9 @@ import java.util.Vector;
 import java.util.Scanner;
 
 public class FileManager {
-     private final String file_players_name = "src/data_files/list_of_players.dat";
+	static private final String file_players_name = "src/data_files/list_of_players.dat";
 
-    public Vector<Student> init_old_Players() {
+    static public Vector<Student> init_old_Players() {
         Vector<Student> players = new Vector<>(30);
         File tmpDir = new File(file_players_name);
         if(!tmpDir.exists()){
@@ -35,8 +35,8 @@ public class FileManager {
         return players;
     }
 
-     public ArrayList<Questions> initQuestions(){
-        ArrayList<Questions> questionsAndAnswers = new ArrayList<>();
+    static public ArrayList<Question> initQuestions(){
+        ArrayList<Question> questionsAndAnswers = new ArrayList<>();
          String file_questions = "src/data_files/list_of_questions.dat";
          File tmpDir = new File(file_questions);
         if(!tmpDir.exists()){
@@ -61,14 +61,14 @@ public class FileManager {
                 for (int i = 1; i < c.length; i++){
                     c[i] = scanner.next();
                 }
-                questionsAndAnswers.add(new Questions(q,a,c));
+                questionsAndAnswers.add(new Question(q,a,c));
             }
             scanner.close();
 
         return questionsAndAnswers;
     }
 
-     public Vector<String> initTeachers() throws IOException {
+    static public Vector<String> initTeachers() throws IOException {
          String file_teachers = "src/data_files/list_of_teachers";
          int lineCount = (int) Files.lines(Path.of(file_teachers)).count();
         Vector<String> teacherSet = new Vector<>(lineCount);
@@ -97,7 +97,7 @@ public class FileManager {
         return teacherSet;
     }
 
-     private boolean create_file(String name){
+    static private boolean create_file(String name){
         File file = new File(name);
         boolean result = false;
         try {
@@ -109,7 +109,7 @@ public class FileManager {
         return result;
     }
 
-    public boolean saveGame(Vector<Student> players){
+    static public boolean saveGame(Vector<Student> players){
         if(players == null){
             return true;
         }

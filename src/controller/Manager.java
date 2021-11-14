@@ -6,12 +6,11 @@ import java.util.Vector;
 
 public class Manager {
     private final StudentManager studentManager = new StudentManager();
-    private final TeacherManager teacherManager = new TeacherManager();
     private final MissionManager missionManager = new MissionManager();
     private final FileManager fileManager = new FileManager();
     private final ConsoleView consoleView = new ConsoleView();
     private final MenuView menuView = new MenuView();
-
+    private final int CONTINUE_MISSION = 1; 
     private boolean inGame = false;
     private boolean inMenu = false;
     private final Menu menu = new Menu();
@@ -37,13 +36,11 @@ public class Manager {
         }
     }
 
-    private void inMainMenu() throws IOException {
-        if(player != null){
-            menuView.currentAcc(player);
-        }
+    private void inMainMenu() throws IOException { // 1 new Player, 2 Select created Player, 3 My score, 4 Exit the program
+        if(player != null) menuView.currentAcc(player);
         menuView.printMainMenu();
         int item = menuView.getMenuItem();
-
+        
         if(item == 1 && menu.new_game.available){
             player = studentManager.createStudent();
             inGame = true;
@@ -78,37 +75,30 @@ public class Manager {
             inGame = true;
             menu.select_game.available = true;
             menu.score.available = true;
-            Teacher teacher = teacherManager.createTeacher();
-            missionManager.generateMissions(player,teacher);
             consoleView.getPersonalInfo(player);
-            missionManager.openMission(player,teacher);
-
+            missionManager.generateMissions(player);
+            missionManager.openMission(player);      
             while (inGame){
-                inGame = inGameMenu(player, teacher);
+                inGame = inGameMenu();
             }
         }
     }
-
+    
     //Bag
-    public boolean inGameMenu(Student player, Teacher teacher) throws IOException {
-        if (player.getHealth() <= 0){
-            PlayersList.remove(player);
+    private boolean inGameMenu() throws IOException { // 1 Continue, 2 Exit to mainMenu
+        
+    	if (player.getHealth() <= 0){
+            PlayersList.remove(player); // This is IASA! (SPARTA)
             return false;
         }
         menuView.printGameMenu();
         int item = menuView.getMenuItem();
 
         consoleView.getPersonalInfo(player);
-        if(item == 1){
-
-            if (teacher.getHealth() > 0){
-            missionManager.openMission(player,teacher);
-            }else{
-                inGameMenu(player, teacherManager.createTeacher());
-            }
+        if(item == CONTINUE_MISSION){     	
+        	missionManager.openMission(player);
             return true;
         }
-
         return false;
     }
 }

@@ -2,24 +2,37 @@ package model;
 import view.ConsoleView;
 
 import java.io.Serializable;
+import java.util.Vector;
+
+import controller.MissionManager;
 
 public class Student extends Person implements Serializable {
-    private final int MAX_MANA = 100;
-    private final int MAX_LEVEL = 10;
-    private final int MAX_HEALTH = 50;
+    private static final int MAX_MANA = 100;
+    private static final int MAX_LEVEL = 10;
+    private static final int MAX_HEALTH = 50;
+
     private int mana = 50;
     private int level = 1;
+    private int counter_evailable_missions = MissionManager.MAX_NUMBER_OF_MISSIONS;
     public int score = 0;
     private final int DEFAULT_HP = 50;
     private final ConsoleView consoleView = new ConsoleView();
-
+    private Vector<String> stateMissions;
+    public Vector<Mission> missions;
+    
     public Student(){
+    	
         setMana(mana);
         setLevel(level);
         setHealth(DEFAULT_HP);
         setScore(score);
     }
-
+    
+    public boolean has_available_mission() {
+    	if(counter_evailable_missions > 0) return true;
+    	return false;
+    }
+    
     public Student(String name, boolean sex){
         setMana(mana);
         setLevel(level);

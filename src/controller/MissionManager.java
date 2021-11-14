@@ -8,64 +8,91 @@ public class MissionManager {
 
     private final ConsoleView consoleView = new ConsoleView();
     private final FileManager fileManager = new FileManager();
+    
     private final StudentManager studentManager = new StudentManager();
+    public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 11
 
-    public  Mission createMission(Student student, int missionsNum, Teacher teacher){
-        Mission newMission = new Mission(student, teacher, missionsNum);
-        ArrayList<Questions> questionSet = fileManager.initQuestions();
-        int nN = (int)(Math.random()*questionSet.size());
-        newMission.setQuestion(questionSet.get(nN).getQuestion());
-        newMission.setAnswer(questionSet.get(nN).getAnswer());
-        newMission.setChoices(questionSet.get(nN).getChoices());
-        questionSet.remove(nN);
-
+     
+    
+    public  Mission createMission(Student student, int missionsNum, Teacher teacher){ 
+        Mission newMission = new Mission(student, teacher, missionsNum);    		
         return newMission;
     }
 
-    public Vector<Mission> generateMissions(Student student, Teacher teacher){
-        Vector<Mission> missions = new Vector<>(student.getLevel() + 1);
-        for(int i = 0; i < student.getMaxLevel(); i++){
-            missions.add(createMission(student, student.getLevel() + i, teacher));
+    public void generateMissions(Student student){
+    	student.missions = new Vector<>(student.getLevel() + 1);
+    	Vector<Teacher> Teachers = TeacherManager.getTeachers();
+        for(int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++){
+        	student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
         }
-        return missions;
     }
 
 
-    public boolean startMission(Student student, Mission mission, Teacher teacher){
-        consoleView.open(mission,teacher);
+    public void startMission(Student student, Mission mission){
+    	mission.set_in_Progress();
+    	consoleView.open(mission);
         String studentAnswer;
-        consoleView.quiz(mission);
+        Question question = mission.giveQuestion();
 
-        while(student.getHealth() > 0) {
-            studentAnswer = studentManager.giveAnswer();
-            if (studentAnswer.toLowerCase().equals(mission.getAnswer())) {
+        
+        while(question != null && mission.getTeacher().getHealth() > 0 
+        		&& student.getHealth() > 0) {
+        	consoleView.quiz(question);
+        	studentAnswer = studentManager.giveAnswer();
+            if (studentAnswer.toLowerCase().equals(question.getAnswer())) {
                 //Polymorphism
-                for(Person player : mission.getPlayers()){
+                for(Person player : mission.getPeople()){
                     player.correctStudentAnswer();
                 }
-                if (teacher.getHealth() > 0) consoleView.correctAnswerOutput(teacher);
-
-                return true;
-            } else {
+                
+                if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
+                else {
+                	mission.setComplated();						           							
+                }												  
+             
+            } 
+            else {
                 //Polymorphism
-                for(Person player : mission.getPlayers()){
+                for(Person player : mission.getPeople()){
                     player.wrongStudentAnswer();
                 }
-                return true;
+              
             }
+            question = mission.giveQuestion();
         }
-        return false;
+        
+        if(mission.getTeacher().getHealth() < 0) {
+        	mission.setComplated();
+        }
+        if(mission.getTeacher().getHealth() > 0 && question == null) {
+        	System.out.println("Failed");
+        	mission.setFailed();
+        }
+        if(student.getHealth() < 0){
+        	mission.setFailed();
+        }
     }
 
-    public void openMission(Student student, Teacher teacher){
-        int missinNumber = 0;
-        Vector<Mission> missions = generateMissions(student,teacher);
-
-        while (missinNumber <= 0 || missinNumber > missions.size()){
-            consoleView.choosingMission(missions);
-            missinNumber = consoleView.missinNumScanner(missinNumber);
+    public void openMission(Student student){
+        int missionNumber = 0;
+        Mission mission;
+        if(!student.has_available_mission()) {
+        	consoleView.has_no_mission();
+        	return;
         }
-
-        startMission(student, missions.get(missinNumber - 1), teacher);
+        do {
+        	while (missionNumber <= 0 || missionNumber > student.missions.size()){
+                consoleView.choosingMission(student.missions);
+                missionNumber = consoleView.missinNumScanner(missionNumber);
+                if(missionNumber == 1) {
+                	int i = 9;
+                }
+            }
+        	
+        	mission = student.missions.get(missionNumber - 1);
+        	missionNumber = -100;
+        }while(!mission.mission_available());
+        
+        startMission(student, mission);
     }
 }
