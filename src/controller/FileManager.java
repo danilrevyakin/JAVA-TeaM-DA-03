@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.Scanner;
 
@@ -35,67 +36,55 @@ public class FileManager {
         return players;
     }
 
-    static public ArrayList<Question> initQuestions(){
-        ArrayList<Question> questionsAndAnswers = new ArrayList<>();
-         String file_questions = "src/data_files/list_of_questions.dat";
-         File tmpDir = new File(file_questions);
-        if(!tmpDir.exists()){
-            if(!create_file(file_questions)) System.out.println("Unsuccessful creature");
-            return null;
-        }else if(tmpDir.length() <= 0) return null;
+    static public HashMap<String, ArrayList<Question>> initQuestions() {
 
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(tmpDir);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while (true){
-            assert scanner != null;
-            if (!scanner.hasNextLine()) break;
-            scanner.useDelimiter("\n");
-                String q = scanner.next();
-                String a = scanner.next();
-                String[] c = new String[4];
-                c[0] = a;
-                for (int i = 1; i < c.length; i++){
-                    c[i] = scanner.next();
-                }
-                questionsAndAnswers.add(new Question(q,a,c));
+        String teacherName = null;
+        HashMap<String, ArrayList<Question>> teacherQuestions = new HashMap<>();
+        String file_questions = "src/data_files/questions/";
+        File tmpDir = new File(file_questions);
+        if (tmpDir.listFiles() != null) {
+            for (File questionsFile : tmpDir.listFiles()) {
+                ArrayList<Question> questionsAndAnswers = new ArrayList<>();
+//                if (!questionsFile.exists()) {
+//                    if (!create_file(file_questions)) System.out.println("Unsuccessful creature");
+//                    return null;
+//                } else if (questionsFile.length() <= 0) return null;
+
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(questionsFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+
+            //scanner.useDelimiter("\n");
+            teacherName = scanner.nextLine();
+
+            while (true) {
+                assert scanner != null;
+                if (!scanner.hasNextLine()) break;
+                //scanner.useDelimiter("\n");
+
+                    String q = scanner.nextLine();
+                    String a = scanner.nextLine();
+
+                    String[] c = new String[4];
+                    c[0] = a;
+                    for (int i = 1; i < c.length; i++) {
+                        if(scanner.hasNextLine())
+                            c[i] = scanner.nextLine();
+                    }
+                    questionsAndAnswers.add(new Question(q, a, c));
+
+            }
+            teacherQuestions.put(teacherName, questionsAndAnswers);
             scanner.close();
-
-        return questionsAndAnswers;
+        }
+    }
+        return teacherQuestions;
     }
 
-    static public Vector<String> initTeachers() throws IOException {
-         String file_teachers = "src/data_files/list_of_teachers";
-         int lineCount = (int) Files.lines(Path.of(file_teachers)).count();
-        Vector<String> teacherSet = new Vector<>(lineCount);
-        File tmpDir = new File(file_teachers);
-        if(!tmpDir.exists()){
-            if(!create_file(file_teachers)) System.out.println("Unsuccessful creature");
-            return null;
-        }else if(tmpDir.length() <= 0) return null;
 
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(tmpDir);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while (true){
-            assert scanner != null;
-            if (!scanner.hasNextLine()) break;
-
-            scanner.useDelimiter("\n");
-            String t = scanner.next();
-            teacherSet.add(t);
-        }
-        scanner.close();
-
-        return teacherSet;
-    }
 
     static private boolean create_file(String name){
         File file = new File(name);
@@ -128,4 +117,6 @@ public class FileManager {
         }
         return result;
     }
+
+
 }

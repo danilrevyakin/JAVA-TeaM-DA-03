@@ -7,29 +7,19 @@ public abstract class Person implements Serializable {
     private boolean sex;
     private int health;
 
-    public void correctStudentAnswer(){}
+    abstract public void correctStudentAnswer();
 
-    public void wrongStudentAnswer(){}
+    abstract public void wrongStudentAnswer();
 
     //getters & setters
 
-    public int getHealth() {
-        return health;
-    }
+    public int getHealth() {return health;}
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
+    public void setHealth(int health) {this.health = health;}
 
-    public String getName(){
-        return name;
-    }
+    public String getName(){return name;}
 
-    public void setName(String name){
-        this.name = name;
-    }
+    public void setName(String name){this.name = name;}
 
-    public void setSex(boolean sex){
-        this.sex = sex;
-    }
+    public void setSex(boolean sex){this.sex = sex;}
 }

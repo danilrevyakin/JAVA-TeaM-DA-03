@@ -40,9 +40,11 @@ public class ConsoleView implements Serializable { // it is not must implements 
         if(sexS == 0) sex = false;
         return sex;
     }
+
     public void has_no_mission() {
     	System.out.println("Sorry, but you has no available mission");
     }
+
     public String giveAnswer(){
         String answer;
         Scanner in = new Scanner(System.in);
@@ -69,9 +71,9 @@ public class ConsoleView implements Serializable { // it is not must implements 
 
     public void quiz(Question question){
         System.out.println("Your task: " + question.getQuestion());
-        System.out.print("Choices: ");
+        System.out.println("Choices: ");
         for (String choice : question.getChoices()) {
-            System.out.print(choice + "  ");
+            System.out.println("* " + choice);
         }
         System.out.print("\n");
     }
@@ -98,5 +100,8 @@ public class ConsoleView implements Serializable { // it is not must implements 
 
     public void teacherDefeat(){
         System.out.println("OMG, You're correct...again... My colleagues will take revenge!");
+    }
+    public void missionCompleted(){
+        System.out.println("Mission Completed!");
     }
 }

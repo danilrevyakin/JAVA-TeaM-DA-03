@@ -28,11 +28,6 @@ public class Student extends Person implements Serializable {
         setScore(score);
     }
     
-    public boolean has_available_mission() {
-    	if(counter_evailable_missions > 0) return true;
-    	return false;
-    }
-    
     public Student(String name, boolean sex){
         setMana(mana);
         setLevel(level);
@@ -40,6 +35,11 @@ public class Student extends Person implements Serializable {
         setSex(sex);
         setHealth(DEFAULT_HP);
         setScore(score);
+    }
+
+    public boolean has_available_mission() {
+        if(counter_evailable_missions > 0) return true;
+        return false;
     }
 
     public void setScore(int score) {

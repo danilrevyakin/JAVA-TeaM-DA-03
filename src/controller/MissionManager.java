@@ -1,6 +1,9 @@
 package controller;
 import model.*;
 import view.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class MissionManager {
@@ -8,7 +11,7 @@ public class MissionManager {
     private final ConsoleView consoleView = new ConsoleView();
     private final TeacherManager teacherManager = new TeacherManager();
     private final StudentManager studentManager = new StudentManager();
-    public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 11
+    public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 10
 
      
     
@@ -18,20 +21,25 @@ public class MissionManager {
     }
 
     public void generateMissions(Student student){
-    	student.missions = new Vector<>(student.getLevel() + 1);
-    	Vector<Teacher> Teachers = teacherManager.getTeachers();
+    	student.missions = new Vector<>();
+       Vector<Teacher> Teachers = teacherManager.getTeachers();
         for(int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++){
-        	student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
+            student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
         }
     }
 
 
     public void startMission(Student student, Mission mission){
+        if(mission.getState().equals("c")){
+            consoleView.missionCompleted();
+            return;
+        }
     	mission.set_in_Progress();
     	consoleView.open(mission);
         String studentAnswer;
         Question question = mission.giveQuestion();
 
+        System.out.println(question.getQuestion());
         
         while(question != null && mission.getTeacher().getHealth() > 0 
         		&& student.getHealth() > 0) {
@@ -44,9 +52,9 @@ public class MissionManager {
                 }
                 
                 if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
-                else {
-                	mission.setCompleted();
-                }												  
+                else if(mission.getTeacher().getHealth() < 0) {
+                    mission.setCompleted();
+                }
              
             } 
             else {
@@ -59,7 +67,7 @@ public class MissionManager {
             question = mission.giveQuestion();
         }
         
-        if(mission.getTeacher().getHealth() < 0) {
+        if(mission.getTeacher().getHealth() <= 0) {
         	mission.setCompleted();
         }
         if(mission.getTeacher().getHealth() > 0 && question == null) {
