@@ -32,7 +32,7 @@ public class Mission implements Serializable{
     public String getState() {
     	return stateMission;
     }
-    public void setComplated() {
+    public void setCompleted() {
     	stateMission = MISSION_COMPLETED;
     }
     public void set_in_Progress() {

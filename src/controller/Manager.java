@@ -1,13 +1,11 @@
 package controller;
 import model.*;
 import view.*;
-import java.io.IOException;
 import java.util.Vector;
 
 public class Manager {
     private final StudentManager studentManager = new StudentManager();
     private final MissionManager missionManager = new MissionManager();
-    private final FileManager fileManager = new FileManager();
     private final ConsoleView consoleView = new ConsoleView();
     private final MenuView menuView = new MenuView();
     private final int CONTINUE_MISSION = 1; 
@@ -18,14 +16,14 @@ public class Manager {
     private Vector<Student> PlayersList;
 
     public Manager() {
-        PlayersList = fileManager.init_old_Players();
+        PlayersList = FileManager.init_old_Players();
         if(PlayersList == null){
             PlayersList = new Vector<>(5);
             menu.select_game.available = false;
             menu.score.available = false;
         }
     }
-    public void start() throws IOException {
+    public void start() {
         inMenu = true;
         consoleView.helloFriend();
         while (inMenu) {
@@ -36,13 +34,14 @@ public class Manager {
         }
     }
 
-    private void inMainMenu() throws IOException { // 1 new Player, 2 Select created Player, 3 My score, 4 Exit the program
+    private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 My score, 4 Exit the program
         if(player != null) menuView.currentAcc(player);
         menuView.printMainMenu();
         int item = menuView.getMenuItem();
         
         if(item == 1 && menu.new_game.available){
             player = studentManager.createStudent();
+            missionManager.generateMissions(player);
             inGame = true;
             PlayersList.add(player);
 
@@ -67,7 +66,7 @@ public class Manager {
         }
         else if(item == 4 && menu.quit.available){
             inMenu = false;
-            fileManager.saveGame(PlayersList);
+            FileManager.saveGame(PlayersList);
             return;
         }
         if((item == 1 && menu.new_game.available)
@@ -76,16 +75,14 @@ public class Manager {
             menu.select_game.available = true;
             menu.score.available = true;
             consoleView.getPersonalInfo(player);
-            missionManager.generateMissions(player);
             missionManager.openMission(player);      
             while (inGame){
                 inGame = inGameMenu();
             }
         }
     }
-    
-    //Bag
-    private boolean inGameMenu() throws IOException { // 1 Continue, 2 Exit to mainMenu
+
+    private boolean inGameMenu() { // 1 Continue, 2 Exit to mainMenu
         
     	if (player.getHealth() <= 0){
             PlayersList.remove(player); // This is IASA! (SPARTA)

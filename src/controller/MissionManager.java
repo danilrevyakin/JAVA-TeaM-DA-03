@@ -1,14 +1,12 @@
 package controller;
 import model.*;
 import view.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class MissionManager {
 
     private final ConsoleView consoleView = new ConsoleView();
-    private final FileManager fileManager = new FileManager();
-    
+    private final TeacherManager teacherManager = new TeacherManager();
     private final StudentManager studentManager = new StudentManager();
     public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 11
 
@@ -21,7 +19,7 @@ public class MissionManager {
 
     public void generateMissions(Student student){
     	student.missions = new Vector<>(student.getLevel() + 1);
-    	Vector<Teacher> Teachers = TeacherManager.getTeachers();
+    	Vector<Teacher> Teachers = teacherManager.getTeachers();
         for(int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++){
         	student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
         }
@@ -47,7 +45,7 @@ public class MissionManager {
                 
                 if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
                 else {
-                	mission.setComplated();						           							
+                	mission.setCompleted();
                 }												  
              
             } 
@@ -62,7 +60,7 @@ public class MissionManager {
         }
         
         if(mission.getTeacher().getHealth() < 0) {
-        	mission.setComplated();
+        	mission.setCompleted();
         }
         if(mission.getTeacher().getHealth() > 0 && question == null) {
         	System.out.println("Failed");

@@ -7,10 +7,10 @@ import java.util.Random;
 import view.ConsoleView;
 
 public class Teacher extends Person implements Serializable{
-    private int DEFAULT_HP = 50;
+    private final int DEFAULT_HP = 50;
     private final ConsoleView consoleView = new ConsoleView();
     private ArrayList<Question> questions;
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private int Num_of_question;
     
     public Teacher(String name, ArrayList<Question> questions){
@@ -23,13 +23,14 @@ public class Teacher extends Person implements Serializable{
     	int size = questions.size();
     	if(size <= 0) 
     		return null;
-    	int num = this.rand.nextInt() % size;
+    	int num = rand.nextInt() % size;
     	num = Math.abs(num);
     	return questions.remove(num);
     }
     public int getNumber_of_Question() {
     	return questions.size();
     }
+
     public void correctStudentAnswer(){
         setHealth(getHealth() - 25);
 
