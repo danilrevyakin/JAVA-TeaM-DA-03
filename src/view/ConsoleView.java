@@ -19,7 +19,7 @@ public class ConsoleView implements Serializable { // it is not must implements 
                 "; health: " + person.getHealth() + "; mana: " +  person.getMana() + "): ");
     }
 
-    //Student data
+    //Student data////
     public String setStudentName(){
         Scanner scanner = new Scanner(System.in);
         String name;
