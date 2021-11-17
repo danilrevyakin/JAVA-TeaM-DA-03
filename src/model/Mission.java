@@ -4,6 +4,7 @@ import controller.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Mission implements Serializable{
     private int missionNumber;
@@ -24,7 +25,7 @@ public class Mission implements Serializable{
     }
     
     public boolean mission_available() {
-    	if(stateMission != MISSION_COMPLETED && stateMission != MISSION_FAILED) return true; 		
+    	if(!Objects.equals(stateMission, MISSION_COMPLETED) && !Objects.equals(stateMission, MISSION_FAILED)) return true;
     	return false;
     }
     
