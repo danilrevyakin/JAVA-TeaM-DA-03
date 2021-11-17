@@ -37,6 +37,42 @@ public class Student extends Person implements Serializable {
         setScore(score);
     }
 
+    public void correctStudentAnswer(){
+        setMana(getMana() + 10);
+        setScore(getScore() + 10);
+        setHealth(MAX_HEALTH);
+
+        if (getScore() >= 50){
+            setLevel(getLevel() + 1);
+            setScore(getScore() - 50);
+        }
+
+        if(getLevel() >= getMaxLevel()){
+            consoleView.victory();
+        }
+
+        if (getMana() >= getMaxMana()){
+            setMana(MAX_MANA);
+        }
+    }
+
+    public void wrongStudentAnswer(){
+        setHealth(getHealth() - 10);
+        setMana(getMana() - 10);
+
+        if(getHealth() <= 0){
+            consoleView.studentDefeat();
+        }
+
+        if (getMana() < 0){
+            setMana(0);
+        }
+
+        if(getHealth() > 0){
+            consoleView.tryAgain(getHealth());
+        }
+    }
+
     public boolean has_available_mission() {
         if(counter_evailable_missions > 0) return true;
         return false;
@@ -74,39 +110,13 @@ public class Student extends Person implements Serializable {
         return this.mana = mana;
     }
 
-    public void correctStudentAnswer(){
-        setMana(getMana() + 10);
-        setScore(getScore() + 10);
-        setHealth(MAX_HEALTH);
-
-        if (getScore() >= 50){
-            setLevel(getLevel() + 1);
-            setScore(getScore() - 50);
-        }
-
-        if(getLevel() >= getMaxLevel()){
-            consoleView.victory();
-        }
-
-        if (getMana() >= getMaxMana()){
-            setMana(MAX_MANA);
-        }
+    public int getCounter_evailable_missions() {
+        return counter_evailable_missions;
     }
 
-    public void wrongStudentAnswer(){
-        setHealth(getHealth() - 10);
-        setMana(getMana() - 10);
-
-        if(getHealth() <= 0){
-            consoleView.studentDefeat();
-        }
-
-        if (getMana() < 0){
-            setMana(0);
-        }
-
-        if(getHealth() > 0){
-            consoleView.tryAgain(getHealth());
-        }
+    public void setCounter_evailable_missions(int counter_evailable_missions) {
+        this.counter_evailable_missions = counter_evailable_missions;
     }
+
+
 }

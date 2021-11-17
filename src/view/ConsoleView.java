@@ -8,7 +8,7 @@ import java.util.Vector;
 public class ConsoleView implements Serializable { // it is not must implements Serializable
     public boolean open(Mission mission){
 
-        System.out.println("Welcome to the " + mission.getMissionNumber() + " mission 8).\n" +
+        System.out.println("\nWelcome to the " + mission.getMissionNumber() + " mission 8).\n" +
                 "Your teacher is " + mission.getTeacher().getName() + " (" + mission.getTeacher().getHealth() + "HP)");
 
         return true;
@@ -46,6 +46,7 @@ public class ConsoleView implements Serializable { // it is not must implements 
     }
 
     public String giveAnswer(){
+        System.out.print("Enter answer: ");
         String answer;
         Scanner in = new Scanner(System.in);
         answer = in.nextLine();
@@ -83,7 +84,7 @@ public class ConsoleView implements Serializable { // it is not must implements 
     }
 
     public void tryAgain(int hp){
-        System.out.println("Wrong, now your health is " + hp + "... Try again :(");
+        System.out.println("Wrong, now your health is " + hp+"...");
     }
 
     public void studentDefeat(){

@@ -17,7 +17,6 @@ public class TeacherManager {
 		Vector<Teacher> Teachers_Set = new Vector<Teacher>(NUMBER_OF_TEACHERS);
     	for(Map.Entry<String, ArrayList<Question>> pair: questionSet.entrySet()) {
 			assert questionSet != null;
-			System.out.println(pair.getValue());
 			Teacher newTeacher = new Teacher(pair.getKey(), pair.getValue());
     		Teachers_Set.add(newTeacher);
     	}

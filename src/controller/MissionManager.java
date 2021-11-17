@@ -16,7 +16,8 @@ public class MissionManager {
      
     
     public  Mission createMission(Student student, int missionsNum, Teacher teacher){ 
-        Mission newMission = new Mission(student, teacher, missionsNum);    		
+        Mission newMission = new Mission(student, teacher, missionsNum);
+
         return newMission;
     }
 
@@ -30,22 +31,23 @@ public class MissionManager {
 
 
     public void startMission(Student student, Mission mission){
-        if(mission.getState().equals("c")){
+        if(!mission.mission_available()){
             consoleView.missionCompleted();
             return;
         }
+        student.setCounter_evailable_missions(student.getCounter_evailable_missions()-1);
     	mission.set_in_Progress();
     	consoleView.open(mission);
         String studentAnswer;
         Question question = mission.giveQuestion();
 
-        System.out.println(question.getQuestion());
+        //System.out.println(question.getQuestion());
         
         while(question != null && mission.getTeacher().getHealth() > 0 
         		&& student.getHealth() > 0) {
         	consoleView.quiz(question);
         	studentAnswer = studentManager.giveAnswer();
-            if (studentAnswer.toLowerCase().equals(question.getAnswer())) {
+            if (studentAnswer.toLowerCase().equals(question.getAnswer().toLowerCase())) {
                 //Polymorphism
                 for(Person player : mission.getPeople()){
                     player.correctStudentAnswer();
@@ -69,9 +71,10 @@ public class MissionManager {
         
         if(mission.getTeacher().getHealth() <= 0) {
         	mission.setCompleted();
+            //student.missions.remove(mission);
         }
         if(mission.getTeacher().getHealth() > 0 && question == null) {
-        	System.out.println("Failed");
+        	System.out.println("You almost won (");
         	mission.setFailed();
         }
         if(student.getHealth() < 0){

@@ -30,7 +30,7 @@ public class MenuView {
 
     public void printGameMenu(){
         System.out.println(
-                "\t1. Continue\n" +
+                "\n\t1. Continue\n" +
                         "\t2. Back to menu");
     }
 

@@ -51,15 +51,16 @@ public class Manager {
                 menuView.createAccFirstWarning();
                 inGame = false;
             }
-            menuView.selectAccount(PlayersList);
-            int choice = menuView.enterAccount(PlayersList);
+            else {
+                menuView.selectAccount(PlayersList);
+                int choice = menuView.enterAccount(PlayersList);
 
-            if(choice == 0){
-                item = 0;
-            }else {
-                player = PlayersList.elementAt(choice - 1);
+                if (choice == 0) {
+                    item = 0;
+                } else {
+                    player = PlayersList.elementAt(choice - 1);
+                }
             }
-
         }
         else if(item == 3){
            menuView.myScoreInfo(player,menu);
@@ -75,7 +76,7 @@ public class Manager {
             menu.select_game.available = true;
             menu.score.available = true;
             consoleView.getPersonalInfo(player);
-            missionManager.openMission(player);      
+            missionManager.openMission(player);
             while (inGame){
                 inGame = inGameMenu();
             }
@@ -92,7 +93,7 @@ public class Manager {
         int item = menuView.getMenuItem();
 
         consoleView.getPersonalInfo(player);
-        if(item == CONTINUE_MISSION){     	
+        if(item == CONTINUE_MISSION){
         	missionManager.openMission(player);
             return true;
         }
