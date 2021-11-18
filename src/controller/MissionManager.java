@@ -84,17 +84,20 @@ public class MissionManager {
     }
 
     public void openMission(Student student){
-        int missionNumber = 0;
+        int missionNumber = -100;
+        final int EXIT = 0;
         Mission mission;
         if(!student.has_available_mission()) {
         	consoleView.has_no_mission();
         	return;
         }
         do {
-        	while (missionNumber <= 0 || missionNumber > student.missions.size()){
+        	while (missionNumber < 0 || missionNumber > student.missions.size()){
                 consoleView.choosingMission(student.missions);
                 missionNumber = consoleView.missinNumScanner(missionNumber);
-
+                if(missionNumber == EXIT) {
+                	return;
+                }
             }
         	
         	mission = student.missions.get(missionNumber - 1);

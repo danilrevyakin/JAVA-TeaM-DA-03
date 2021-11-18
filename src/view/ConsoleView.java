@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class ConsoleView implements Serializable { // it is not must implements Serializable
+public class ConsoleView implements Serializable {
     public boolean open(Mission mission){
 
         System.out.println("\nWelcome to the " + mission.getMissionNumber() + " mission 8).\n" +
@@ -15,7 +15,7 @@ public class ConsoleView implements Serializable { // it is not must implements 
     }
 
     public void getPersonalInfo(Student person){
-        System.out.println("\n" + person.getName() +  " (level: "+ person.getLevel() +
+        System.out.println(person.getName() +  " (level: "+ person.getLevel() +
                 "; health: " + person.getHealth() + "; mana: " +  person.getMana() + "): ");
     }
 
@@ -58,9 +58,10 @@ public class ConsoleView implements Serializable { // it is not must implements 
     	System.out.println();
     	for(Mission mission: missions) {
     		if(mission.mission_available()) {
-    			System.out.println("#" + mission.getMissionNumber() + ". " + mission.getTeacher().getName());
+    			System.out.println("#" + mission.getMissionNumber() + ".\t" + mission.getTeacher().getName());
     		}
     	}
+    	System.out.print("#0.\tExit");
         System.out.print("\nChoose mission number: ");
     }
 

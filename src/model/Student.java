@@ -2,6 +2,9 @@ package model;
 import view.ConsoleView;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 
 import controller.MissionManager;
@@ -117,6 +120,6 @@ public class Student extends Person implements Serializable {
     public void setCounter_evailable_missions(int counter_evailable_missions) {
         this.counter_evailable_missions = counter_evailable_missions;
     }
-
+    
 
 }
