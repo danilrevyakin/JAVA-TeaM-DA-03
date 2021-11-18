@@ -15,13 +15,14 @@ public class Mission implements Serializable{
     public static final String MISSION_FAILED = "f";
     public static final String MISSION_IN_PROGRESS = "p";
     public static final String MISSION_NOT_OPEN = "n";
-    private String stateMission = MISSION_NOT_OPEN;
+    private String stateMission;
     
     public Mission(Student student, Teacher teacher, int missionNumber){
         this.missionNumber = missionNumber;
         this.teacher = teacher;
         People.add(student);
         People.add(teacher);
+        stateMission = MISSION_NOT_OPEN;
     }
     
     public boolean mission_available() {
@@ -45,7 +46,7 @@ public class Mission implements Serializable{
     public int getMissionNumber(){
         return missionNumber;
     }
-    public Question giveQuestion() {
+    public ArrayList<Question> giveQuestion() {
     	return teacher.give_Question();
     }
     public Teacher getTeacher() {

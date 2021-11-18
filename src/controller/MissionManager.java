@@ -39,46 +39,47 @@ public class MissionManager {
     	mission.set_in_Progress();
     	consoleView.open(mission);
         String studentAnswer;
-        Question question = mission.giveQuestion();
+        ArrayList<Question> questions = mission.giveQuestion();
 
         //System.out.println(question.getQuestion());
-        
-        while(question != null && mission.getTeacher().getHealth() > 0 
-        		&& student.getHealth() > 0) {
-        	consoleView.quiz(question);
-        	studentAnswer = studentManager.giveAnswer();
-            if (studentAnswer.toLowerCase().equals(question.getAnswer().toLowerCase())) {
-                //Polymorphism
-                for(Person player : mission.getPeople()){
-                    player.correctStudentAnswer();
+
+        for(Question question : questions) {
+
+            if (question != null && mission.getTeacher().getHealth() > 0
+                    && student.getHealth() > 0) {
+                consoleView.quiz(question);
+                studentAnswer = studentManager.giveAnswer();
+                if (studentAnswer.toLowerCase().equals(question.getAnswer().toLowerCase())) {
+                    //Polymorphism
+                    for (Person player : mission.getPeople()) {
+                        player.correctStudentAnswer();
+                    }
+
+                    if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
+                    else if (mission.getTeacher().getHealth() < 0) {
+                        mission.setCompleted();
+                    }
+
+                } else {
+                    //Polymorphism
+                    for (Person player : mission.getPeople()) {
+                        player.wrongStudentAnswer();
+                    }
+
                 }
-                
-                if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
-                else if(mission.getTeacher().getHealth() < 0) {
-                    mission.setCompleted();
-                }
-             
-            } 
-            else {
-                //Polymorphism
-                for(Person player : mission.getPeople()){
-                    player.wrongStudentAnswer();
-                }
-              
             }
-            question = mission.giveQuestion();
-        }
-        
-        if(mission.getTeacher().getHealth() <= 0) {
-        	mission.setCompleted();
-            //student.missions.remove(mission);
-        }
-        if(mission.getTeacher().getHealth() > 0 && question == null) {
-        	System.out.println("You almost won (");
-        	mission.setFailed();
-        }
-        if(student.getHealth() < 0){
-        	mission.setFailed();
+
+            if (mission.getTeacher().getHealth() <= 0) {
+                mission.setCompleted();
+                //student.missions.remove(mission);
+            }
+            if (mission.getTeacher().getHealth() > 0 && question == null) {
+                System.out.println("You almost won (");
+                mission.setFailed();
+            }
+            if (student.getHealth() < 0) {
+                mission.setFailed();
+            }
         }
     }
 
@@ -93,9 +94,7 @@ public class MissionManager {
         	while (missionNumber <= 0 || missionNumber > student.missions.size()){
                 consoleView.choosingMission(student.missions);
                 missionNumber = consoleView.missinNumScanner(missionNumber);
-                if(missionNumber == 1) {
-                	int i = 9;
-                }
+
             }
         	
         	mission = student.missions.get(missionNumber - 1);

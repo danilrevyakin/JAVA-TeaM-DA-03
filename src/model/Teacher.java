@@ -19,14 +19,20 @@ public class Teacher extends Person implements Serializable{
         this.questions = questions;
     }
     
-    public Question give_Question() {
-    	int size = questions.size();
-    	if(size <= 0) 
-    		return null;
-    	int num = rand.nextInt() % size;
-    	num = Math.abs(num);
-    	return questions.remove(num);
+//    public Question give_Question() {
+//    	int size = questions.size();
+//    	if(size <= 0)
+//    		return null;
+//    	int num = rand.nextInt() % size;
+//    	num = Math.abs(num);
+////    	return questions.remove(num);
+//        return questions.get(num);
+//    }
+
+    public ArrayList<Question> give_Question() {
+        return questions;
     }
+
     public int getNumber_of_Question() {
     	return questions.size();
     }
