@@ -80,7 +80,9 @@ public class Student extends Person implements Serializable {
         if(counter_evailable_missions > 0) return true;
         return false;
     }
-
+    public void decrease_Counter_availableMissions(){
+    	--counter_evailable_missions;
+    }
     public void setScore(int score) {
         this.score = score;
     }

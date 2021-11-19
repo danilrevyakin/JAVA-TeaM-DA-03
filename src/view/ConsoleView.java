@@ -18,7 +18,10 @@ public class ConsoleView implements Serializable {
         System.out.println(person.getName() +  " (level: "+ person.getLevel() +
                 "; health: " + person.getHealth() + "; mana: " +  person.getMana() + "): ");
     }
-
+    
+    public void YouAlmostWon() {
+    	System.out.println("You almost won (");
+    }
     //Student data////
     public String setStudentName(){
         Scanner scanner = new Scanner(System.in);

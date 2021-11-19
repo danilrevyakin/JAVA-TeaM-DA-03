@@ -13,11 +13,8 @@ public class MissionManager {
     private final StudentManager studentManager = new StudentManager();
     public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 10
 
-     
-    
-    public  Mission createMission(Student student, int missionsNum, Teacher teacher){ 
+    private  Mission createMission(Student student, int missionsNum, Teacher teacher){ 
         Mission newMission = new Mission(student, teacher, missionsNum);
-
         return newMission;
     }
 
@@ -29,22 +26,10 @@ public class MissionManager {
         }
     }
 
-
-    public void startMission(Student student, Mission mission){
-        if(!mission.mission_available()){
-            consoleView.missionCompleted();
-            return;
-        }
-        student.setCounter_evailable_missions(student.getCounter_evailable_missions()-1);
-    	mission.set_in_Progress();
-    	consoleView.open(mission);
-        String studentAnswer;
+    private void playMission(Student student, Mission mission) {
+    	String studentAnswer;
         ArrayList<Question> questions = mission.giveQuestion();
-
-        //System.out.println(question.getQuestion());
-
         for(Question question : questions) {
-
             if (question != null && mission.getTeacher().getHealth() > 0
                     && student.getHealth() > 0) {
                 consoleView.quiz(question);
@@ -56,31 +41,45 @@ public class MissionManager {
                     }
 
                     if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
-                    else if (mission.getTeacher().getHealth() < 0) {
-                        mission.setCompleted();
+                    else if (mission.getTeacher().getHealth() <= 0) {
+                        return;
                     }
-
-                } else {
+                } 
+                else {
                     //Polymorphism
                     for (Person player : mission.getPeople()) {
                         player.wrongStudentAnswer();
                     }
-
                 }
             }
-
-            if (mission.getTeacher().getHealth() <= 0) {
-                mission.setCompleted();
-                //student.missions.remove(mission);
-            }
-            if (mission.getTeacher().getHealth() > 0 && question == null) {
-                System.out.println("You almost won (");
-                mission.setFailed();
-            }
-            if (student.getHealth() < 0) {
-                mission.setFailed();
-            }
+            else
+            	break;
         }
+    }
+    
+    private void setResultMission(Student student, Mission mission) {
+    	if (mission.getTeacher().getHealth() <= 0) {
+            mission.setCompleted();
+            student.decrease_Counter_availableMissions();
+        }
+        else if (mission.getTeacher().getHealth() > 0) {
+            this.consoleView.YouAlmostWon();
+        }
+        else if (student.getHealth() < 0) {
+            mission.setFailed();
+            student.decrease_Counter_availableMissions();
+        }
+    }
+    
+    private void startMission(Student student, Mission mission){
+        if(!mission.mission_available()){
+            consoleView.missionCompleted();
+            return;
+        }
+    	mission.set_in_Progress();
+    	consoleView.open(mission);
+        playMission(student, mission);
+        setResultMission(student, mission);
     }
 
     public void openMission(Student student){
@@ -99,9 +98,7 @@ public class MissionManager {
                 	return;
                 }
             }
-        	
         	mission = student.missions.get(missionNumber - 1);
-        	missionNumber = -100;
         }while(!mission.mission_available());
         
         startMission(student, mission);
