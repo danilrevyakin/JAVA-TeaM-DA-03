@@ -4,31 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.FileManager;
 import view.ConsoleView;
 
 public class Teacher extends Person implements Serializable{
-    private final int DEFAULT_HP = 50;
+    protected static final int DEFAULT_HP = 50; // Protected because I wanna class child be able to see this field 
     private final ConsoleView consoleView = new ConsoleView();
     private ArrayList<Question> questions;
     private static final Random rand = new Random();
-    private int Num_of_question;
     
-    public Teacher(String name, ArrayList<Question> questions){
-        setName(name);
-        setHealth(DEFAULT_HP);
+    public Teacher(String name, boolean sex, ArrayList<Question> questions){
+    	super(name, sex, DEFAULT_HP);
         this.questions = questions;
     }
-    
-//    public Question give_Question() {
-//    	int size = questions.size();
-//    	if(size <= 0)
-//    		return null;
-//    	int num = rand.nextInt() % size;
-//    	num = Math.abs(num);
-////    	return questions.remove(num);
-//        return questions.get(num);
-//    }
-
+    public Teacher(Pair<Pair<String, String>, ArrayList<Question>> teacherInfo){
+    	super(teacherInfo.getFirst().getFirst(), sex, DEFAULT_HP);
+        this.questions = questions;
+    }
     public ArrayList<Question> give_Question() {
         return questions;
     }
@@ -44,7 +36,11 @@ public class Teacher extends Person implements Serializable{
             consoleView.teacherDefeat();
         }
     }
-
+    public void skill() {
+    	
+    }
+    
+    
     public void wrongStudentAnswer(){
         setHealth(getHealth() + 5);
     }

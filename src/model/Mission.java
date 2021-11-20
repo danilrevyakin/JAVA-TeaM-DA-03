@@ -14,7 +14,7 @@ public class Mission implements Serializable{
     public static final String MISSION_COMPLETED = "c";
     public static final String MISSION_FAILED = "f";
     public static final String MISSION_IN_PROGRESS = "p";
-    public static final String MISSION_NOT_OPEN = "n";
+    public static final String MISSION_UNSTARTED = "n";
     private String stateMission;
     
     public Mission(Student student, Teacher teacher, int missionNumber){
@@ -22,7 +22,7 @@ public class Mission implements Serializable{
         this.teacher = teacher;
         People.add(student);
         People.add(teacher);
-        stateMission = MISSION_NOT_OPEN;
+        stateMission = MISSION_UNSTARTED;
     }
     
     public boolean mission_available() {
@@ -31,8 +31,20 @@ public class Mission implements Serializable{
     }
     
     //getters & setters
+    public String getNameState() {
+    	if(this.stateMission.equals(MISSION_COMPLETED))
+    		return "COMPLETED";
+    	else if(this.stateMission.equals(MISSION_FAILED)) {
+    		return "FAILED";
+    	}
+    	else if(this.stateMission.equals(MISSION_IN_PROGRESS)) {
+    		return "IN PROGRESS";
+    	}
+    	return "UNSTARTED";
+    		
+    }
     public String getState() {
-    	return stateMission;
+    	return this.stateMission;
     }
     public void setCompleted() {
     	stateMission = MISSION_COMPLETED;

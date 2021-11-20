@@ -18,25 +18,14 @@ public class Student extends Person implements Serializable {
     private int level = 1;
     private int counter_evailable_missions = MissionManager.MAX_NUMBER_OF_MISSIONS;
     public int score = 0;
-    private final int DEFAULT_HP = 50;
     private final ConsoleView consoleView = new ConsoleView();
-    private Vector<String> stateMissions;
     public Vector<Mission> missions;
     
-    public Student(){
-    	
-        setMana(mana);
-        setLevel(level);
-        setHealth(DEFAULT_HP);
-        setScore(score);
-    }
     
     public Student(String name, boolean sex){
+    	super(name, sex, MAX_HEALTH);
         setMana(mana);
         setLevel(level);
-        setName(name);
-        setSex(sex);
-        setHealth(DEFAULT_HP);
         setScore(score);
     }
 

@@ -61,13 +61,13 @@ public class ConsoleView implements Serializable {
     	System.out.println();
     	for(Mission mission: missions) {
     		if(mission.mission_available()) {
-    			System.out.println("#" + mission.getMissionNumber() + ".\t" + mission.getTeacher().getName());
+    			System.out.println("#" + mission.getMissionNumber() + ".\t" + mission.getTeacher().getName() + "\tHealth: " + + mission.getTeacher().getHealth());
     		}
     	}
     	System.out.print("#0.\tExit");
         System.out.print("\nChoose mission number: ");
     }
-
+    
     public int missinNumScanner(int missinNum){
         Scanner in = new Scanner(System.in);
         missinNum = in.nextInt();

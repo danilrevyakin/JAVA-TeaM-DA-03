@@ -9,33 +9,24 @@ import java.util.Vector;
 public class TeacherManager {
 
 	//    private Vector<String> teachers_names_list = init_names_list();
-	private static final HashMap<String, ArrayList<Question>> questionSet = FileManager.initQuestions();
+	
 	public static final int NUMBER_OF_TEACHERS = 10;
 
 
 	private Vector<Teacher> init_teachers() {
-		Vector<Teacher> Teachers_Set = new Vector<Teacher>(NUMBER_OF_TEACHERS);
-		for(Map.Entry<String, ArrayList<Question>> pair: questionSet.entrySet()) {
-			assert questionSet != null;
-			Teacher newTeacher = new Teacher(pair.getKey(), pair.getValue());
-			Teachers_Set.add(newTeacher);
+		ArrayList<String> names;
+		Vector<Teacher> Teachers = new Vector<Teacher>(NUMBER_OF_TEACHERS);
+		FileManager.readTeacherInfo("Beznosic");
+		for(String name: names) {
+			Teacher teacher = magicMethod(name);
+			Teachers.add(teacher);
 		}
-		return Teachers_Set;
+		
+		return Teachers;
 	}
-
-
-//    private Vector<String> init_names_list(){
-//    	try {
-//			return FileManager.initTeachers();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	return null;
-//    }
-
 
 	public Vector<Teacher> getTeachers() {
 		return init_teachers();
 	}
+	
 }

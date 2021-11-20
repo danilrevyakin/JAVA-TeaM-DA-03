@@ -1,4 +1,5 @@
 A. Verbitskiy
+male
 cond(A) = ?:
 ||A|| * ||A^(-1)||
 ||A||^2
