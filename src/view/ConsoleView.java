@@ -35,6 +35,13 @@ public class ConsoleView implements Serializable {
     public void Teachers_out_of_Index() {
     	System.out.println("Teachers_out_of_Index: maybe class MissionManager method generateMissions");
     }
+    private void print(String str) {
+    	System.out.println(str);
+    }
+    public void StatckevichRegards() {
+    	print("Yes, that is right. You are well done");
+    }
+    
     public boolean setStudentSex(){
         Scanner in = new Scanner(System.in);
         boolean sex = true;

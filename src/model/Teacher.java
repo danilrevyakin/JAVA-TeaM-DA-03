@@ -27,7 +27,12 @@ public abstract class Teacher extends Person implements Serializable{
     public int getNumber_of_Question() {
     	return questions.size();
     }
-
+    public void setStudent(Student student) {
+    	this.student = student;
+    }
+    public void setLastQuestion(Question question) {
+    	this.lastQuestion = question;
+    }
     public void correctStudentAnswer(){
         setHealth(getHealth() - 25);
 
