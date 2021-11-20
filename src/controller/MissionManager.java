@@ -20,7 +20,7 @@ public class MissionManager {
 
     public void generateMissions(Student student){
     	student.missions = new Vector<>();
-       Vector<Teacher> Teachers = teacherManager.getTeachers();
+       ArrayList<Teacher> Teachers = teacherManager.getTeachers();
         for(int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++){
             student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
         }
@@ -29,11 +29,15 @@ public class MissionManager {
     private void playMission(Student student, Mission mission) {
     	String studentAnswer;
         ArrayList<Question> questions = mission.giveQuestion();
+        Teacher teacher = mission.getTeacher();
+        teacher.setStudent(student);
         for(Question question : questions) {
             if (question != null && mission.getTeacher().getHealth() > 0
                     && student.getHealth() > 0) {
                 consoleView.quiz(question);
+                teacher.setLastQuestion(question);
                 studentAnswer = studentManager.giveAnswer();
+
                 if (studentAnswer.toLowerCase().equals(question.getAnswer().toLowerCase())) {
                     //Polymorphism
                     for (Person player : mission.getPeople()) {

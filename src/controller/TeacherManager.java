@@ -1,31 +1,27 @@
 package controller;
 import model.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+
+
+import factory.TeacherFactory;
 
 public class TeacherManager {
-
-	//    private Vector<String> teachers_names_list = init_names_list();
 	
 	public static final int NUMBER_OF_TEACHERS = 10;
-
-
-	private Vector<Teacher> init_teachers() {
-		ArrayList<String> names;
-		Vector<Teacher> Teachers = new Vector<Teacher>(NUMBER_OF_TEACHERS);
-		FileManager.readTeacherInfo("Beznosic");
-		for(String name: names) {
-			Teacher teacher = magicMethod(name);
+	private final TeacherFactory teacherFactory = new TeacherFactory();
+	private final FileManager fileManager = new FileManager();
+	
+	private ArrayList<Teacher> init_teachers() {
+		ArrayList<String> names = fileManager.SurnamesOfTeachers;
+		ArrayList<Teacher> Teachers = new ArrayList<Teacher>(NUMBER_OF_TEACHERS);
+		for(String surname: names) {
+			Teacher teacher = teacherFactory.getTeacher(surname);
 			Teachers.add(teacher);
 		}
-		
 		return Teachers;
 	}
 
-	public Vector<Teacher> getTeachers() {
+	public ArrayList<Teacher> getTeachers() {
 		return init_teachers();
 	}
 	
