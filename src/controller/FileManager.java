@@ -13,7 +13,22 @@ public class FileManager {
 	static private final String file_path_teacher = "src/data_files/questions/";
 	static public final String MALE = "male";
 	static public final String FEMALE = "female";
-	
+	public ArrayList<String> SurnamesOfTeachers = initNamesOfTeachers();
+			
+	private ArrayList<String> initNamesOfTeachers(){
+		String teacherName = null;
+		SurnamesOfTeachers = new ArrayList<String>(TeacherManager.NUMBER_OF_TEACHERS);
+        String file_questions = "src/data_files/questions/";
+        File tmpDir = new File(file_questions);
+        if (tmpDir.listFiles() != null) {
+            for (File teacherFile : tmpDir.listFiles()) {
+            	String name = teacherFile.getName();
+            	SurnamesOfTeachers.add(name.substring(0, name.length() - 4));
+            }
+        }
+		return SurnamesOfTeachers;
+	}
+
     static public Vector<Student> init_old_Players() {
         Vector<Student> players = new Vector<>(30);
         File tmpDir = new File(file_players_name);
