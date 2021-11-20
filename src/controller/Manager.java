@@ -1,15 +1,9 @@
 package controller;
-import model.*;
-import view.*;
-
-import java.util.AbstractCollection;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Vector;
 
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
+import model.Student;
+import view.ConsoleView;
+import view.MenuView;
 
 public class Manager {
     private final StudentManager studentManager = new StudentManager();

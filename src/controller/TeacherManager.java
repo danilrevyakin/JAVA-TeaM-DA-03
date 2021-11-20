@@ -1,9 +1,8 @@
 package controller;
-import model.*;
 import java.util.ArrayList;
 
-
 import factory.TeacherFactory;
+import model.Teacher;
 
 public class TeacherManager {
 	

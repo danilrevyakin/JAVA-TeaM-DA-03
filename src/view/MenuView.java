@@ -1,11 +1,11 @@
 package view;
-import model.Menu;
-import model.Student;
+import static model.Menu.Items;
 
 import java.util.Scanner;
 import java.util.Vector;
 
-import static model.Menu.Items;
+import model.Menu;
+import model.Student;
 
 public class MenuView {
 	Menu menu = new Menu();

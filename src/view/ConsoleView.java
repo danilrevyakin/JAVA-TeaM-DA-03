@@ -1,9 +1,12 @@
 package view;
-import model.*;
-
 import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Vector;
+
+import model.Mission;
+import model.Question;
+import model.Student;
+import model.Teacher;
 
 public class ConsoleView implements Serializable {
     public boolean open(Mission mission){

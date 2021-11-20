@@ -4,7 +4,6 @@ import java.util.Random;
 
 import model.Question;
 import model.Student;
-import view.ConsoleView;
 
 public class StatckevichSkill implements Skill{
 	private Random rand = new Random();

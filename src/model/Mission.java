@@ -1,7 +1,5 @@
 package model;
 
-import controller.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;

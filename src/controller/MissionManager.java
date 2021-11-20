@@ -1,10 +1,13 @@
 package controller;
-import model.*;
-import view.*;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
+
+import model.Mission;
+import model.Person;
+import model.Question;
+import model.Student;
+import model.Teacher;
+import view.ConsoleView;
 
 public class MissionManager {
 

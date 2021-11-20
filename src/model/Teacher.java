@@ -2,16 +2,13 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
-import controller.FileManager;
 import view.ConsoleView;
 
 public abstract class Teacher extends Person implements Serializable{
     protected static final int DEFAULT_HP = 50; // Protected because I wanna class child be able to see this field 
-    private final ConsoleView consoleView = new ConsoleView();
+    protected final ConsoleView consoleView = new ConsoleView();
     private ArrayList<Question> questions;
-    private static final Random rand = new Random();
     protected Student student;
     protected Question lastQuestion;
     

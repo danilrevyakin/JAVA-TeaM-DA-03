@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import model.*;
+import model.Student;
 import view.ConsoleView;
 
 public class StudentManager {
