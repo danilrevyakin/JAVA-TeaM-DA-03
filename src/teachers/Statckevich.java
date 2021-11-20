@@ -18,6 +18,7 @@ public final class Statckevich extends Teacher{
 
 	@Override
 	protected void correctStudentAnswerSkill() {
+		
 		if(Probability.event_Probability(33))
 			skill.studentAnswerCorrect(super.student, super.lastQuestion);	
 	}

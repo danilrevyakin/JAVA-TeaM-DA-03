@@ -15,6 +15,7 @@ public class StatckevichSkill implements Skill{
 		int add_mana = Math.abs(rand.nextInt() % 11);
 		student.setHealth(student.getHealth() + add_health);
 		student.setMana(student.getMana() + add_mana);		
+		student.score += 25;
 	}
 
 	@Override
