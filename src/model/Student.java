@@ -12,7 +12,7 @@ public class Student extends Person implements Serializable {
 
     private int mana = 50;
     private int level = 1;
-    private int counter_evailable_missions = MissionManager.MAX_NUMBER_OF_MISSIONS;
+    private int counterAvailableMissions = MissionManager.MAX_NUMBER_OF_MISSIONS;
     public int score = 0;
     private final ConsoleView consoleView = new ConsoleView();
     public Vector<Mission> missions;
@@ -61,12 +61,12 @@ public class Student extends Person implements Serializable {
         }
     }
 
-    public boolean has_available_mission() {
-        if(counter_evailable_missions > 0) return true;
+    public boolean hasAvailableMission() {
+        if(counterAvailableMissions > 0) return true;
         return false;
     }
-    public void decrease_Counter_availableMissions(){
-    	--counter_evailable_missions;
+    public void decreaseCounterAvailableMissions(){
+    	--counterAvailableMissions;
     }
     public void setScore(int score) {
         this.score = score;
@@ -100,12 +100,12 @@ public class Student extends Person implements Serializable {
         return this.mana = mana;
     }
 
-    public int getCounter_evailable_missions() {
-        return counter_evailable_missions;
+    public int getCounterAvailableMissions() {
+        return counterAvailableMissions;
     }
 
-    public void setCounter_evailable_missions(int counter_evailable_missions) {
-        this.counter_evailable_missions = counter_evailable_missions;
+    public void setCounterAvailableMissions(int counterAvailableMissions) {
+        this.counterAvailableMissions = counterAvailableMissions;
     }
     
 

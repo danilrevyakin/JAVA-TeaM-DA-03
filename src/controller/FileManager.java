@@ -7,10 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 import model.Pair;
 import model.Person;
@@ -26,11 +23,11 @@ public class FileManager {
 			
 	private ArrayList<String> initNamesOfTeachers(){
 		String teacherName = null;
-		SurnamesOfTeachers = new ArrayList<String>(TeacherManager.NUMBER_OF_TEACHERS);
+		SurnamesOfTeachers = new ArrayList<>(TeacherManager.NUMBER_OF_TEACHERS);
         String file_questions = "src/data_files/questions/";
         File tmpDir = new File(file_questions);
         if (tmpDir.listFiles() != null) {
-            for (File teacherFile : tmpDir.listFiles()) {
+            for (File teacherFile : Objects.requireNonNull(tmpDir.listFiles())) {
             	String name = teacherFile.getName();
             	SurnamesOfTeachers.add(name.substring(0, name.length() - 4));
             }
@@ -38,11 +35,11 @@ public class FileManager {
 		return SurnamesOfTeachers;
 	}
 
-    static public Vector<Student> init_old_Players() {
+    static public Vector<Student> initOldPlayers() {
         Vector<Student> players = new Vector<>(30);
         File tmpDir = new File(file_players_name);
         if(!tmpDir.exists()){
-            if(!create_file(file_players_name)) System.out.println("Unsuccessful creature");
+            if(!createFile(file_players_name)) System.out.println("Unsuccessful creature");
             return null;
         }else if(tmpDir.length() <= 0) return null;
         try {
@@ -63,57 +60,57 @@ public class FileManager {
         return players;
     }
 
-    static public HashMap<String, ArrayList<Question>> initQuestions() {
-
-        String teacherName = null;
-        HashMap<String, ArrayList<Question>> teacherQuestions = new HashMap<>();
-        String file_questions = "src/data_files/questions/";
-        File tmpDir = new File(file_questions);
-        if (tmpDir.listFiles() != null) {
-            for (File questionsFile : tmpDir.listFiles()) {
-                ArrayList<Question> questionsAndAnswers = new ArrayList<>();
-            Scanner scanner = null;
-            try {
-                scanner = new Scanner(questionsFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            //scanner.useDelimiter("\n");
-            teacherName = scanner.nextLine();
-
-            while (true) {
-                assert scanner != null;
-                if (!scanner.hasNextLine()) break;
-                //scanner.useDelimiter("\n");
-
-                    String q = scanner.nextLine();
-                    String a = scanner.nextLine();
-
-                    String[] c = new String[4];
-                    c[0] = a;
-                    for (int i = 1; i < c.length; i++) {
-                        if(scanner.hasNextLine())
-                            c[i] = scanner.nextLine();
-                    }
-                    questionsAndAnswers.add(new Question(q, a, c));
-
-            }
-            teacherQuestions.put(teacherName, questionsAndAnswers);
-            scanner.close();
-        }
-    }
-        return teacherQuestions;
-    }
+//    static public HashMap<String, ArrayList<Question>> initQuestions() {
+//
+//        String teacherName;
+//        HashMap<String, ArrayList<Question>> teacherQuestions = new HashMap<>();
+//        String file_questions = "src/data_files/questions/";
+//        File tmpDir = new File(file_questions);
+//        if (tmpDir.listFiles() != null) {
+//            for (File questionsFile : Objects.requireNonNull(tmpDir.listFiles())) {
+//                ArrayList<Question> questionsAndAnswers = new ArrayList<>();
+//            Scanner scanner = null;
+//            try {
+//                scanner = new Scanner(questionsFile);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//
+//            //scanner.useDelimiter("\n");
+//            teacherName = scanner.nextLine();
+//
+//            while (true) {
+//                assert scanner != null;
+//                if (!scanner.hasNextLine()) break;
+//                //scanner.useDelimiter("\n");
+//
+//                    String q = scanner.nextLine();
+//                    String a = scanner.nextLine();
+//
+//                    String[] c = new String[4];
+//                    c[0] = a;
+//                    for (int i = 1; i < c.length; i++) {
+//                        if(scanner.hasNextLine())
+//                            c[i] = scanner.nextLine();
+//                    }
+//                    questionsAndAnswers.add(new Question(q, a, c));
+//
+//            }
+//            teacherQuestions.put(teacherName, questionsAndAnswers);
+//            scanner.close();
+//        }
+//    }
+//        return teacherQuestions;
+//    }
     
-    static public Pair<Pair<String, Boolean>, ArrayList<Question>> readTeacherInfo(String filename) {	
+    static public Pair<Pair<String, Boolean>, ArrayList<Question>> readTeacherInfo(String filename) {
     	Pair<String, Boolean> personInfo = new Pair();
     	ArrayList<Question> questions = new ArrayList<>();
-    	String name = "";
-    	String str_sex = "";
+    	String name;
+    	String str_sex;
     	
         Scanner scanner = null;
-        File questionsFile = new File(file_path_teacher + filename);
+        File questionsFile = new File(file_path_teacher + filename + ".dat");
         try {
             scanner = new Scanner(questionsFile);
         } catch (FileNotFoundException e) {
@@ -121,11 +118,12 @@ public class FileManager {
         }
 
         //scanner.useDelimiter("\n");
+        assert scanner != null;
         name = scanner.nextLine();
         str_sex = scanner.nextLine();
         personInfo.setFirst(name);
         
-        if(str_sex == MALE)
+        if(str_sex.equals(MALE))
         	personInfo.setSecond(Person.MALE);
         else
         	personInfo.setSecond(Person.FEMALE);
@@ -139,9 +137,9 @@ public class FileManager {
     }
     
     private static Question readQuestion(Scanner scanner) {
-    	String q = "";
-    	String a = "";
-    	String[] c = new String[4];;
+    	String q;
+    	String a;
+    	String[] c = new String[4];
     	assert scanner != null;
         //scanner.useDelimiter("\n");
         q = scanner.nextLine();
@@ -153,7 +151,7 @@ public class FileManager {
         }   
     	return new Question(q, a, c);
     }
-    static private boolean create_file(String name){
+    static private boolean createFile(String name){
         File file = new File(name);
         boolean result = false;
         try {

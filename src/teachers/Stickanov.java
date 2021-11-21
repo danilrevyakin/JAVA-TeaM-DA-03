@@ -1,5 +1,6 @@
 package teachers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.Probability;
@@ -8,9 +9,9 @@ import model.Teacher;
 import model.skill.Skill;
 import model.skill.StickanovSkill;
 
-public final class Stickanov extends Teacher{
+public final class Stickanov extends Teacher implements Serializable {
 	
-	private Skill skill = new StickanovSkill();
+	private final Skill skill = new StickanovSkill();
 	
 	public Stickanov(String name, boolean sex, ArrayList<Question> questions) {
 		super(name, sex, questions);
@@ -19,7 +20,7 @@ public final class Stickanov extends Teacher{
 
 	@Override
 	protected void correctStudentAnswerSkill() {
-		if(Probability.event_Probability(50))
+		if(Probability.eventProbability(50))
 			skill.studentAnswerCorrect(student, lastQuestion);
 	}
 

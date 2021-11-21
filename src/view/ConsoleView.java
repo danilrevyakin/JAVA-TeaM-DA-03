@@ -70,7 +70,7 @@ public class ConsoleView implements Serializable {
     	int size_missions = missions.size();
     	System.out.println();
     	for(Mission mission: missions) {
-    		if(mission.mission_available()) {
+    		if(mission.missionAvailable()) {
     			System.out.println("#" + mission.getMissionNumber() + ".\t" + mission.getTeacher().getName() + "\tHealth: " + + mission.getTeacher().getHealth());
     		}
     	}

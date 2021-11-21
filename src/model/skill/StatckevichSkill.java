@@ -1,11 +1,12 @@
 package model.skill;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import model.Question;
 import model.Student;
 
-public class StatckevichSkill implements Skill{
+public class StatckevichSkill implements Skill, Serializable {
 	private Random rand = new Random();
 	
 	@Override

@@ -1,0 +1,17 @@
+V. Statckevich
+male
+(0 /\ a) XOR (1 \/ 0) =:
+1
+0
+a
+a \/ 1
+Where is distributive property:
+x*(y+z) = xy+xz
+x*1 = x
+x+1 = 1
+(x+y)+z = (z+x)+y
+Combinatorial formula for placing n elements:
+n!/k!(n-k)!
+n!
+k!-n!
+n^k

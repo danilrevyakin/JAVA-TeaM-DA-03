@@ -1,5 +1,6 @@
 package teachers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.Probability;
@@ -8,7 +9,7 @@ import model.Teacher;
 import model.skill.Skill;
 import model.skill.TkachukSkill;
 
-public final class Tkachuk extends Teacher{
+public final class Tkachuk extends Teacher implements Serializable {
 	
 	private Skill skill = new TkachukSkill();
 	
@@ -19,13 +20,13 @@ public final class Tkachuk extends Teacher{
 
 	@Override
 	protected void correctStudentAnswerSkill() {
-		if(Probability.event_Probability(80))
+		if(Probability.eventProbability(80))
 			skill.studentAnswerCorrect(student, lastQuestion);
 	}
 
 	@Override
 	protected void wrongStudentAnswerSkill() {
-		if(Probability.event_Probability(33)) 
+		if(Probability.eventProbability(33))
 			skill.studentAnswerFalse(student, lastQuestion);
 	}
 	

@@ -1,6 +1,5 @@
 package controller;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Vector;
 
 import model.Mission;
@@ -42,7 +41,7 @@ public class MissionManager {
                 teacher.setLastQuestion(question);
                 studentAnswer = studentManager.giveAnswer();
 
-                if (studentAnswer.toLowerCase().equals(question.getAnswer().toLowerCase())) {
+                if (studentAnswer.equalsIgnoreCase(question.getAnswer())) {
                     //Polymorphism
                     for (Person player : mission.getPeople()) {
                         player.correctStudentAnswer();
@@ -68,19 +67,19 @@ public class MissionManager {
     private void setResultMission(Student student, Mission mission) {
     	if (mission.getTeacher().getHealth() <= 0) {
             mission.setCompleted();
-            student.decrease_Counter_availableMissions();
+            student.decreaseCounterAvailableMissions();
         }
         else if (mission.getTeacher().getHealth() > 0) {
             this.consoleView.YouAlmostWon();
         }
         else if (student.getHealth() < 0) {
             mission.setFailed();
-            student.decrease_Counter_availableMissions();
+            student.decreaseCounterAvailableMissions();
         }
     }
     
     private void startMission(Student student, Mission mission){
-        if(!mission.mission_available()){
+        if(!mission.missionAvailable()){
             consoleView.missionCompleted();
             return;
         }
@@ -94,7 +93,7 @@ public class MissionManager {
         int missionNumber = -100;
         final int EXIT = 0;
         Mission mission;
-        if(!student.has_available_mission()) {
+        if(!student.hasAvailableMission()) {
         	consoleView.has_no_mission();
         	return;
         }
@@ -107,7 +106,7 @@ public class MissionManager {
                 }
             }
         	mission = student.missions.get(missionNumber - 1);
-        }while(!mission.mission_available());
+        }while(!mission.missionAvailable());
         
         startMission(student, mission);
     }

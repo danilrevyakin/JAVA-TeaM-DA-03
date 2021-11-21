@@ -3,7 +3,9 @@ package model.skill;
 import model.Question;
 import model.Student;
 
-public final class TkachukSkill implements Skill{
+import java.io.Serializable;
+
+public final class TkachukSkill implements Skill, Serializable {
 
 	@Override
 	public void studentAnswerCorrect(Student student, Question question) {

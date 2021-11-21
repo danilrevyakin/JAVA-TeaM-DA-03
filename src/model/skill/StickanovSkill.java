@@ -4,7 +4,9 @@ import controller.Probability;
 import model.Question;
 import model.Student;
 
-public class StickanovSkill implements Skill{
+import java.io.Serializable;
+
+public class StickanovSkill implements Skill, Serializable {
 
 	@Override
 	public void studentAnswerCorrect(Student student, Question question) {

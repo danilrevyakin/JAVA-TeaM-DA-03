@@ -1,0 +1,17 @@
+A. Verbitskiy
+male
+cond(A) = ?:
+||A|| * ||A^(-1)||
+||A||^2
+Inf
+A^(-1)
+Complexity of the Gauss algorithm:
+O(n^3)
+O(n^2)
+O(n)
+O(n!)
+Algorithm for calculating the eigenvalues of a matrix:
+Householder's
+Eratosthenes's
+Gauss`s
+Weierstrass's

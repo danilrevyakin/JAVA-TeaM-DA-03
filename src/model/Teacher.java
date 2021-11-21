@@ -20,7 +20,7 @@ public abstract class Teacher extends Person implements Serializable{
         return questions;
     }
 
-    public int getNumber_of_Question() {
+    public int getNumberOfQuestion() {
     	return questions.size();
     }
     public void setStudent(Student student) {
@@ -31,7 +31,7 @@ public abstract class Teacher extends Person implements Serializable{
     }
     public void correctStudentAnswer(){
         setHealth(getHealth() - 25);
-
+        correctStudentAnswerSkill();
         if(getHealth() <= 0){
             consoleView.teacherDefeat();
         }
@@ -41,6 +41,7 @@ public abstract class Teacher extends Person implements Serializable{
     protected abstract void wrongStudentAnswerSkill();
     
     public void wrongStudentAnswer(){
+        wrongStudentAnswerSkill();
         setHealth(getHealth() + 5);
     }
 }

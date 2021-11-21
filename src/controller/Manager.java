@@ -22,7 +22,7 @@ public class Manager {
     private int item = -100;
     
     public Manager() {
-        PlayersList = FileManager.init_old_Players();
+        PlayersList = FileManager.initOldPlayers();
         if(PlayersList == null){
             PlayersList = new Vector<>(5);
         }
@@ -36,9 +36,9 @@ public class Manager {
         }
     }
     
-    private void select_createdPlayer() {
+    private void selectCreatedPlayer() {
     	final int BACK_TO_MAIN_MENU = 0;
-    	if(!check_existingPlayers()){
+    	if(!checkExistingPlayers()){
             menuView.createAccFirstWarning();
             inGame = false;
             return;
@@ -49,12 +49,12 @@ public class Manager {
             int choice = menuView.enterAccount(PlayersList);
             if (choice != BACK_TO_MAIN_MENU) {
             	player = PlayersList.elementAt(choice - 1);
-                Player_is_selected();
+                playerIsSelected();
             }
         }
     }
    
-    private boolean check_existingPlayers() {
+    private boolean checkExistingPlayers() {
     	if(PlayersList == null) return false;
     	if(PlayersList.size() == 0) return false;
     	return true;
@@ -65,7 +65,7 @@ public class Manager {
         missionManager.generateMissions(player);
         inGame = true;
         PlayersList.add(player);
-        Player_is_selected();
+        playerIsSelected();
     }
     
     private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 My score, 4 Exit the program
@@ -75,14 +75,14 @@ public class Manager {
         	newPlayer();
         }
         else if(item == ITEM_SELECT_CREATED_PLAYER){
-        	select_createdPlayer();
+        	selectCreatedPlayer();
         }
         else if(item == ITEM_EXIT_THE_PROGRAM ){
-        	exit_theProgram();
+        	exitTheProgram();
         }
     }
     
-    private void Player_is_selected() {
+    private void playerIsSelected() {
     	inGame = true;
         consoleView.getPersonalInfo(player); 
         missionManager.openMission(player);
@@ -91,7 +91,7 @@ public class Manager {
         }
     }
     
-    private void exit_theProgram() {
+    private void exitTheProgram() {
     	inMenu = false;
     	this.studentManager.sortStudents(PlayersList);
         FileManager.saveGame(PlayersList);

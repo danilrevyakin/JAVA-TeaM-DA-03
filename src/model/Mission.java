@@ -23,7 +23,7 @@ public class Mission implements Serializable{
         stateMission = MISSION_UNSTARTED;
     }
     
-    public boolean mission_available() {
+    public boolean missionAvailable() {
     	if(!Objects.equals(stateMission, MISSION_COMPLETED) && !Objects.equals(stateMission, MISSION_FAILED)) return true;
     	return false;
     }
