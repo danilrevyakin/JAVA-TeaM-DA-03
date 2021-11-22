@@ -15,14 +15,14 @@ import model.Question;
 import model.Student;
 
 public class FileManager {
-	static private final String filePlayersName = "src/data_files/list_of_players.dat";
-	static private final String filePathTeacher = "src/data_files/questions/";
+	static private final String filePlayersName = "src/dataFiles/listOfPlayers.dat";
+	static private final String filePathTeacher = "src/dataFiles/questions/";
 	static public final String MALE = "male";
 	static public final String FEMALE = "female";
 			
 	public ArrayList<String> initSurnamesOfTeachers(){
 		ArrayList<String> SurnamesOfTeachers = new ArrayList<>(TeacherManager.NUMBER_OF_TEACHERS);
-        String fileQuestions = "src/data_files/questions/";
+        String fileQuestions = "src/dataFiles/questions/";
         File tmpDir = new File(fileQuestions);
         if (tmpDir.listFiles() != null) {
             for (File teacherFile : Objects.requireNonNull(tmpDir.listFiles())) {
