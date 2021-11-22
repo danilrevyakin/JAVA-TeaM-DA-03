@@ -9,49 +9,49 @@ public class Mission implements Serializable{
     private final int playersNumber = 2;
     private ArrayList<Person> people = new ArrayList<>(playersNumber);
     private Teacher teacher;
-    public static final String MISSION_COMPLETED = "c";
-    public static final String MISSION_FAILED = "f";
-    public static final String MISSION_IN_PROGRESS = "p";
-    public static final String MISSION_UNSTARTED = "n";
-    private String stateMission;
+    private State stateMission;
+    
+    static public enum State{
+    	MISSION_COMPLETED, MISSION_FAILED, MISSION_IN_PROGRESS, MISSION_UNSTARTED;
+    }
     
     public Mission(Student student, Teacher teacher, int missionNumber){
         this.missionNumber = missionNumber;
         this.teacher = teacher;
         people.add(student);
         people.add(teacher);
-        stateMission = MISSION_UNSTARTED;
+        stateMission = State.MISSION_UNSTARTED;
     }
     
     public boolean missionAvailable() {
-    	if(!Objects.equals(stateMission, MISSION_COMPLETED) && !Objects.equals(stateMission, MISSION_FAILED)) return true;
+    	if(!Objects.equals(stateMission, State.MISSION_COMPLETED) && !Objects.equals(stateMission, State.MISSION_FAILED)) return true;
     	return false;
     }
     
     //getters & setters
     public String getNameState() {
-    	if(this.stateMission.equals(MISSION_COMPLETED))
+    	if(this.stateMission.equals(State.MISSION_COMPLETED))
     		return "COMPLETED";
-    	else if(this.stateMission.equals(MISSION_FAILED)) {
+    	else if(this.stateMission.equals(State.MISSION_FAILED)) {
     		return "FAILED";
     	}
-    	else if(this.stateMission.equals(MISSION_IN_PROGRESS)) {
+    	else if(this.stateMission.equals(State.MISSION_IN_PROGRESS)) {
     		return "IN PROGRESS";
     	}
     	return "UNSTARTED";
     		
     }
-    public String getState() {
+    public State getState() {
     	return this.stateMission;
     }
     public void setCompleted() {
-    	stateMission = MISSION_COMPLETED;
+    	stateMission = State.MISSION_COMPLETED;
     }
     public void setInProgress() {
-    	stateMission = MISSION_IN_PROGRESS;
+    	stateMission = State.MISSION_IN_PROGRESS;
     }
     public void setFailed() {
-		stateMission = MISSION_FAILED;
+		stateMission = State.MISSION_FAILED;
 	}
     public int getMissionNumber(){
         return missionNumber;
