@@ -34,35 +34,36 @@ public class MissionManager{
         student.setCurrentMission(mission);
     	String studentAnswer;
         ArrayList<Question> questions = mission.giveQuestion();
-        Teacher teacher = mission.getTeacher();
-        teacher.setStudent(student);
+        mission.getTeacher().setStudent(student);
         for(Question question : questions) {
             if (question != null && mission.getTeacher().getHealth() > 0
                     && student.getHealth() > 0) {
-                consoleView.quiz(question);
-                teacher.setLastQuestion(question);
-                studentAnswer = studentManager.giveAnswer();
-
-                if (studentAnswer.equalsIgnoreCase(question.getAnswer())) {
-                    //Polymorphism
-                    if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
-                    else if (mission.getTeacher().getHealth() <= 0) {
-                        return;
-                    }
-                    for (Person player : mission.getPeople()) {
-                        player.correctStudentAnswer();
-                    }
-
-                } 
-                else {
-                    //Polymorphism
-                    for (Person player : mission.getPeople()) {
-                        player.wrongStudentAnswer();
-                    }
-                }
+            	studentAnswer = studentDoTask(mission, question);
+                if (studentAnswer.equalsIgnoreCase(question.getAnswer()))
+                	correctAnswer(mission);
+                else wrongAnswer(mission);
             }
             else
             	break;
+        }
+    }
+    
+    private String studentDoTask(Mission mission, Question question) {
+    	consoleView.quiz(question);
+        mission.getTeacher().setLastQuestion(question);
+        return studentManager.giveAnswer();
+    }
+    
+    private void wrongAnswer(Mission mission) {
+    	for (Person player : mission.getPeople()) {
+            player.wrongStudentAnswer();
+        }
+    }
+    
+    private void correctAnswer(Mission mission) {
+    	if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
+        for (Person player : mission.getPeople()) {
+            player.correctStudentAnswer();
         }
     }
     

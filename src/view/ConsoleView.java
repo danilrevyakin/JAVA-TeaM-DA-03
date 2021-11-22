@@ -68,7 +68,7 @@ public class ConsoleView implements Serializable {
         System.out.println();
         for (Mission mission : missions) {
             if (mission.missionAvailable()) {
-                System.out.println("#" + mission.getMissionNumber() + ". " + mission.getTeacher().getName() + "\t\tHealth: " + +mission.getTeacher().getHealth());
+                System.out.println("#" + mission.getMissionNumber() + ". " + mission.getTeacher().getName());
             }
         }
         System.out.print("#0.\tExit");

@@ -68,7 +68,7 @@ public class Manager {
         playerIsSelected();
     }
     
-    private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 My score, 4 Exit the program
+    private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 Exit the program
         menuView.printMainMenu();
         item = menuView.getMenuItem();
         if(item == ITEM_NEW_PLAYER){

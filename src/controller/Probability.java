@@ -12,8 +12,4 @@ public class Probability {
 		else
 			return false;
 	}
-	
-//	static public Random getRand() {
-//		return rand;
-//	}
 }
