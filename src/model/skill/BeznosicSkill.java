@@ -11,7 +11,7 @@ import java.util.Random;
 public class BeznosicSkill implements Skill, Serializable {
 
     private final ConsoleView consoleView = new ConsoleView();
-    private final MissionManager missionManager = new MissionManager();
+    private static final MissionManager missionManager = new MissionManager();
 
     private final String message = "Do you want to correct the grade? ";
     private final String correctAnsw = "Ok, then start from the beginning!!";

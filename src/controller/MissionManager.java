@@ -1,4 +1,5 @@
 package controller;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -9,7 +10,7 @@ import model.Student;
 import model.Teacher;
 import view.ConsoleView;
 
-public class MissionManager {
+public class MissionManager{
 
     private final ConsoleView consoleView = new ConsoleView();
     private final TeacherManager teacherManager = new TeacherManager();
