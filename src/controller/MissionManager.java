@@ -86,21 +86,21 @@ public class MissionManager{
             consoleView.missionCompleted();
             return;
         }
-    	mission.setInProgress();
     	consoleView.open(mission);
         playMission(student, mission);
         setResultMission(student, mission);
     }
 
     public void openMission(Student student){
-        int missionNumber = -100;
+    	final int unAvailableMission = -100;
+        int missionNumber = unAvailableMission;
         final int EXIT = 0;
         Mission mission;
         if(!student.hasAvailableMission()) {
         	consoleView.hasNoMission();
         	return;
         }
-        do {
+        for(;;) {
         	while (missionNumber < 0 || missionNumber > student.missions.size()){
                 consoleView.choosingMission(student.missions);
                 missionNumber = consoleView.missinNumScanner(missionNumber);
@@ -109,8 +109,10 @@ public class MissionManager{
                 }
             }
         	mission = student.missions.get(missionNumber - 1);
-        }while(!mission.missionAvailable());
-        
+        	if(mission.missionAvailable())
+        		break;
+        	else missionNumber = unAvailableMission;
+        }     
         startMission(student, mission);
     }
 }

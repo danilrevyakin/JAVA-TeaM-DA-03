@@ -12,7 +12,7 @@ public class Mission implements Serializable{
     private State stateMission;
     
     static public enum State{
-    	MISSION_COMPLETED, MISSION_FAILED, MISSION_IN_PROGRESS, MISSION_UNSTARTED;
+    	MISSION_COMPLETED, MISSION_FAILED, MISSION_UNCOMPLETED;
     }
     
     public Mission(Student student, Teacher teacher, int missionNumber){
@@ -20,7 +20,7 @@ public class Mission implements Serializable{
         this.teacher = teacher;
         people.add(student);
         people.add(teacher);
-        stateMission = State.MISSION_UNSTARTED;
+        stateMission = State.MISSION_UNCOMPLETED;
     }
     
     public boolean missionAvailable() {
@@ -28,27 +28,8 @@ public class Mission implements Serializable{
     	return false;
     }
     
-    //getters & setters
-    public String getNameState() {
-    	if(this.stateMission.equals(State.MISSION_COMPLETED))
-    		return "COMPLETED";
-    	else if(this.stateMission.equals(State.MISSION_FAILED)) {
-    		return "FAILED";
-    	}
-    	else if(this.stateMission.equals(State.MISSION_IN_PROGRESS)) {
-    		return "IN PROGRESS";
-    	}
-    	return "UNSTARTED";
-    		
-    }
-    public State getState() {
-    	return this.stateMission;
-    }
     public void setCompleted() {
     	stateMission = State.MISSION_COMPLETED;
-    }
-    public void setInProgress() {
-    	stateMission = State.MISSION_IN_PROGRESS;
     }
     public void setFailed() {
 		stateMission = State.MISSION_FAILED;
