@@ -29,7 +29,8 @@ public class MissionManager {
         }
     }
 
-    private void playMission(Student student, Mission mission) {
+    public void playMission(Student student, Mission mission) {
+        student.setCurrentMission(mission);
     	String studentAnswer;
         ArrayList<Question> questions = mission.giveQuestion();
         Teacher teacher = mission.getTeacher();
@@ -43,14 +44,14 @@ public class MissionManager {
 
                 if (studentAnswer.equalsIgnoreCase(question.getAnswer())) {
                     //Polymorphism
-                    for (Person player : mission.getPeople()) {
-                        player.correctStudentAnswer();
-                    }
-
                     if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
                     else if (mission.getTeacher().getHealth() <= 0) {
                         return;
                     }
+                    for (Person player : mission.getPeople()) {
+                        player.correctStudentAnswer();
+                    }
+
                 } 
                 else {
                     //Polymorphism

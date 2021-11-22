@@ -10,9 +10,9 @@ import model.skill.Skill;
 import model.skill.StatckevichSkill;
 
 public final class Statckevich extends Teacher implements Serializable {
-	
+	private final int correctSkillProbability = 33;
+	private final int wrongSkillProbability = 50;
 	Skill skill = new StatckevichSkill();
-	
 	public Statckevich(String name, boolean sex, ArrayList<Question> questions) {
 		super(name, sex, questions);
 	}
@@ -20,13 +20,13 @@ public final class Statckevich extends Teacher implements Serializable {
 	@Override
 	protected void correctStudentAnswerSkill() {
 		
-		if(Probability.eventProbability(33))
+		if(Probability.eventProbability(correctSkillProbability))
 			skill.studentAnswerCorrect(super.student, super.lastQuestion);	
 	}
 
 	@Override
 	protected void wrongStudentAnswerSkill() {
-		if(Probability.eventProbability(50))
+		if(Probability.eventProbability(wrongSkillProbability))
 			skill.studentAnswerFalse(student, lastQuestion);
 	}
 

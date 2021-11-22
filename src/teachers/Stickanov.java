@@ -10,9 +10,9 @@ import model.skill.Skill;
 import model.skill.StickanovSkill;
 
 public final class Stickanov extends Teacher implements Serializable {
-	
+	private final int skillProbability = 50;
+
 	private final Skill skill = new StickanovSkill();
-	
 	public Stickanov(String name, boolean sex, ArrayList<Question> questions) {
 		super(name, sex, questions);
 		// TODO Auto-generated constructor stub
@@ -20,13 +20,14 @@ public final class Stickanov extends Teacher implements Serializable {
 
 	@Override
 	protected void correctStudentAnswerSkill() {
-		if(Probability.eventProbability(50))
+		if(Probability.eventProbability(skillProbability))
 			skill.studentAnswerCorrect(student, lastQuestion);
 	}
 
 	@Override
 	protected void wrongStudentAnswerSkill() {
-		skill.studentAnswerFalse(student, lastQuestion);
+		if(Probability.eventProbability(skillProbability))
+			skill.studentAnswerFalse(student, lastQuestion);
 	}
 	
 

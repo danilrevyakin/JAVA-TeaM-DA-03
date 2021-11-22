@@ -11,7 +11,8 @@ import model.skill.RomanovSkill;
 import model.skill.Skill;
 
 public final class Romanov extends Teacher implements Serializable {
-
+	private final int correctSkillProbability = 50;
+	private final int wrongSkillProbability = 75;
 	Skill skill = new RomanovSkill();
 	public Romanov(String name, boolean sex, ArrayList<Question> questions) {
 		super(name, sex, questions);
@@ -21,13 +22,13 @@ public final class Romanov extends Teacher implements Serializable {
 	@Override
 	protected void correctStudentAnswerSkill() {
 
-		if(Probability.eventProbability(50))
+		if(Probability.eventProbability(correctSkillProbability))
 			skill.studentAnswerCorrect(super.student, super.lastQuestion);
 	}
 
 	@Override
 	protected void wrongStudentAnswerSkill() {
-		if(Probability.eventProbability(75))
+		if(Probability.eventProbability(wrongSkillProbability))
 			skill.studentAnswerFalse(student, lastQuestion);
 	}
 

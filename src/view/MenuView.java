@@ -71,7 +71,7 @@ public class MenuView {
         if(player == null){
             System.out.println("\nPlease, select your account or create new");
         }else {
-            System.out.println("Your score is " + player.score);
+            System.out.println("Your score is " + player.getScore());
         }
     }
 }

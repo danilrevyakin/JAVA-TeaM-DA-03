@@ -12,10 +12,12 @@ public class Student extends Person implements Serializable {
 
     private int mana = 50;
     private int level = 1;
+    private Mission currentMission;
     private int counterAvailableMissions = MissionManager.MAX_NUMBER_OF_MISSIONS;
-    public int score = 0;
+    private int score = 0;
     private final ConsoleView consoleView = new ConsoleView();
     public Vector<Mission> missions;
+
     
     
     public Student(String name, boolean sex){
@@ -108,5 +110,7 @@ public class Student extends Person implements Serializable {
         this.counterAvailableMissions = counterAvailableMissions;
     }
     
+    public Mission getCurrentMission(){return currentMission;}
 
+    public void setCurrentMission(Mission currentMission){this.currentMission = currentMission;}
 }
