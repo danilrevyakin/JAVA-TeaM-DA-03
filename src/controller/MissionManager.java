@@ -86,7 +86,7 @@ public class MissionManager{
             consoleView.missionCompleted();
             return;
         }
-    	mission.set_in_Progress();
+    	mission.setInProgress();
     	consoleView.open(mission);
         playMission(student, mission);
         setResultMission(student, mission);
@@ -97,7 +97,7 @@ public class MissionManager{
         final int EXIT = 0;
         Mission mission;
         if(!student.hasAvailableMission()) {
-        	consoleView.has_no_mission();
+        	consoleView.hasNoMission();
         	return;
         }
         do {

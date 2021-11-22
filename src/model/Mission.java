@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Mission implements Serializable{
     private int missionNumber;
     private final int playersNumber = 2;
-    private ArrayList<Person> People = new ArrayList<>(playersNumber);
+    private ArrayList<Person> people = new ArrayList<>(playersNumber);
     private Teacher teacher;
     public static final String MISSION_COMPLETED = "c";
     public static final String MISSION_FAILED = "f";
@@ -18,8 +18,8 @@ public class Mission implements Serializable{
     public Mission(Student student, Teacher teacher, int missionNumber){
         this.missionNumber = missionNumber;
         this.teacher = teacher;
-        People.add(student);
-        People.add(teacher);
+        people.add(student);
+        people.add(teacher);
         stateMission = MISSION_UNSTARTED;
     }
     
@@ -47,7 +47,7 @@ public class Mission implements Serializable{
     public void setCompleted() {
     	stateMission = MISSION_COMPLETED;
     }
-    public void set_in_Progress() {
+    public void setInProgress() {
     	stateMission = MISSION_IN_PROGRESS;
     }
     public void setFailed() {
@@ -62,7 +62,7 @@ public class Mission implements Serializable{
     public Teacher getTeacher() {
     	return this.teacher;
     }
-    public ArrayList<Person> getPeople(){return People;}
+    public ArrayList<Person> getPeople(){return people;}
 
 	
 }

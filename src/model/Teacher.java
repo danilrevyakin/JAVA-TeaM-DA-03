@@ -11,6 +11,7 @@ public abstract class Teacher extends Person implements Serializable{
     private ArrayList<Question> questions;
     protected Student student;
     protected Question lastQuestion;
+    
     public Teacher(String name, boolean sex, ArrayList<Question> questions){
     	super(name, sex, DEFAULT_HP);
         this.questions = questions;
@@ -20,9 +21,6 @@ public abstract class Teacher extends Person implements Serializable{
         return questions;
     }
 
-//    public int getNumberOfQuestion() {
-//    	return questions.size();
-//    }
     public void setStudent(Student student) {
     	this.student = student;
     }

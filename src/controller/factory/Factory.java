@@ -28,14 +28,14 @@ public final class Factory implements TeacherFactory {
 //	}
 
 	@Override
-	public Teacher getTeacher(String teacherName) {
+	public Teacher getTeacher(String teacherSurname) {
 		Teacher toReturn;
-		Pair<Pair<String, Boolean>, ArrayList<Question>> teacherInfo = readTeacherInfo(teacherName);
+		Pair<Pair<String, Boolean>, ArrayList<Question>> teacherInfo = readTeacherInfo(teacherSurname);
 		String surname = teacherInfo.getFirst().getFirst();
 		Boolean sex = teacherInfo.getFirst().getSecond();
 		ArrayList<Question> questions = teacherInfo.getSecond();
 
-		toReturn = switch (teacherName) {
+		toReturn = switch (teacherSurname) {
 			case "Artuhov" -> new Artuhov(surname, sex, questions);
 			case "Beznosic" -> new Beznosic(surname, sex, questions);
 			case "Bokhonov" -> new Bokhonov(surname, sex, questions);
@@ -46,7 +46,7 @@ public final class Factory implements TeacherFactory {
 			case "Tkachuk" -> new Tkachuk(surname, sex, questions);
 			case "Verbitskiy" -> new Verbitskiy(surname, sex, questions);
 			case "Snizhko" -> new Snizhko(surname, sex, questions);
-			default -> throw new IllegalArgumentException("Wrong teacher surname: " + teacherName);
+			default -> throw new IllegalArgumentException("Wrong teacher surname: " + teacherSurname);
 		};
 		return toReturn;
 //		Class teacherClass = teachers.get(teacherName);

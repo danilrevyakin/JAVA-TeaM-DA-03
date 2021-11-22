@@ -18,6 +18,7 @@ public class StudentManager  {
     public String giveAnswer(){
         return consoleView.giveAnswer();
     }
+    
     public void sortStudents(List<Student> Students) {
     	Collections.sort(Students, new Comparator<Student>() {
     	    @Override

@@ -51,7 +51,7 @@ public class ConsoleView implements Serializable {
         return sex;
     }
 
-    public void has_no_mission() {
+    public void hasNoMission() {
         System.out.println("Sorry, but you has no available mission");
     }
 

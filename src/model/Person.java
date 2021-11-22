@@ -30,4 +30,6 @@ public abstract class Person implements Serializable {
     public void setName(String name){this.name = name;}
 
     public void setSex(boolean sex){this.sex = sex;}
+    
+    public boolean getSex() {return this.sex;}
 }
