@@ -61,10 +61,10 @@ public class MissionManager{
     }
     
     private void correctAnswer(Mission mission) {
-    	if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
         for (Person player : mission.getPeople()) {
             player.correctStudentAnswer();
         }
+        if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
     }
     
     private void setResultMission(Student student, Mission mission) {
