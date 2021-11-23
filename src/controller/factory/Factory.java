@@ -5,57 +5,38 @@ import model.Question;
 import model.Teacher;
 import teachers.*;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import static controller.FileManager.readTeacherInfo;
 
 
 public final class Factory implements TeacherFactory {
 
-//	private final Map<String, Class> teachers = new HashMap<>();
+	private final Map<String, Class> teachers = new HashMap<>();
 
-//	public Factory() {
-//		teachers.put(Artuhov.class.getName(), Artuhov.class);
-//		teachers.put(Bokhonov.class.getName(), Bokhonov.class);
-//		teachers.put(High.class.getName(), High.class);
-//		teachers.put(Beznosic.class.getName(), Beznosic.class);
-//		teachers.put(Verbitskiy.class.getName(), Verbitskiy.class);
-//		teachers.put(Romanov.class.getName(), Romanov.class);
-//		teachers.put(Statckevich.class.getName(), Statckevich.class);
-//		teachers.put(Stickanov.class.getName(), Stickanov.class);
-//		teachers.put(Tkachuk.class.getName(), Tkachuk.class);
-//		teachers.put(Snizhko.class.getName(),Snizhko.class);
-//	}
+	public Factory() {
+		File nf = new File("src\\teachers");
+		for (File teacherFile : Objects.requireNonNull(nf.listFiles())) {
+			teachers.put(teacherFile.getName(), teacherFile.getClass());
+		}
+	}
 
 	@Override
-	public Teacher getTeacher(String teacherSurname) {
-		Teacher toReturn;
-		Pair<Pair<String, Boolean>, ArrayList<Question>> teacherInfo = readTeacherInfo(teacherSurname);
+	public Teacher getTeacher(String className) throws NoSuchMethodException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
+		Pair<Pair<String, Boolean>, ArrayList<Question>> teacherInfo = readTeacherInfo(className);
 		String surname = teacherInfo.getFirst().getFirst();
 		Boolean sex = teacherInfo.getFirst().getSecond();
 		ArrayList<Question> questions = teacherInfo.getSecond();
 
-		toReturn = switch (teacherSurname) {
-			case "Artuhov" -> new Artuhov(surname, sex, questions);
-			case "Beznosic" -> new Beznosic(surname, sex, questions);
-			case "Bokhonov" -> new Bokhonov(surname, sex, questions);
-			case "High" -> new High(surname, sex, questions);
-			case "Romanov" -> new Romanov(surname, sex, questions);
-			case "Statckevich" -> new Statckevich(surname, sex, questions);
-			case "Stickanov" -> new Stickanov(surname, sex, questions);
-			case "Tkachuk" -> new Tkachuk(surname, sex, questions);
-			case "Verbitskiy" -> new Verbitskiy(surname, sex, questions);
-			case "Snizhko" -> new Snizhko(surname, sex, questions);
-			default -> throw new IllegalArgumentException("Wrong teacher surname: " + teacherSurname);
-		};
-		return toReturn;
-//		Class teacherClass = teachers.get(teacherName);
-//		Object obj = null;
-//		try {
-//			obj = teacherClass.getDeclaredConstructor().newInstance();
-//		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-//			e.printStackTrace();
-//		}
-//		return (Teacher) obj;
+		Class myClass = Class.forName("teachers."+className);
+		Constructor constrt = myClass.getConstructor(String.class, boolean.class, ArrayList.class);
+
+		return (Teacher) constrt.newInstance(surname, sex, questions);
 	}
 }
