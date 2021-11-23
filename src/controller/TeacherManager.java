@@ -1,5 +1,4 @@
 package controller;
-import java.io.Serializable;
 import java.util.ArrayList;
 import controller.factory.TeacherFactory;
 import model.Teacher;

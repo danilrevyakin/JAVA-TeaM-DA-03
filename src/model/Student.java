@@ -53,14 +53,14 @@ public class Student extends Person implements Serializable {
         if(getHealth() <= 0){
             consoleView.studentDefeat();
         }
-
+        if(getHealth() > 0){
+            consoleView.tryAgain(getHealth());
+        }
         if (getMana() < 0){
             setMana(0);
         }
 
-        if(getHealth() > 0){
-            consoleView.tryAgain(getHealth());
-        }
+        
     }
 
     public boolean hasAvailableMission() {

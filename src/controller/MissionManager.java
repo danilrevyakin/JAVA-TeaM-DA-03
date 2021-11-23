@@ -24,12 +24,47 @@ public class MissionManager{
 
     public void generateMissions(Student student){
     	student.missions = new Vector<>();
-       ArrayList<Teacher> Teachers = teacherManager.getTeachers();
+    	ArrayList<Teacher> Teachers = teacherManager.getTeachers();
         for(int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++){
-            student.missions.add(createMission(student, student.getLevel() + i, Teachers.get(i)));
+            student.missions.add(createMission(student, (1 + i), Teachers.get(i)));
         }
     }
-
+    
+    public void openMission(Student student){
+    	final int unAvailableMission = -100;
+        int missionNumber = unAvailableMission;
+        final int EXIT = 0;
+        Mission mission;
+        if(!student.hasAvailableMission()) {
+        	consoleView.hasNoMission();
+        	return;
+        }
+        for(;;) {
+        	while (missionNumber < 0 || missionNumber > student.missions.size()){
+                consoleView.choosingMission(student.missions);
+                missionNumber = consoleView.missinNumScanner(missionNumber);
+                if(missionNumber == EXIT) {
+                	return;
+                }
+            }
+        	mission = student.missions.get(missionNumber - 1);
+        	if(mission.missionAvailable())
+        		break;
+        	else missionNumber = unAvailableMission;
+        }     
+        startMission(student, mission);
+    }
+    
+    private void startMission(Student student, Mission mission){
+        if(!mission.missionAvailable()){
+            consoleView.missionCompleted();
+            return;
+        }
+    	consoleView.open(mission);
+        playMission(student, mission);
+        setResultMission(student, mission);
+    }
+    
     public void playMission(Student student, Mission mission) {
         student.setCurrentMission(mission);
     	String studentAnswer;
@@ -64,7 +99,6 @@ public class MissionManager{
         for (Person player : mission.getPeople()) {
             player.correctStudentAnswer();
         }
-        if (mission.getTeacher().getHealth() > 0) consoleView.correctAnswerOutput(mission.getTeacher());
     }
     
     private void setResultMission(Student student, Mission mission) {
@@ -81,38 +115,7 @@ public class MissionManager{
         }
     }
     
-    private void startMission(Student student, Mission mission){
-        if(!mission.missionAvailable()){
-            consoleView.missionCompleted();
-            return;
-        }
-    	consoleView.open(mission);
-        playMission(student, mission);
-        setResultMission(student, mission);
-    }
+    
 
-    public void openMission(Student student){
-    	final int unAvailableMission = -100;
-        int missionNumber = unAvailableMission;
-        final int EXIT = 0;
-        Mission mission;
-        if(!student.hasAvailableMission()) {
-        	consoleView.hasNoMission();
-        	return;
-        }
-        for(;;) {
-        	while (missionNumber < 0 || missionNumber > student.missions.size()){
-                consoleView.choosingMission(student.missions);
-                missionNumber = consoleView.missinNumScanner(missionNumber);
-                if(missionNumber == EXIT) {
-                	return;
-                }
-            }
-        	mission = student.missions.get(missionNumber - 1);
-        	if(mission.missionAvailable())
-        		break;
-        	else missionNumber = unAvailableMission;
-        }     
-        startMission(student, mission);
-    }
+    
 }

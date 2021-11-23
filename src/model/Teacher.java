@@ -33,6 +33,7 @@ public abstract class Teacher extends Person implements Serializable{
             consoleView.teacherDefeat();
             return;
         }
+        if (getHealth() > 0) consoleView.correctAnswerOutput(this);
         correctStudentAnswerSkill();
     }
     protected abstract void correctStudentAnswerSkill();

@@ -36,6 +36,28 @@ public class Manager {
         }
     }
     
+    private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 Exit the program
+        menuView.printMainMenu();
+        item = menuView.getMenuItem();
+        if(item == ITEM_NEW_PLAYER){
+        	newPlayer();
+        }
+        else if(item == ITEM_SELECT_CREATED_PLAYER){
+        	selectCreatedPlayer();
+        }
+        else if(item == ITEM_EXIT_THE_PROGRAM ){
+        	exitTheProgram();
+        }
+    }
+    
+    private void newPlayer() {
+    	player = studentManager.createStudent();
+        missionManager.generateMissions(player);
+        inGame = true;
+        PlayersList.add(player);
+        playerIsSelected();
+    }
+    
     private void selectCreatedPlayer() {
     	final int BACK_TO_MAIN_MENU = 0;
     	if(!checkExistingPlayers()){
@@ -53,34 +75,6 @@ public class Manager {
             }
         }
     }
-   
-    private boolean checkExistingPlayers() {
-    	if(PlayersList == null) return false;
-    	if(PlayersList.size() == 0) return false;
-    	return true;
-    }
-    
-    private void newPlayer() {
-    	player = studentManager.createStudent();
-        missionManager.generateMissions(player);
-        inGame = true;
-        PlayersList.add(player);
-        playerIsSelected();
-    }
-    
-    private void inMainMenu() { // 1 new Player, 2 Select created Player, 3 Exit the program
-        menuView.printMainMenu();
-        item = menuView.getMenuItem();
-        if(item == ITEM_NEW_PLAYER){
-        	newPlayer();
-        }
-        else if(item == ITEM_SELECT_CREATED_PLAYER){
-        	selectCreatedPlayer();
-        }
-        else if(item == ITEM_EXIT_THE_PROGRAM ){
-        	exitTheProgram();
-        }
-    }
     
     private void playerIsSelected() {
     	inGame = true;
@@ -89,12 +83,6 @@ public class Manager {
         while (inGame){
             inGame = inGameMenu();
         }
-    }
-    
-    private void exitTheProgram() {
-    	inMenu = false;
-    	this.studentManager.sortStudents(PlayersList);
-        FileManager.saveGame(PlayersList);
     }
     
     private boolean inGameMenu() { // 1 SELECT MISSION, 2 Exit to mainMenu
@@ -116,5 +104,17 @@ public class Manager {
             return CONTINUE;
         }
         return EXIT;
+    }
+    
+    private void exitTheProgram() {
+    	inMenu = false;
+    	this.studentManager.sortStudents(PlayersList);
+        FileManager.saveGame(PlayersList);
+    }
+    
+    private boolean checkExistingPlayers() {
+    	if(PlayersList == null) return false;
+    	if(PlayersList.size() == 0) return false;
+    	return true;
     }
 }
