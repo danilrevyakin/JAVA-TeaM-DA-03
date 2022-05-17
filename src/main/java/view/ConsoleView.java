@@ -1,15 +1,23 @@
 package view;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import model.Mission;
 import model.Question;
 import model.Student;
 import model.Teacher;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Scanner;
+
 public class ConsoleView implements Serializable {
+    public  static final String INPUT_DATA = "Enter your ";
+    public static final String WRONG_INPUT_DATA = "Wrong input! Repeat please!";
+    public static final String EXISTING_EMAIL = "This email already exists. Try to enter your account or use another email";
+    public static final String EXISTING_LOGIN = "This login already exists. Choose another one";
+    public static final String WRONG_LOGIN = "Wrong login. Try again";
+    public static final String WRONG_PASSWORD = "Wrong password. Try again";
+
+
     public boolean open(Mission mission) {
 
         System.out.println("\nWelcome to the " + mission.getMissionNumber() + " mission 8).\n" +
@@ -27,69 +35,12 @@ public class ConsoleView implements Serializable {
         System.out.println("You almost won (");
     }
 
+    public static void printMessage(String message){
+        System.out.println(message);
+    }
+
     //Student data////
 
-    public ArrayList<String> setUserInfo(){
-        String name, surname, sex, email, login, password;
-        Scanner scanner = new Scanner(System.in);
-        do {
-            System.out.println("Enter name: ");
-            name = scanner.nextLine();
-        } while (name == null || name.trim().isEmpty());
-
-        do {
-            System.out.println("Enter surname: ");
-            surname = scanner.nextLine();
-        } while (surname == null || surname.trim().isEmpty());
-
-        do {
-            System.out.println("Enter sex: ");
-            sex = scanner.nextLine();
-        } while (sex == null || sex.trim().isEmpty());
-
-        do {
-            System.out.println("Enter email: ");
-            email = scanner.nextLine();
-        } while (email == null || email.trim().isEmpty());
-
-        do {
-            System.out.println("Enter login: ");
-            login = scanner.nextLine();
-        } while (login == null || login.trim().isEmpty());
-
-        do {
-            System.out.println("Enter password: ");
-            password = scanner.nextLine();
-        } while (password == null || password.trim().isEmpty());
-
-        return new ArrayList<>(List.of(name, surname, sex, email, login, password));
-
-    }
-
-
-    public String setStudentName() {
-        Scanner scanner = new Scanner(System.in);
-        String name;
-        do {
-            System.out.print("Enter name: ");
-            name = scanner.nextLine();
-        } while (name == null || name.trim().isEmpty());
-        return name;
-    }
-
-    public void Teachers_out_of_Index() {
-        System.out.println("Teachers_out_of_Index: maybe class MissionManager method generateMissions");
-    }
-
-
-    public boolean setStudentSex() {
-        Scanner in = new Scanner(System.in);
-        boolean sex = true;
-        System.out.print("Enter sex(1 - man; 0 - women): ");
-        short sexS = in.nextShort();
-        if (sexS == 0) sex = false;
-        return sex;
-    }
 
     public void hasNoMission() {
         System.out.println("Sorry, but you has no available mission");

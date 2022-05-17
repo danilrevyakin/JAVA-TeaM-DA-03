@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,6 +25,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @NaturalId
     @Column(name = "login", nullable = false)
     private String login;
 

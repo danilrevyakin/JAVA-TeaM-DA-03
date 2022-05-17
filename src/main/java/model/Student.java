@@ -1,12 +1,11 @@
 package model;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Properties;
 
 import controller.MissionManager;
 import view.ConsoleView;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 public class Student extends Person implements Serializable {
     private static final int MAX_MANA = 100;

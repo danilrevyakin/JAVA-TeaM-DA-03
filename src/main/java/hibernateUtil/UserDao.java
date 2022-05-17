@@ -1,10 +1,8 @@
 package hibernateUtil;
 
-import model.Player;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -42,5 +40,13 @@ public class UserDao implements DaoImpl<User> {
     @Override
     public List<User> findAll() {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User").list();
+    }
+
+    public User findByLogin(String login){
+        return HibernateSessionFactoryUtil.getSessionFactory()
+                .openSession()
+                .byNaturalId(User.class)
+                .using("login", login)
+                .load();
     }
 }

@@ -83,20 +83,24 @@ public class Manager {
     
     private void selectCreatedPlayer() {
     	final int BACK_TO_MAIN_MENU = 0;
+        AuthorizationController authorizationController = new AuthorizationController();
     	if(!checkExistingPlayers()){
             menuView.createAccFirstWarning();
             inGame = false;
             return;
         }
         else{
-        	this.studentManager.sortStudents(PlayersList);
-        	menuView.selectAccount(PlayersList);
-            int choice = menuView.enterAccount(PlayersList);
-            if (choice != BACK_TO_MAIN_MENU) {
-            	player = PlayersList.get(choice - 1);
-                getAvailableMissions(player);
-                playerIsSelected();
-            }
+//        	this.studentManager.sortStudents(PlayersList);
+//        	menuView.selectAccount(PlayersList);
+//            int choice = menuView.enterAccount(PlayersList);
+//            if (choice != BACK_TO_MAIN_MENU) {
+//            	player = PlayersList.get(choice - 1);
+//                getAvailableMissions(player);
+//                playerIsSelected();
+//            }
+            player = authorizationController.getStudent();
+            getAvailableMissions(player);
+            playerIsSelected();
         }
     }
 
