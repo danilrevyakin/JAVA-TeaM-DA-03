@@ -1,11 +1,11 @@
-package model.skill;
+package model.modes;
 
 import model.Student;
 import view.ConsoleView;
 
 import java.io.Serializable;
 
-public class StickanovSkill implements Skill, Serializable {
+public class VeryHard implements Mode, Serializable {
 	ConsoleView consoleView = new ConsoleView();
 	@Override
 	public void studentAnswerCorrect(Student student) {

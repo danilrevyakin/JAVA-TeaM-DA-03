@@ -1,4 +1,4 @@
-package model.skill;
+package model.modes;
 
 import model.Student;
 import view.ConsoleView;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 
-public class HighSkill implements Skill, Serializable {
+public class Hard implements Mode, Serializable {
 
     private final ConsoleView consoleView = new ConsoleView();
     Random random = new Random();

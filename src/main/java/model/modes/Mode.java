@@ -1,8 +1,8 @@
-package model.skill;
+package model.modes;
 
 import model.Student;
 
-public interface Skill{
+public interface Mode {
 	 void studentAnswerCorrect(Student student);
 	 void studentAnswerFalse(Student student);
 }

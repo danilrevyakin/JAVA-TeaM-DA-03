@@ -1,4 +1,4 @@
-package model.skill;
+package model.modes;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -6,7 +6,7 @@ import java.util.Random;
 import model.Student;
 import view.ConsoleView;
 
-public class StatckevichSkill implements Skill, Serializable {
+public class Easy implements Mode, Serializable {
 	private Random rand = new Random();
 	ConsoleView consoleView = new ConsoleView();
 	
