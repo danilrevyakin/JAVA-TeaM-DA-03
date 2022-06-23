@@ -1,14 +1,8 @@
 package hibernateUtil;
 
-import hibernateUtil.DaoImpl;
-import hibernateUtil.HibernateSessionFactoryUtil;
 import model.Player;
-import model.Student;
-import model.User;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
