@@ -1,5 +1,6 @@
 package model;
 
+import model.modes.Mode;
 import view.ConsoleView;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public abstract class Teacher extends Person implements Serializable{
     private List<Question> questions;
 
     private Student student;
-
+    protected Mode mode;
     public ConsoleView getConsoleView() {
         return consoleView;
     }
@@ -71,5 +72,9 @@ public abstract class Teacher extends Person implements Serializable{
 
     public void setStudent(Student student){
         this.student = student;
+    }
+
+    public Mode getSkill() {
+        return mode;
     }
 }
