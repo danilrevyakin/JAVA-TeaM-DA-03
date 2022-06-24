@@ -5,9 +5,10 @@ import model.modes.Mode;
 import view.ConsoleView;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
-public abstract class Teacher extends Person implements Serializable{
+public abstract class Teacher extends Person implements Serializable {
     private int id;
     protected final ConsoleView consoleView = new ConsoleView();
 
@@ -15,13 +16,17 @@ public abstract class Teacher extends Person implements Serializable{
 
     private Student student;
     protected Mode mode = new Easy();
+
     public ConsoleView getConsoleView() {
         return consoleView;
     }
 
-    public Teacher(String name, String sex, List<Question> questions, int id){
+    Iterator<Question> iterator;
+
+    public Teacher(String name, String sex, List<Question> questions, int id) {
         super(name, sex, 50);
         this.questions = questions;
+        iterator = questions.listIterator();
         this.id = id;
     }
 
@@ -33,13 +38,21 @@ public abstract class Teacher extends Person implements Serializable{
         this.id = id;
     }
 
-    public List<Question> giveQuestion() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void correctStudentAnswer(){
+    public Question giveNextQuestion() {
+        if (!iterator.hasNext()){
+            return null;
+        }
+        Question question = iterator.next();
+        return question;
+    }
+
+    public void correctStudentAnswer() {
         setHealth(getHealth() - 25);
-        if(getHealth() <= 0){
+        if (getHealth() <= 0) {
             consoleView.teacherDefeat();
             return;
         }
@@ -51,7 +64,7 @@ public abstract class Teacher extends Person implements Serializable{
 
     protected abstract void wrongStudentAnswerSkill();
 
-    public void wrongStudentAnswer(){
+    public void wrongStudentAnswer() {
         setHealth(getHealth() + 5);
         wrongStudentAnswerSkill();
     }
@@ -71,11 +84,21 @@ public abstract class Teacher extends Person implements Serializable{
                 '}';
     }
 
-    public void setStudent(Student student){
+    public boolean hasQuestions(){
+        return iterator.hasNext();
+    }
+
+    public void setStudent(Student student) {
         this.student = student;
     }
 
-    public Mode getSkill() {
+    public Mode getMode() {
         return mode;
     }
+
+    public String getModeName(){
+        StringBuilder stringBuilder = new StringBuilder(mode.getClass().getName());
+        return stringBuilder.substring(stringBuilder.lastIndexOf(".") + 1);
+    }
+
 }

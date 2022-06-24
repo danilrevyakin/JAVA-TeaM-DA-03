@@ -14,8 +14,6 @@ public class Medium implements Mode, Serializable {
 
     @Override
     public void studentAnswerCorrect(Student student) {
-        consoleView.VerbitskiySkillMessage();
-        consoleView.giveAnswer();
         consoleView.teacherHappy(k);
         int health = student.getHealth();
         student.setHealth(health + k);
@@ -24,8 +22,6 @@ public class Medium implements Mode, Serializable {
 
     @Override
     public void studentAnswerFalse(Student student) {
-        consoleView.VerbitskiySkillMessage();
-        consoleView.giveAnswer();
         consoleView.teacherAngry(k);
         int health = student.getHealth();
         student.setHealth(health - k);
