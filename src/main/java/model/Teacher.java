@@ -1,5 +1,6 @@
 package model;
 
+import model.modes.Easy;
 import model.modes.Mode;
 import view.ConsoleView;
 
@@ -10,10 +11,10 @@ public abstract class Teacher extends Person implements Serializable{
     private int id;
     protected final ConsoleView consoleView = new ConsoleView();
 
-    private List<Question> questions;
+    private final List<Question> questions;
 
     private Student student;
-    protected Mode mode;
+    protected Mode mode = new Easy();
     public ConsoleView getConsoleView() {
         return consoleView;
     }
