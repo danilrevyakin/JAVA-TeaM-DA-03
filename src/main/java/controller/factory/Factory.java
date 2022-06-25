@@ -21,12 +21,12 @@ public final class Factory implements TeacherFactory {
 		Teacher t = null;
 		try {
 			myClass = Class.forName("teachers." + className.substring(3));
-			Constructor constrt = myClass.getConstructor(String.class, String.class, List.class, int.class);
+			Constructor constrt = myClass.getConstructor(String.class, String.class, List.class, int.class, int.class, int.class);
 			String name = className.substring(3);
 			String sex = pair.getSecond();
 			int id = pair.getFirst();
 			t =  (Teacher) constrt.newInstance(name, sex,
-					questionDao.getTeacherQuestions(id), id);
+					questionDao.getTeacherQuestions(id), id, 0, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

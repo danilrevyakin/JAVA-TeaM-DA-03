@@ -81,6 +81,17 @@ public class Student extends Person implements Serializable {
         return player.getScore();
     }
 
+    public void increaseScoreOn(int points){
+        this.setScore(getScore() + points);
+    }
+
+    public void increaseHealthOn(int points){
+        this.setHealth(getHealth() + points);
+    }
+
+    public void increaseManaOn(int points){
+        this.setMana(getMana() + points);
+    }
     public int getMaxMana() {
         return MAX_MANA;
     }

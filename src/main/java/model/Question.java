@@ -44,6 +44,20 @@ public class Question implements Serializable{
         this.teacherID = teacherID;
     }
 
+    public void setQuestion(String question){
+        this.question = question;
+    }
+
+    public void setChoices(ArrayList<String> choices){
+        if(choices.size() < 4){
+            return;
+        }
+        this.option1 = choices.get(0);
+        this.option2 = choices.get(1);
+        this.option3 = choices.get(2);
+        this.option4 = choices.get(3);
+    }
+
     public Question() {}
 
     //getters
@@ -65,6 +79,10 @@ public class Question implements Serializable{
         ArrayList<String> choices = new ArrayList<>(List.of(option1, option2,option3,option4));
         Collections.shuffle(choices);
         return choices;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public int getId() {

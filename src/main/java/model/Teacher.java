@@ -1,5 +1,6 @@
 package model;
 
+import controller.Probability;
 import model.modes.Easy;
 import model.modes.Mode;
 import view.ConsoleView;
@@ -7,11 +8,13 @@ import view.ConsoleView;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 
 public abstract class Teacher extends Person implements Serializable {
     private int id;
     protected final ConsoleView consoleView = new ConsoleView();
-
+    protected String message;
     private final List<Question> questions;
 
     private Student student;
@@ -20,14 +23,19 @@ public abstract class Teacher extends Person implements Serializable {
     public ConsoleView getConsoleView() {
         return consoleView;
     }
+    protected Random rand = new Random();
+    ListIterator<Question> iterator;
 
-    Iterator<Question> iterator;
+    protected final int correctSkillProbability;
+    protected final int wrongSkillProbability;
 
-    public Teacher(String name, String sex, List<Question> questions, int id) {
+    public Teacher(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
         super(name, sex, 50);
         this.questions = questions;
         iterator = questions.listIterator();
         this.id = id;
+        this.correctSkillProbability = correctSkillProbability;
+        this.wrongSkillProbability = wrongSkillProbability;
     }
 
     public int getId() {
@@ -46,8 +54,15 @@ public abstract class Teacher extends Person implements Serializable {
         if (!iterator.hasNext()){
             return null;
         }
-        Question question = iterator.next();
-        return question;
+        message = "";//message is new because of teacher give another question
+        return iterator.next();
+    }
+    public Question givePreviousQuestion() {
+        if (!iterator.hasPrevious()){
+            return null;
+        }
+        message = "";//message is new because of teacher give another question
+        return iterator.previous();
     }
 
     public void correctStudentAnswer() {
@@ -57,17 +72,31 @@ public abstract class Teacher extends Person implements Serializable {
             return;
         }
         if (getHealth() > 0) consoleView.correctAnswerOutput(this);
-        correctStudentAnswerSkill();
+        message += correctStudentReaction();
     }
-
-    protected abstract void correctStudentAnswerSkill();
-
-    protected abstract void wrongStudentAnswerSkill();
 
     public void wrongStudentAnswer() {
         setHealth(getHealth() + 5);
-        wrongStudentAnswerSkill();
+        message += wrongStudentReaction();
     }
+
+    public void addNextQuestion(Question question){
+        iterator.add(question);
+    }
+
+    protected String correctStudentReaction(){
+        if(Probability.eventProbability(correctSkillProbability))
+            return mode.studentAnswerCorrect(student);
+        return ConsoleView.correctMessage();
+    }
+
+    protected String wrongStudentReaction(){
+        if(Probability.eventProbability(wrongSkillProbability))
+            return mode.studentAnswerFalse(student);
+        return ConsoleView.wrongMessage();
+    }
+
+
 
     public Student getStudent() {
         return student;
@@ -99,6 +128,10 @@ public abstract class Teacher extends Person implements Serializable {
     public String getModeName(){
         StringBuilder stringBuilder = new StringBuilder(mode.getClass().getName());
         return stringBuilder.substring(stringBuilder.lastIndexOf(".") + 1);
+    }
+
+    public String say(){
+        return message;
     }
 
 }

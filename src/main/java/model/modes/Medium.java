@@ -10,21 +10,30 @@ public class Medium implements Mode, Serializable {
 
     private final ConsoleView consoleView = new ConsoleView();
     Random random = new Random();
-    int k = Math.abs(random.nextInt() % 15);
 
     @Override
-    public void studentAnswerCorrect(Student student) {
-        consoleView.teacherHappy(k);
+    public String studentAnswerCorrect(Student student) {
+        int k = Math.abs(random.nextInt() % 15);
         int health = student.getHealth();
         student.setHealth(health + k);
         student.setScore(student.getScore() + k);
+        return teacherHappy(k);
+    }
+
+    public String teacherHappy(int k){
+        return ("I am in a good mood today, I will add a " + k + " points for you!");
+    }
+
+    public String teacherAngry(){
+        return ("Omg, very stupid mistake, you pissed me off, I will give you a bad grade!");
     }
 
     @Override
-    public void studentAnswerFalse(Student student) {
-        consoleView.teacherAngry(k);
+    public String studentAnswerFalse(Student student) {
+        int k = Math.abs(random.nextInt() % 15);
         int health = student.getHealth();
         student.setHealth(health - k);
         student.setScore(student.getScore() - k);
+        return teacherAngry();
     }
 }

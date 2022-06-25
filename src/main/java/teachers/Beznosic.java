@@ -1,28 +1,30 @@
 package teachers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import controller.Probability;
 import model.Question;
 import model.Teacher;
 
 public final class Beznosic extends Teacher implements Serializable {
-	private final int skillProbability = 75;
-	public Beznosic(String name, String sex, List<Question> questions, int id) {
-		super(name, sex, questions, id);
+	public Beznosic(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
+		super(name, sex, questions, id,75, 75);
 	}
 
 	@Override
-	protected void correctStudentAnswerSkill() {
-		if(Probability.eventProbability(skillProbability))
-		mode.studentAnswerCorrect(super.getStudent());
+	protected String wrongStudentReaction(){
+		return super.wrongStudentReaction() + BeznosReactionOnCribbedLab();
 	}
-
-	@Override
-	protected void wrongStudentAnswerSkill() {
-		if(Probability.eventProbability(skillProbability))
-		mode.studentAnswerFalse(super.getStudent());
+	private String BeznosReactionOnCribbedLab(){
+		String message = "I guess I saw this work...";
+		Question hardQuestion = new Question();
+		hardQuestion.setQuestion("Have you gribed the lab?..");
+		String answer = "of course not";
+		hardQuestion.setChoices(new ArrayList<>(List.of("yes","no","probably", answer)));
+		hardQuestion.setAnswer(answer);
+		addNextQuestion(hardQuestion);
+		return message;
 	}
 
 }

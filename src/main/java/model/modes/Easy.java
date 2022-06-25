@@ -7,29 +7,27 @@ import model.Student;
 import view.ConsoleView;
 
 public class Easy implements Mode, Serializable {
-	private Random rand = new Random();
+	static private final Random rand = new Random();
 	ConsoleView consoleView = new ConsoleView();
-	
+
 	@Override
-	public void studentAnswerCorrect(Student student) {
+	public String studentAnswerCorrect(Student student) {
 		int addHealth = Math.abs(rand.nextInt() % 6);
 		int addMana = Math.abs(rand.nextInt() % 11);
 		int addScore = 25;
-		consoleView.StatkevichSkillCorrectMessage(addScore, addMana, addHealth);
+		String message = "As always correct, I will pamper you with additional points!";
 		student.setHealth(student.getHealth() + addHealth);
 		student.setMana(student.getMana() + addMana);
 		student.setScore(student.getScore()+addScore);
+		return message;
 	}
 
 	@Override
-	public void studentAnswerFalse(Student student) {
+	public String studentAnswerFalse(Student student) {
 		int addScore = rand.nextInt() % 5; // min = -4, max = 4 - I know this
-		consoleView.StatkevichSkillWrongMessage(addScore);
+		String message = "I don't even know what grade to give you!";
 		student.setScore(student.getScore() + addScore);
+		return message;
 	}
-
-	
-
-	
 
 }
