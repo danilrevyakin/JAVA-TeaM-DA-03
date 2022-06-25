@@ -78,10 +78,10 @@ public class ExamController implements Initializable {
         this.teacher = teacher;
     }
 
-    static public void playMissionInGUI(Student student, Mission mission, MissionManager missionManager){
+    static public void playMissionInGUI(Mission mission, MissionManager missionManager){
         URL url = ExamController.class.getResource("Exam.fxml");
         FXMLLoader loader = new FXMLLoader(url);
-        loader.setControllerFactory(controllerClass -> new ExamController(student, mission.getTeacher(), missionManager));
+        loader.setControllerFactory(controllerClass -> new ExamController(mission.getStudent(), mission.getTeacher(), missionManager));
         try {
             loader.load();
         } catch (IOException e) {

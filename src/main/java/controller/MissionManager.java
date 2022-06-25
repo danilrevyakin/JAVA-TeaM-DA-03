@@ -67,7 +67,7 @@ public class MissionManager {
 
     public void playMission(Student student, Mission mission) {
         mission.getTeacher().setStudent(student);
-        ExamController.playMissionInGUI(student, mission, this);
+        ExamController.playMissionInGUI(mission, this);
     }
 
     public AnswerResult analiseResult(String studentAnswer, Question question){
