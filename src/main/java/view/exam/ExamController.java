@@ -70,14 +70,6 @@ public class ExamController implements Initializable {
 
     private SeparatorFactory factory = new SeparatorFactory();
 
-
-    public ExamController(Student student, Teacher teacher, MissionManager missionManager) {
-        this.missionManager = missionManager;
-        System.out.println("constr");
-        this.student = student;
-        this.teacher = teacher;
-    }
-
     static public void playMissionInGUI(Mission mission, MissionManager missionManager){
         URL url = ExamController.class.getResource("Exam.fxml");
         FXMLLoader loader = new FXMLLoader(url);
@@ -93,57 +85,11 @@ public class ExamController implements Initializable {
         stage.showAndWait();
     }
 
-    private VBox getTeacherView(Teacher teacher) {
-        Pair<Object, VBox> data = getControllerAndVbox("Person.fxml");
-        teacherController = (PersonController)data.getKey();
-        setPersonData(teacher, pathToTeacherPhoto, List.of("Mode: " + teacher.getModeName()), teacherController);
-        return data.getValue();
-    }
-
-
-    private VBox getStudentView(Student student) {
-        Pair<Object, VBox> data = getControllerAndVbox("Person.fxml");
-        studentController = (PersonController)data.getKey();
-        setPersonData(student, pathToStudentPhoto, null, studentController);
-        return data.getValue();
-    }
-
-    private void updatePlayers(){
-        setPersonData(teacher, pathToTeacherPhoto,
-                List.of("Mode: " + teacher.getModeName()), teacherController);
-        setPersonData(student, pathToStudentPhoto,
-                null, studentController);
-    }
-
-    private void setPersonData(Person person, String pathToAvatar,
-                          List<String> additionalDetails, PersonController controller){
-        controller.setAvatar(pathToAvatar);
-        List<String> list = new LinkedList<>();
-        list.add(person.getName());
-        list.add("Health: " + person.getHealth());
-        if (additionalDetails != null) {
-            list.addAll(additionalDetails);
-        }
-        controller.setDetails(list);
-    }
-
-    private Pair<Object, VBox> getControllerAndVbox(String pathToFXML){
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(pathToFXML));
-        VBox vBox;
-        try {
-            vBox = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Object controller = fxmlLoader.getController();
-        return new Pair<>(controller, vBox);
-    }
-    private VBox getQuestion(Question question){
-        Pair<Object, VBox> data = getControllerAndVbox("Question.fxml");
-        questionController = (QuestionController)data.getKey();
-        questionController.setQuestion(question);
-        return data.getValue();
+    public ExamController(Student student, Teacher teacher, MissionManager missionManager) {
+        this.missionManager = missionManager;
+        System.out.println("constr");
+        this.student = student;
+        this.teacher = teacher;
     }
 
     @Override
@@ -151,6 +97,42 @@ public class ExamController implements Initializable {
         TeacherPane.getChildren().add(getTeacherView(teacher));
         StudentPane.getChildren().add(getStudentView(student));
         updateQuestion();
+    }
+
+
+
+    private VBox getTeacherView(Teacher teacher) {
+        Pair<Object, VBox> data = PersonController.getControllerAndVbox("Person.fxml", this);
+        teacherController = (PersonController)data.getKey();
+        List<String> teacherData = PersonController.getAdditionalDataOfTeacher(teacher);
+        PersonController.setPersonData(teacher, pathToTeacherPhoto, teacherData , teacherController);
+        return data.getValue();
+    }
+
+
+    private VBox getStudentView(Student student) {
+        Pair<Object, VBox> data = PersonController.getControllerAndVbox("Person.fxml", this);
+        studentController = (PersonController)data.getKey();
+        List<String> studentData = PersonController.getAdditionalDataOfStudent(student);
+        PersonController.setPersonData(student, pathToStudentPhoto, studentData, studentController);
+        return data.getValue();
+    }
+
+
+
+    private void updatePlayers(){
+        PersonController.setPersonData(teacher, pathToTeacherPhoto,
+                PersonController.getAdditionalDataOfTeacher(teacher), teacherController);
+        PersonController.setPersonData(student, pathToStudentPhoto,
+                PersonController.getAdditionalDataOfStudent(student), studentController);
+    }
+
+
+    private VBox getQuestion(Question question){
+        Pair<Object, VBox> data = PersonController.getControllerAndVbox("Question.fxml", this);
+        questionController = (QuestionController)data.getKey();
+        questionController.setQuestion(question);
+        return data.getValue();
     }
 
 

@@ -1,11 +1,17 @@
 package view.exam;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
+import model.Person;
+import model.Student;
+import model.Teacher;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,4 +42,40 @@ public class PersonController {
             Details.getChildren().add(text);
         }
     }
+
+    public static List<String> getAdditionalDataOfStudent(Student student){
+        return List.of("Mana: " + student.getMana(),
+                "Score: " + student.getScore(),
+                "Level: " + student.getLevel());
+    }
+
+    public static List<String> getAdditionalDataOfTeacher(Teacher teacher){
+        return List.of("Mode: " + teacher.getModeName(),
+                "Number of questions: " + teacher.getQuestions().size());
+    }
+
+    static public Pair<Object, VBox> getControllerAndVbox(String pathToFXML, Object object){
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(object.getClass().getResource(pathToFXML));
+        VBox vBox;
+        try {
+            vBox = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Object controller = fxmlLoader.getController();
+        return new Pair<>(controller, vBox);
+    }
+    static public void setPersonData(Person person, String pathToAvatar,
+                                     List<String> additionalDetails, PersonController controller){
+        controller.setAvatar(pathToAvatar);
+        List<String> list = new LinkedList<>();
+        list.add(person.getName());
+        list.add("Health: " + person.getHealth());
+        if (additionalDetails != null) {
+            list.addAll(additionalDetails);
+        }
+        controller.setDetails(list);
+    }
+
 }

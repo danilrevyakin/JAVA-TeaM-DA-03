@@ -61,6 +61,11 @@ public class Student extends Person implements Serializable {
         }
     }
 
+    @Override
+    public String getName(){
+        return user.getName();
+    }
+
     public boolean hasAvailableMission() {
         return counterAvailableMissions > 0;
     }
