@@ -1,15 +1,10 @@
 package controller;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+
 import model.*;
 import view.ConsoleView;
 import view.exam.ExamController;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,7 +47,7 @@ public class MissionManager {
 //                	return;
 //                }
 //            }
-            missionNumber = (new Random()).nextInt(10) + 1;
+            missionNumber = (new Random()).nextInt(student.missions.size());
             mission = student.missions.get(missionNumber - 1);
             if (mission.missionAvailable())
                 break;
@@ -71,16 +66,8 @@ public class MissionManager {
     }
 
     public void playMission(Student student, Mission mission) {
-//        student.setCurrentMission(mission);
-//        String studentAnswer;
-//        List<Question> questions = mission.giveQuestion();
-//        for(Question question : questions) {
-//
-//            else
-//            	break;
-//        }
         mission.getTeacher().setStudent(student);
-        playMissionInGUI(student, mission);
+        ExamController.playMissionInGUI(student, mission, this);
     }
 
     public AnswerResult analiseResult(String studentAnswer, Question question){
@@ -96,20 +83,7 @@ public class MissionManager {
         return AnswerResult.WrongAnswer;
     }
 
-    private void playMissionInGUI(Student student, Mission mission){
-        URL url = ExamController.class.getResource("Exam.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
-        loader.setControllerFactory(controllerClass -> new ExamController(student, mission.getTeacher(), this));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    }
+
 
     private String studentDoTask(Question question) {
         consoleView.quiz(question);

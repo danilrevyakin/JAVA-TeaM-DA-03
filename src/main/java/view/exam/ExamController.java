@@ -4,23 +4,26 @@ import controller.MissionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Pair;
-import model.Person;
-import model.Student;
-import model.Teacher;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
-import model.Question;
+
 public class ExamController implements Initializable {
     @FXML
     private Pane BottomPane;
@@ -41,16 +44,17 @@ public class ExamController implements Initializable {
     private Button SendButton;
 
     @FXML
-    private Pane StudentPane;
+    private StackPane StudentPane;
 
     @FXML
-    private Pane TeacherPane;
+    private StackPane TeacherPane;
 
     @FXML
     private Pane TopPane;
 
     @FXML
     private VBox VboxInScroll;
+
 
     private final String pathToTeacherPhoto = "oldTeacher.png";
     private final String pathToStudentPhoto = "studentBrown.png";
@@ -64,11 +68,29 @@ public class ExamController implements Initializable {
     private PersonController teacherController;
     private final MissionManager missionManager;
 
+    private SeparatorFactory factory = new SeparatorFactory();
+
+
     public ExamController(Student student, Teacher teacher, MissionManager missionManager) {
         this.missionManager = missionManager;
         System.out.println("constr");
         this.student = student;
         this.teacher = teacher;
+    }
+
+    static public void playMissionInGUI(Student student, Mission mission, MissionManager missionManager){
+        URL url = ExamController.class.getResource("Exam.fxml");
+        FXMLLoader loader = new FXMLLoader(url);
+        loader.setControllerFactory(controllerClass -> new ExamController(student, mission.getTeacher(), missionManager));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
     private VBox getTeacherView(Teacher teacher) {
@@ -136,6 +158,7 @@ public class ExamController implements Initializable {
         question = teacher.giveNextQuestion();
         VboxInScroll.getChildren().add(getQuestion(question));
     }
+
     @FXML
     void sendClicked(MouseEvent event) {
         String currentAnswer = questionController.getCurrentAnswer();
@@ -144,6 +167,7 @@ public class ExamController implements Initializable {
             return;
         }
         printResult(missionManager.analiseResult(currentAnswer, question));
+        questionController.setDisabledCurrentChoices();
         if(missionManager.getMission().missionAvailable()){
             updateQuestion();
         }else{
@@ -178,13 +202,6 @@ public class ExamController implements Initializable {
 
     }
 
-    static public Rectangle getRoundedRectangle(double width, double height, double arcWidth, double arcHeight) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setWidth(width);
-        rectangle.setHeight(height);
-        rectangle.setArcWidth(arcWidth);
-        rectangle.setArcHeight(arcHeight);
-        return rectangle;
-    }
+
 
 }

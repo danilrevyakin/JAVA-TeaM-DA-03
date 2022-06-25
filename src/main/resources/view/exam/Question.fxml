@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.exam.QuestionController">
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="280.0" styleClass="VBox" stylesheets="@Message.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.exam.QuestionController">
    <children>
-      <Text fx:id="questionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="298.7294921875">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <Separator fx:id="separatorBetweenQuestionAndCheckBoxes" orientation="VERTICAL" prefHeight="19.0" prefWidth="302.0" />
+      <HBox fx:id="questionContainer" alignment="CENTER" prefHeight="33.0" prefWidth="270.0" styleClass="text" stylesheets="@QuestionStyleTitle.css">
+         <children>
+            <Separator prefWidth="50.0" visible="false" />
+            <Label fx:id="questionText" prefHeight="30.0" prefWidth="239.0" styleClass="text" text="Question" />
+            <Separator prefWidth="50.0" visible="false" />
+         </children>
+      </HBox>
+      <Separator fx:id="separatorBetweenQuestionAndCheckBoxes" orientation="VERTICAL" prefHeight="20.0" prefWidth="302.0" visible="false" />
    </children>
 </VBox>

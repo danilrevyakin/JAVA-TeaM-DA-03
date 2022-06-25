@@ -1,0 +1,6 @@
+.text {
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-font-family: "Times New Roman", sans-serif;
+    -fx-text-fill: white;
+}
