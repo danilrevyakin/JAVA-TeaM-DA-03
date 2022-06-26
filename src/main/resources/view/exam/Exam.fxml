@@ -21,11 +21,11 @@
          <children>
             <ScrollPane fx:id="ScrollChatBox" prefHeight="478.0" prefWidth="461.0">
                <content>
-                  <VBox fx:id="VboxInScroll" alignment="BOTTOM_LEFT" prefHeight="476.0" prefWidth="458.0" />
+                  <VBox fx:id="VboxInScroll" alignment="BOTTOM_LEFT" prefWidth="458.0" />
                </content></ScrollPane>
             <HBox fx:id="ReactBox" alignment="CENTER" prefHeight="70.0" prefWidth="335.0">
                <children>
-                  <ChoiceBox fx:id="ChoiceReactBox" prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: gray;" />
+                  <ChoiceBox fx:id="studentChoices" prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: gray;" />
                   <Button fx:id="SendButton" mnemonicParsing="false" onMouseClicked="#sendClicked" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: orange; -fx-font-weight: bold;" text="Send" textAlignment="CENTER" />
                </children>
             </HBox>

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
@@ -54,18 +55,7 @@ public class PersonController {
                 "Number of questions: " + teacher.getQuestions().size());
     }
 
-    static public Pair<Object, VBox> getControllerAndVbox(String pathToFXML, Object object){
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(object.getClass().getResource(pathToFXML));
-        VBox vBox;
-        try {
-            vBox = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Object controller = fxmlLoader.getController();
-        return new Pair<>(controller, vBox);
-    }
+
     static public void setPersonData(Person person, String pathToAvatar,
                                      List<String> additionalDetails, PersonController controller){
         controller.setAvatar(pathToAvatar);

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="hBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="210.0" styleClass="VBox" stylesheets="@Message.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.exam.MessageController">
+   <children>
+      <Separator fx:id="leftSeparator" prefHeight="0.0" prefWidth="15.0" visible="false" />
+      <Label fx:id="text" styleClass="text" stylesheets="@QuestionStyleTitle.css" text="wefwfew ewf fwef we fw " />
+      <Separator fx:id="rightSeparator" prefHeight="188.0" prefWidth="15.0" visible="false" />
+   </children>
+</HBox>
