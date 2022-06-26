@@ -13,7 +13,9 @@ import model.modes.Medium;
 public class Bokhonov extends Teacher implements Serializable {
     String superQuestion = "Ok, I have additional question for you: What year was Richter born?";
     final int correctAnsw = 1915;
-    String badNews = "Absolutely wrong, I want to see you on the commission faster," +
+    private boolean superQuestionIsUsed = false;
+
+    String badNews = "\nAbsolutely wrong, I want to see you on the commission faster," +
             " so I'll take off half of your health";
 
     public Bokhonov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
@@ -23,7 +25,11 @@ public class Bokhonov extends Teacher implements Serializable {
 
     @Override
     protected String correctStudentReaction() {
-        return super.correctStudentReaction() + BokhonovReactionSmartStudent();
+        if(!superQuestionIsUsed){
+            superQuestionIsUsed = true;
+            return super.correctStudentReaction() + BokhonovReactionSmartStudent();
+        }
+        return super.correctStudentReaction();
     }
 
     private String BokhonovReactionSmartStudent() {
@@ -32,11 +38,12 @@ public class Bokhonov extends Teacher implements Serializable {
         String answer = String.valueOf(correctAnsw);
         hardQuestion.setChoices(new ArrayList<>(List.of(getWrongChoice(), getWrongChoice(), getWrongChoice(), answer)));
         hardQuestion.setAnswer(answer);
+        addNextQuestion(hardQuestion);
         return message;
     }
 
     private String getWrongChoice() {
-        return String.valueOf(correctAnsw + rand.nextInt() % 4);
+        return String.valueOf(correctAnsw + rand.nextInt() % 5);
     }
 
     @Override

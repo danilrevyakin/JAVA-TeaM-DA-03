@@ -17,7 +17,7 @@ public class Snizhko extends Teacher implements Serializable {
         return ("I like you, add " + k + " points to your score!");
     }
     public String SnizhkoSkillWrongMessage(){
-        return ("You should study more");
+        return ("\nYou should study more");
     }
 
     @Override

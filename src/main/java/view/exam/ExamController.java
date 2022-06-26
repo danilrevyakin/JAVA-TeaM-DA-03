@@ -62,13 +62,13 @@ public class ExamController implements Initializable {
     private QuestionController questionController;
     private Question question;
 
-    private Student student;
+    private final Student student;
     private PersonController studentController;
-    private Teacher teacher;
+    private final Teacher teacher;
     private PersonController teacherController;
     private final MissionManager missionManager;
 
-    private SeparatorFactory factory = new SeparatorFactory();
+    private final SeparatorFactory factory = new SeparatorFactory();
 
     static public void playMissionInGUI(Mission mission, MissionManager missionManager){
         URL url = ExamController.class.getResource("Exam.fxml");
@@ -97,6 +97,7 @@ public class ExamController implements Initializable {
         TeacherPane.getChildren().add(getTeacherView(teacher));
         StudentPane.getChildren().add(getStudentView(student));
         updateQuestion();
+        VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, true));
     }
 
 
@@ -150,6 +151,7 @@ public class ExamController implements Initializable {
         }
         printResult(missionManager.analiseResult(currentAnswer, question));
         questionController.setDisabledCurrentChoices();
+        System.out.println(teacher.say());
         if(missionManager.getMission().missionAvailable()){
             updateQuestion();
         }else{
@@ -158,6 +160,7 @@ public class ExamController implements Initializable {
         }
         ScrollChatBox.vvalueProperty().bind(VboxInScroll.heightProperty());
         updatePlayers();
+        VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, true));
     }
 
     private void finishMission(){

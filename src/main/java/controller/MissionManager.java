@@ -47,7 +47,7 @@ public class MissionManager {
 //                	return;
 //                }
 //            }
-            missionNumber = (new Random()).nextInt(student.missions.size());
+            missionNumber = 2;
             mission = student.missions.get(missionNumber - 1);
             if (mission.missionAvailable())
                 break;

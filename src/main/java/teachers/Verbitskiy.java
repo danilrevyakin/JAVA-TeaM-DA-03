@@ -17,8 +17,8 @@ public final class Verbitskiy extends Teacher implements Serializable {
 
 	@Override
 	protected String wrongStudentReaction() {
-		addNextQuestion(givePreviousQuestion());
-		giveNextQuestion();
+		addNextQuestion(givePreviousQuestionWithoutDeletingOldMessage());
+		giveNextQuestionWithoutDeletingOldMessage();
 		return super.wrongStudentReaction() + repeat;
 	}
 

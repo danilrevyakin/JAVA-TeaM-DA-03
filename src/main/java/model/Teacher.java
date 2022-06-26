@@ -6,7 +6,6 @@ import model.modes.Mode;
 import view.ConsoleView;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
@@ -65,6 +64,19 @@ public abstract class Teacher extends Person implements Serializable {
         return iterator.previous();
     }
 
+    public Question giveNextQuestionWithoutDeletingOldMessage() {
+        if (!iterator.hasNext()){
+            return null;
+        }
+        return iterator.next();
+    }
+    public Question givePreviousQuestionWithoutDeletingOldMessage() {
+        if (!iterator.hasPrevious()){
+            return null;
+        }
+        return iterator.previous();
+    }
+
     public void correctStudentAnswer() {
         setHealth(getHealth() - 25);
         if (getHealth() <= 0) {
@@ -72,16 +84,23 @@ public abstract class Teacher extends Person implements Serializable {
             return;
         }
         if (getHealth() > 0) consoleView.correctAnswerOutput(this);
-        message += correctStudentReaction();
+        String reaction = correctStudentReaction();
+        if(reaction.length() >= 1){
+            message += "\n" + reaction;
+        }
     }
 
     public void wrongStudentAnswer() {
         setHealth(getHealth() + 5);
-        message += wrongStudentReaction();
+        String reaction = wrongStudentReaction();
+        if(reaction.length() >= 1){
+            message += reaction;
+        }
     }
 
     public void addNextQuestion(Question question){
         iterator.add(question);
+        iterator.previous();
     }
 
     protected String correctStudentReaction(){

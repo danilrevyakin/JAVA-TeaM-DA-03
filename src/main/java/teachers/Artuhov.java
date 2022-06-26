@@ -22,7 +22,7 @@ public final class Artuhov extends Teacher implements Serializable {
 
 	private String ArtuhovReactionOnGoodRGR(){
 		int points = rand.nextInt(10) + 5;
-		String message = "I like your work. It is so unique. I give you " + points + " additional points";
+		String message = "\nI like your work. It is so unique. I give you " + points + " additional points";
 		getStudent().increaseScoreOn(points);
 		return message;
 	}
@@ -34,14 +34,14 @@ public final class Artuhov extends Teacher implements Serializable {
 	private String ArtuhovReactionOnBadGR(){
 		if(this.hasQuestions()){
 			String message = "Oh.., Ok, I let you read my book on next question";
-			Question task = this.giveNextQuestion();
+			Question task = this.giveNextQuestionWithoutDeletingOldMessage();
 			String question = task.getQuestion();
 			List<String> chars = Arrays.asList(question.split(""));
 			Collections.shuffle(chars);
 			String newQuestion = String.join("",chars);
 			newQuestion += "\nI hope you use program for circuitry to launching my book";
 			task.setQuestion(newQuestion);
-			this.givePreviousQuestion();//step backward
+			givePreviousQuestionWithoutDeletingOldMessage();
 			return message;
 		}
 		return "";
