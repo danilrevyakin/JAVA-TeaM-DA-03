@@ -7,16 +7,37 @@ import javafx.util.Pair;
 import java.io.IOException;
 
 public class ControllerFactory {
-    static public Pair<Object, Pane> getControllerAndPane(String pathToFXML, Object object){
-        FXMLLoader fxmlLoader = new FXMLLoader();
+
+    private FXMLLoader fxmlLoader;
+    private Pane pane;
+
+    private Object controller;
+
+    private final String pathToFXML;
+    private final Object object;
+
+    public ControllerFactory(String pathToFXML, Object object) {
+        this.pathToFXML = pathToFXML;
+        this.object = object;
+        fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(object.getClass().getResource(pathToFXML));
-        Pane pane;
         try {
             pane = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Object controller = fxmlLoader.getController();
-        return new Pair<>(controller, pane);
+        controller = fxmlLoader.getController();
+    }
+
+    public FXMLLoader getFxmlLoader() {
+        return fxmlLoader;
+    }
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public Object getController() {
+        return controller;
     }
 }

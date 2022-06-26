@@ -59,7 +59,6 @@ public class ExamController implements Initializable {
     private final String pathToStudentPhoto = "studentBrown.png";
 
     private Question question;
-    private final ControllerFactory controllerFactory = new ControllerFactory();
     private final Student student;
     private PersonController studentController;
     private final Teacher teacher;
@@ -108,28 +107,28 @@ public class ExamController implements Initializable {
 
     private MessageController messageController;
     private HBox getMessageView(String stringMessage) {
-        Pair<Object, Pane> data = controllerFactory.getControllerAndPane("Message.fxml", this);
-        messageController = (MessageController) data.getKey();
+        ControllerFactory controllerFactory = new ControllerFactory("Message.fxml", this);
+        messageController = (MessageController) controllerFactory.getController();
         messageController.setText(stringMessage);
-        return (HBox) data.getValue();
+        return (HBox) controllerFactory.getPane();
     }
 
 
     private VBox getTeacherView(Teacher teacher) {
-        Pair<Object, Pane> data = controllerFactory.getControllerAndPane("Person.fxml", this);
-        teacherController = (PersonController) data.getKey();
+        ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
+        teacherController = (PersonController) controllerFactory.getController();
         List<String> teacherData = PersonController.getAdditionalDataOfTeacher(teacher);
         PersonController.setPersonData(teacher, pathToTeacherPhoto, teacherData, teacherController);
-        return (VBox) data.getValue();
+        return (VBox) controllerFactory.getPane();
     }
 
 
     private VBox getStudentView(Student student) {
-        Pair<Object, Pane> data = controllerFactory.getControllerAndPane("Person.fxml", this);
-        studentController = (PersonController) data.getKey();
+        ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
+        studentController = (PersonController) controllerFactory.getController();
         List<String> studentData = PersonController.getAdditionalDataOfStudent(student);
         PersonController.setPersonData(student, pathToStudentPhoto, studentData, studentController);
-        return (VBox) data.getValue();
+        return (VBox) controllerFactory.getPane();
     }
 
 
@@ -149,6 +148,9 @@ public class ExamController implements Initializable {
     }
 
     public void sendMessage(String message, boolean isTeacher){
+        if(message.length() <= 4 && isTeacher){
+            return;
+        }
         HBox hBox = new HBox();
         if(isTeacher){
             hBox.setAlignment(Pos.CENTER_LEFT);
