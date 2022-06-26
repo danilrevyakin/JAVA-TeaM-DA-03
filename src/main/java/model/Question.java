@@ -3,6 +3,7 @@ package model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,17 +17,8 @@ public class Question implements Serializable{
     @Column(name = "question", nullable = false)
     private String question;
 
-    @Column(name = "option1", nullable = false)
-    private String option1;
-
-    @Column(name = "option2", nullable = false)
-    private String option2;
-
-    @Column(name = "option3", nullable = false)
-    private String option3;
-
-    @Column(name = "option4", nullable = false)
-    private String option4;
+    @Column(name = "options", nullable = false)
+    private String options;
 
     @Column(name = "teacher_id", nullable = false)
     private int teacherID;
@@ -34,13 +26,14 @@ public class Question implements Serializable{
     @Column(name = "answer", nullable = false)
     private String answer;
 
-    public Question(String question, String option1, String option2, String option3, String option4, String answer, int teacherID){
+    @Transient
+    private List<String> choices;
+
+    public Question(String question, String options, int teacherID, String answer){
         this.question = question;
+        this.options = options;
+        this.choices = Arrays.stream(options.split("//")).toList();
         this.answer = answer;
-        this.option1 = option1;
-        this.option2 = option2;
-        this.option3 = option3;
-        this.option4 = option4;
         this.teacherID = teacherID;
     }
 
@@ -48,21 +41,16 @@ public class Question implements Serializable{
         this.question = question;
     }
 
-    public void setChoices(ArrayList<String> choices){
-        if(choices.size() < 4){
+    public void setChoices(ArrayList<String> variants){
+        if(variants.size() < 1){
             return;
         }
-        this.option1 = choices.get(0);
-        this.option2 = choices.get(1);
-        this.option3 = choices.get(2);
-        this.option4 = choices.get(3);
+        this.choices = variants;
     }
 
     public Question() {}
 
     //getters
-
-
     public int getTeacherID() {
         return teacherID;
     }
@@ -71,14 +59,18 @@ public class Question implements Serializable{
         return question;
     }
 
-    public String getAnswer(){
-        return answer;
-    }
+    public String getAnswer(){return answer;}
 
-    public ArrayList<String> getChoices(){
-        ArrayList<String> choices = new ArrayList<>(List.of(option1, option2,option3,option4));
-        Collections.shuffle(choices);
-        return choices;
+    public ArrayList<String> getChoices() {
+        ArrayList<String> variants;
+        if (options != null) {
+            variants = new ArrayList<>(Arrays.asList(options.split("//")));
+            Collections.shuffle(variants);
+            return variants;
+        }
+        else{
+            return (ArrayList<String>) choices;
+        }
     }
 
     public void setAnswer(String answer) {
@@ -87,21 +79,5 @@ public class Question implements Serializable{
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id =" + id +
-                ", question ='" + question + '\'' +
-                ", option1 ='" + option1 + '\'' +
-                ", option2 ='" + option2 + '\'' +
-                ", option3 ='" + option3 + '\'' +
-                ", option4 ='" + option4 + '\'' +
-                "}\n";
     }
 }
