@@ -103,7 +103,7 @@ public class MissionManager {
     }
 
     private void setResultMission(Student student, Mission mission) {
-        if (student.getHealth() < 0) {
+        if (student.getHealth() <= 0) {
             setMissionFailedState(student);
             return;
         }else if(mission.getTeacher().hasQuestions()){

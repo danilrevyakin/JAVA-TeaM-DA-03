@@ -12,16 +12,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 public class ExamController implements Initializable {
     @FXML
@@ -57,6 +61,7 @@ public class ExamController implements Initializable {
 
     private final String pathToTeacherPhoto = "oldTeacher.png";
     private final String pathToStudentPhoto = "studentBrown.png";
+    private final String pathToExitPhoto = "EscapeFromIASA.png";
 
     private Question question;
     private final Student student;
@@ -64,7 +69,7 @@ public class ExamController implements Initializable {
     private final Teacher teacher;
     private PersonController teacherController;
     private final MissionManager missionManager;
-
+    private Button exitButton;
 
     private final SeparatorFactory factory = new SeparatorFactory();
 
@@ -90,22 +95,42 @@ public class ExamController implements Initializable {
         this.teacher = teacher;
     }
 
-    public void getChoice(ActionEvent e){
+    public void getChoice(ActionEvent e) {
         currentAnswer = studentChoices.getValue();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TeacherPane.getChildren().add(getTeacherView(teacher));
         StudentPane.getChildren().add(getStudentView(student));
         studentChoices.setOnAction(this::getChoice);
-        updateQuestion();
         VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, true));
+        exitButton = initExitButton();
+        VBox box = new VBox();
+        box.getChildren().add(getTeacherView(teacher));
+        box.getChildren().add(exitButton);
+        TeacherPane.getChildren().add(box);
+        TeacherPane.setAlignment(Pos.TOP_CENTER);
+        box.setAlignment(Pos.TOP_CENTER);
+        updateQuestion();
     }
 
+    public Button initExitButton() {
+        Image image = new Image(getClass().getResourceAsStream(pathToExitPhoto));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(100);
+        Button exitButton = new Button();
+        exitButton.setGraphic(imageView);
+        exitButton.setOnAction(this::setActionExitButton);
+        return exitButton;
+    }
 
+    private void setActionExitButton(ActionEvent e) {
+        this.closeWindow();
+    }
 
     private MessageController messageController;
+
     private HBox getMessageView(String stringMessage) {
         ControllerFactory controllerFactory = new ControllerFactory("Message.fxml", this);
         messageController = (MessageController) controllerFactory.getController();
@@ -141,20 +166,21 @@ public class ExamController implements Initializable {
 
 
     private void updateQuestion() {
+        exitButton.setDisable(true);
         studentChoices.getItems().clear();
         question = teacher.giveNextQuestion();
         sendMessage(question.getQuestion(), true);
         studentChoices.getItems().addAll(question.getChoices());
     }
 
-    public void sendMessage(String message, boolean isTeacher){
-        if(message.length() <= 4 && isTeacher){
+    public void sendMessage(String message, boolean isTeacher) {
+        if (message.length() <= 4 && isTeacher) {
             return;
         }
         HBox hBox = new HBox();
-        if(isTeacher){
+        if (isTeacher) {
             hBox.setAlignment(Pos.CENTER_LEFT);
-        }else {
+        } else {
             hBox.setAlignment(Pos.CENTER_RIGHT);
         }
         hBox.getChildren().add(getMessageView(message));
@@ -171,6 +197,7 @@ public class ExamController implements Initializable {
         if (null == currentAnswer) {
             return;
         }
+        exitButton.setDisable(false);
         sendMessage(currentAnswer, false);
         missionManager.analiseResult(currentAnswer, question);
         sendMessage(teacher.say(), true);
@@ -184,12 +211,13 @@ public class ExamController implements Initializable {
     }
 
     private void finishMission() {
-        closeWindow();
+        studentChoices.setDisable(true);
+        SendButton.setDisable(true);
+        sendMessage(missionManager.getMission().getStateMission().getNormalName(), true);
     }
 
     private void closeWindow() {
-        this.ScrollChatBox.getScene().getWindow().hide();
+        Stage stage = (Stage) this.BottomPane.getScene().getWindow();
+        stage.close();
     }
-
-
 }

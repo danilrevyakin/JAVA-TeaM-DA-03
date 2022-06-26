@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Mission implements Serializable {
-    private int missionNumber;
+    private final int missionNumber;
     private final int playersNumber = 2;
     private ArrayList<Person> people = new ArrayList<>(playersNumber);
     private Teacher teacher;
@@ -14,7 +14,23 @@ public class Mission implements Serializable {
     private State stateMission;
 
     public enum State {
-        MISSION_COMPLETED, MISSION_FAILED, MISSION_UNCOMPLETED
+        MISSION_COMPLETED("Mission completed"),
+        MISSION_FAILED("Mission failed"),
+        MISSION_UNCOMPLETED("Mission uncompleted");
+
+        private final String normalName;
+
+        State(String normalName) {
+            this.normalName = normalName;
+        }
+
+        public String getNormalName() {
+            return normalName;
+        }
+    }
+
+    public State getStateMission() {
+        return stateMission;
     }
 
     public Mission(Student student, Teacher teacher, int missionNumber) {

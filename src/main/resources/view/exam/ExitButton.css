@@ -1,0 +1,6 @@
+.exitButton {
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-border-color: orange;
+    -fx-background-color: #2E3348;
+}

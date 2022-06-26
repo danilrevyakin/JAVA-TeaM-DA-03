@@ -80,7 +80,7 @@ public abstract class Teacher extends Person implements Serializable {
     public void correctStudentAnswer() {
         setHealth(getHealth() - 25);
         if (getHealth() <= 0) {
-            consoleView.teacherDefeat();
+            message += consoleView.teacherDefeat();
             return;
         }
         if (getHealth() > 0) consoleView.correctAnswerOutput(this);
@@ -150,6 +150,9 @@ public abstract class Teacher extends Person implements Serializable {
     }
 
     public String say(){
+        if(!hasQuestions()){
+            message += "\nI have no questions for you(";
+        }
         return message;
     }
 

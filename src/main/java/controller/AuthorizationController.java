@@ -61,6 +61,8 @@ public class AuthorizationController {
 
         if (user != null && user.getPassword().equals(loginPassword)){
             try {
+                Stage stage = (Stage) authButton.getScene().getWindow();
+                stage.close();
                 gameManager.selectCreatedPlayer(new Student(user.getPlayer(), user));
                 //openNewScene(); ТУТ МАЄ БУТИ .fxml МАПИ
             } catch (IOException e) {
