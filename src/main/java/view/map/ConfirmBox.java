@@ -34,14 +34,10 @@ public class ConfirmBox {
 
         yesButton.setOnAction(e -> {
             answer = true;
-            if (!student.availableMissions.containsKey(missionNumber)) {
-                student.setCurrentMission(student.availableMissions.get(missionNumber));
-                ExamController.playMissionInGUI(student);
-                System.out.println("Opening");
-                window.close();
-            }else{
-                //smth
-            }
+            student.setCurrentMission(student.availableMissions.get(missionNumber));
+            ExamController.playMissionInGUI(student);
+            System.out.println("Opening");
+            window.close();
         });
         noButton.setOnAction(e -> {
             answer = false;

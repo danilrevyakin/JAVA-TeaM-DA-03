@@ -31,6 +31,9 @@ public class Player {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Transient
+    private String login;
+
     //default constructor
     public Player() {
         health = 50;
@@ -95,7 +98,11 @@ public class Player {
         this.score = score;
     }
 
+    public String getLogin() {
+        return user.getLogin();
+    }
 
-
-
+    public void setLogin(String login) {
+        this.login = login;
+    }
 }

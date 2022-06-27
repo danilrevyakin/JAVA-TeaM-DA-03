@@ -335,8 +335,7 @@ public class StaticMapController implements Initializable {
           noPress();
           player.setLayoutX(player.getLayoutX()+50); player.setLayoutY(player.getLayoutY()+50);
           //Check
-          if(student.availableMissions.get(currentMission).getStateMission() == Mission.State.MISSION_UNCOMPLETED
-                  && currentMission != -1)
+          if(currentMission != -1)
               ConfirmBox.display("Enter " + currentMission + " mission?", student, currentMission);
           else {
               //ConfirmBox.display("Exit to game menu?");

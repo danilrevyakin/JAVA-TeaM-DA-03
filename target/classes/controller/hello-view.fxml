@@ -21,7 +21,7 @@
                   <Font size="17.0" />
                </font>
             </PasswordField>
-            <Label layoutX="282.0" layoutY="34.0" prefHeight="47.0" prefWidth="152.0" text="Authorization" textFill="#a8a2a2">
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="34.0" prefHeight="47.0" prefWidth="700.0" text="Authorization" textFill="#a8a2a2">
                <font>
                   <Font name="Bangla MN" size="20.0" />
                </font>
@@ -33,11 +33,12 @@
             </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="163.0" layoutY="24.0" text="Escape from IASA" textFill="WHITE">
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="25.0" prefHeight="80.0" prefWidth="700.0" text="Escape from IASA" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Bangla MN" size="35.0" />
          </font>
       </Label>
       <Button fx:id="loggingSignUpButton" layoutX="576.0" layoutY="12.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="113.0" text="Sign up" />
+      <Button fx:id="loggingStatisticsButton" layoutX="576.0" layoutY="46.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="113.0" text="Statistics" />
    </children>
 </AnchorPane>

@@ -133,4 +133,14 @@ public class Student extends Person implements Serializable {
     public Player getPlayer() {
         return player;
     }
+
+    @Override
+    public String toString() {
+        return user.getLogin()
+                + "\tLevel: " + player.getLevel()
+                + "\tScore: " + player.getScore()
+                + "\tMana: " + player.getMana()
+                + "\tHealth: " + player.getHealth()
+                + "\n";
+    }
 }

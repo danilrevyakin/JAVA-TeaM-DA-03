@@ -32,6 +32,9 @@ public class AuthorizationController {
     @FXML
     private PasswordField passwordField;
 
+    @FXML
+    private Button loggingStatisticsButton;
+
     UserDao userDao;
     PlayerDao playerDao;
 
@@ -52,6 +55,23 @@ public class AuthorizationController {
             }
         });
 
+        loggingStatisticsButton.setOnAction(event -> {
+            loggingStatisticsButton.getScene().getWindow().hide();
+            URL url = StatisticsController.class.getResource("statistics.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        });
+
         openNewScene("signUp.fxml");
 
     }
@@ -64,8 +84,6 @@ public class AuthorizationController {
                 Stage stage = (Stage) authButton.getScene().getWindow();
                 stage.close();
                 Student student = new Student(user.getPlayer(), user);
-                //gameManager.selectCreatedPlayer(student);
-                //openNewScene(); ТУТ МАЄ БУТИ .fxml МАПИ
                 MissionManager manager = new MissionManager();
         		manager.generateMissions(student);
                 StaticMapController.playMapInGUI(student);

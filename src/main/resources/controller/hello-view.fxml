@@ -39,5 +39,6 @@
          </font>
       </Label>
       <Button fx:id="loggingSignUpButton" layoutX="576.0" layoutY="12.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="113.0" text="Sign up" />
+      <Button fx:id="loggingStatisticsButton" layoutX="576.0" layoutY="46.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="113.0" text="Statistics" />
    </children>
 </AnchorPane>
