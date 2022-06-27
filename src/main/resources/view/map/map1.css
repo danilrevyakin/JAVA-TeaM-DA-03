@@ -1,0 +1,15 @@
+#scene1{
+	-fx-background-image: url("map1.jpg");
+    -fx-background-size: cover;
+}
+
+#bt1{
+-fx-border-color: #fff;
+-fx-background-color: #fff;
+-fx-text-fill: #fff;
+}
+
+#infoLabel{
+    -fx-color: #fff;
+
+}

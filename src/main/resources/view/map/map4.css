@@ -1,0 +1,9 @@
+.root{
+	-fx-background-image: url("map4.jpg");
+    -fx-background-size: cover;
+}
+#bt1{
+-fx-border-color: #fff;
+-fx-background-color: #fff;
+-fx-text-fill: #fff;
+}
