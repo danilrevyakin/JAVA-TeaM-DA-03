@@ -1,7 +1,7 @@
 package controller.factory;
 
 import controller.SQLiteJDBC;
-import hibernateUtil.QuestionDao;
+import controller.hibernateUtil.QuestionDao;
 import model.Pair;
 import model.Teacher;
 
@@ -20,7 +20,7 @@ public final class Factory implements TeacherFactory {
 		Class myClass;
 		Teacher t = null;
 		try {
-			myClass = Class.forName("teachers." + className.substring(3));
+			myClass = Class.forName("model.teachers." + className.substring(3));
 			Constructor constrt = myClass.getConstructor(String.class, String.class, List.class, int.class, int.class, int.class);
 			String name = className.substring(3);
 			String sex = pair.getSecond();

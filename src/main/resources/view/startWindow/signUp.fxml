@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.startWindow.RegistrationController">
+    <children>
+        <AnchorPane layoutX="-9.0" layoutY="100.0" prefHeight="309.0" prefWidth="709.0" style="-fx-background-color: fafafa;">
+            <children>
+                <TextField fx:id="signUpLogin" layoutX="50.0" layoutY="185.0" prefHeight="34.0" prefWidth="277.0" promptText="Login">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="signUpPassword" layoutX="408.0" layoutY="185.0" prefHeight="34.0" prefWidth="277.0" promptText="Password">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </PasswordField>
+                <Button fx:id="signUpRegButton" layoutX="318.0" layoutY="258.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="77.0" style="-fx-background-color: Orange;" text="Sign Up">
+                    <font>
+                        <Font name="Bangla MN" size="11.0" />
+                    </font>
+                </Button>
+            <TextField fx:id="signUpName" layoutX="50.0" layoutY="41.0" prefHeight="34.0" prefWidth="277.0" promptText="First name">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="signUpSurname" layoutX="408.0" layoutY="40.0" prefHeight="34.0" prefWidth="277.0" promptText="Last name">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="signUpEmail" layoutX="50.0" layoutY="110.0" prefHeight="34.0" prefWidth="277.0" promptText="Email">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+            <CheckBox fx:id="signUpMale" layoutX="408.0" layoutY="118.0" mnemonicParsing="false" text="Male" textFill="SILVER" />
+            <CheckBox fx:id="signUpFemale" layoutX="502.0" layoutY="118.0" mnemonicParsing="false" text="Female" textFill="SILVER" />
+            <CheckBox fx:id="signUpOther" layoutX="605.0" layoutY="118.0" mnemonicParsing="false" text="Other" textFill="SILVER" />
+            <Label fx:id="nameWarning" layoutX="50.0" layoutY="23.0" prefHeight="17.0" prefWidth="105.0" />
+            <Label fx:id="emailWarning" layoutX="50.0" layoutY="93.0" prefHeight="17.0" prefWidth="89.0" />
+            <Label fx:id="loginWarning" layoutX="50.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" />
+            <Label fx:id="surnameWarning" layoutX="408.0" layoutY="23.0" prefHeight="17.0" prefWidth="105.0" />
+            <Label fx:id="passwordWarning" layoutX="408.0" layoutY="168.0" prefHeight="17.0" prefWidth="126.0" />
+            <Label fx:id="signUpSexWarning" layoutX="408.0" layoutY="102.0" prefHeight="17.0" prefWidth="77.0" />
+            </children>
+        </AnchorPane>
+        <Label layoutX="163.0" layoutY="24.0" text="Escape from IASA" textFill="WHITE">
+            <font>
+                <Font name="Bangla MN" size="35.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

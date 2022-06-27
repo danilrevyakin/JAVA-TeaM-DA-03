@@ -1,7 +1,6 @@
 package view;
 
-import controller.AuthorizationController;
-import controller.StatisticsController;
+import view.startWindow.AuthorizationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,7 +1,7 @@
 package view.map;
 import controller.MissionManager;
-import controller.RegistrationController;
-import hibernateUtil.PlayerDao;
+import view.startWindow.RegistrationController;
+import controller.hibernateUtil.PlayerDao;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -20,10 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.Mission;
 import model.Student;
-import view.map.ConfirmBox;
-import view.exam.ExamController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -80,7 +77,7 @@ public class StaticMapController implements Initializable {
         stage.setTitle("Escape From KPI");
         stage.getIcons().add(new Image(Objects.requireNonNull(StaticMapController.class.getResourceAsStream("logo2.png"))));
         stage.setScene(new Scene(root, screenWidth, screenHeight));
-        stage.showAndWait();
+        stage.show();
     }
 
     private BooleanBinding keyPressed = upPressed.or(leftPressed).or(downPressed).or(rightPressed);
