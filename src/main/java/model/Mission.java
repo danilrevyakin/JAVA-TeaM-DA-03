@@ -33,13 +33,13 @@ public class Mission implements Serializable {
         return stateMission;
     }
 
-    public Mission(Student student, Teacher teacher, int missionNumber) {
-        this.missionNumber = missionNumber;
+    public Mission(Teacher teacher, Student student) {
         this.teacher = teacher;
         this.student = student;
-        people.add(student);
-        people.add(teacher);
+        this.missionNumber = teacher.getId();
         stateMission = State.MISSION_UNCOMPLETED;
+        people.add(teacher);
+        people.add(student);
     }
 
     public boolean missionAvailable() {

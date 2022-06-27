@@ -1,7 +1,6 @@
 package view.map;
 
 
-import controller.StudentManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,12 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Mission;
 import model.Student;
 import view.exam.ExamController;
 
@@ -22,9 +18,6 @@ import java.util.Objects;
 
 public class ConfirmBox {
     static boolean answer;
-
-    static private final StudentManager studentManager= new StudentManager();
-
     public static boolean display(String text, Student student, int missionNumber){
         Stage window = new Stage();
         window.getIcons().add(new Image(Objects.requireNonNull(ConfirmBox.class.getResourceAsStream("logo2.png"))));
@@ -41,11 +34,14 @@ public class ConfirmBox {
 
         yesButton.setOnAction(e -> {
             answer = true;
-            //studentManager.getAvailableMissions(student);
-            student.setCurrentMission(new Mission(student, student.missions.get(missionNumber).getTeacher(), missionNumber));
-            ExamController.playMissionInGUI(student);
-            System.out.println("Opening");
-            window.close();
+            if (!student.availableMissions.containsKey(missionNumber)) {
+                student.setCurrentMission(student.availableMissions.get(missionNumber));
+                ExamController.playMissionInGUI(student);
+                System.out.println("Opening");
+                window.close();
+            }else{
+                //smth
+            }
         });
         noButton.setOnAction(e -> {
             answer = false;

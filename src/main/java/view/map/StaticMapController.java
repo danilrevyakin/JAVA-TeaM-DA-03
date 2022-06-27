@@ -1,6 +1,7 @@
 package view.map;
 import controller.MissionManager;
 import controller.RegistrationController;
+import hibernateUtil.PlayerDao;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -333,12 +334,16 @@ public class StaticMapController implements Initializable {
           timer.stop();
           noPress();
           player.setLayoutX(player.getLayoutX()+50); player.setLayoutY(player.getLayoutY()+50);
-          if(currentMission != -1)
+          //Check
+          if(student.availableMissions.get(currentMission).getStateMission() == Mission.State.MISSION_UNCOMPLETED
+                  && currentMission != -1)
               ConfirmBox.display("Enter " + currentMission + " mission?", student, currentMission);
           else {
               //ConfirmBox.display("Exit to game menu?");
+              PlayerDao playerDao = new PlayerDao();
               Stage st = (Stage)scene1.getScene().getWindow();
               st.close();
+              playerDao.update(student.getPlayer());
               URL url = RegistrationController.class.getResource("Hello-view.fxml");
               FXMLLoader loader = new FXMLLoader(url);
 

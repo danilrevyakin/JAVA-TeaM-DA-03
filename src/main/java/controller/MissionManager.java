@@ -1,83 +1,48 @@
 package controller;
 
-
 import model.*;
-import view.ConsoleView;
-import view.exam.ExamController;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.IntStream;
 
 public class MissionManager {
-
-    private final ConsoleView consoleView = new ConsoleView();
     private final TeacherManager teacherManager = new TeacherManager();
-    private final StudentManager studentManager = new StudentManager();
     public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 10
-//    private Mission mission;
-//    public MissionManager(){
-//    }
-//    public MissionManager(Mission mission){
-//        this.mission = mission;
-//    }
-    private Mission createMission(Student student, int missionsNum, Teacher teacher) {
-        return new Mission(student, teacher, missionsNum);
+
+    private Mission createMission(Teacher teacher, Student student){
+        return new Mission(teacher, student);
     }
+
+    public void generateMissions(Student student){
+        student.availableMissions = new HashMap<>();
+        List<Teacher> teachers = teacherManager.getTeachers();
+        List<String> completed;
+        if (student.getPlayer().getCompletedMissions() != null) {
+            completed = Arrays.stream(student.getPlayer().getCompletedMissions().split(",")).toList();
+            IntStream.range(0, MAX_NUMBER_OF_MISSIONS)
+                    .forEach(index -> {
+                                student.availableMissions.put(index + 1, createMission(teachers.get(index), student));
+                                if (completed.contains(String.valueOf(index + 1))) {
+                                    student.availableMissions.get(index + 1).setCompleted();
+                                }
+                            }
+                    );
+        }else{
+            IntStream.range(0, MAX_NUMBER_OF_MISSIONS)
+                    .forEach(index -> student.availableMissions.put(index + 1, createMission(teachers.get(index), student)));
+        }
+
+
+    }
+
     public enum AnswerResult{
         CorrectAnswer, WrongAnswer
     }
-    public void generateMissions(Student student) {
-        student.missions = new ArrayList<>();
-        List<Teacher> Teachers = teacherManager.getTeachers();
-        for (int i = 0; i < MAX_NUMBER_OF_MISSIONS; i++) {
-            student.missions.add(createMission(student, (1 + i), Teachers.get(i)));
-        }
-    }
-
-//    public void openMission(Student student) {
-//        final int unAvailableMission = -100;
-//        int missionNumber = unAvailableMission;
-//        final int EXIT = 0;
-//
-//        if (!student.hasAvailableMission()) {
-//            consoleView.hasNoMission();
-//            return;
-//        }
-//        for (; ; ) {
-////        	while (missionNumber < 0 || missionNumber > student.missions.size()){
-////                consoleView.choosingMission(student.missions);
-////                missionNumber = consoleView.missinNumScanner(missionNumber);
-////                if(missionNumber == EXIT) {
-////                	return;
-////                }
-////            }
-//            missionNumber = 2;
-//            mission = student.missions.get(missionNumber - 1);
-//            if (mission.missionAvailable())
-//                break;
-//            else missionNumber = unAvailableMission;
-//        }
-//        startMission(student, mission);
-//    }
-
-    private void startMission(Student student, Mission mission) {
-        if (!mission.missionAvailable()) {
-            consoleView.missionCompleted();
-            return;
-        }
-        consoleView.open(mission);
-        playMission(student, mission);
-    }
-
-    public void playMission(Student student, Mission mission) {
-        mission.getTeacher().setStudent(student);
-        ExamController.playMissionInGUI(student);
-    }
 
     public AnswerResult analiseResult(String studentAnswer, Question question, Mission mission){
-        studentAnswer = studentAnswer.replaceAll(" ", "");
-        String realAnswer = question.getAnswer().replaceAll(" ", "");
+        String realAnswer = question.getAnswer();
         if (studentAnswer.equalsIgnoreCase(realAnswer)){
             correctAnswer(mission);
             setResultMission(mission.getStudent(), mission);
@@ -86,13 +51,6 @@ public class MissionManager {
         wrongAnswer(mission);
         setResultMission(mission.getStudent(), mission);
         return AnswerResult.WrongAnswer;
-    }
-
-
-
-    private String studentDoTask(Question question) {
-        consoleView.quiz(question);
-        return studentManager.giveAnswer();
     }
 
     private void wrongAnswer(Mission mission) {
@@ -120,10 +78,12 @@ public class MissionManager {
     private void setMissionFailedState(Student student, Mission mission){
         mission.setFailed();
         student.decreaseCounterAvailableMissions();
+        student.availableMissions.get(mission.getMissionNumber()).setFailed();
     }
 
     private void setMissionSuccessfulState(Student student, Mission mission){
         mission.setCompleted();
+        student.availableMissions.get(mission.getMissionNumber()).setCompleted();
         student.getPlayer().setCompletedMissions(
                 student.getPlayer().getCompletedMissions()
                         + mission.getTeacher().getId()

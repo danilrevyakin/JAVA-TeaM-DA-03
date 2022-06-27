@@ -5,7 +5,9 @@ import view.ConsoleView;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Student extends Person implements Serializable {
     private static final int MAX_MANA = 100;
@@ -18,7 +20,7 @@ public class Student extends Person implements Serializable {
     private int counterAvailableMissions = MissionManager.MAX_NUMBER_OF_MISSIONS;
 
     private final ConsoleView consoleView = new ConsoleView();
-    public List<Mission> missions;
+    public Map<Integer, Mission> availableMissions;
 
     public Student(Player player, User user) throws IOException {
         this.player = player;

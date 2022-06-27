@@ -4,6 +4,7 @@ import hibernateUtil.UserDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import model.Player;
 import model.Student;
 import model.User;
@@ -162,6 +163,8 @@ public class RegistrationController {
             MissionManager manager = new MissionManager();
             Student student = createStudent(user);
     		manager.generateMissions(student);
+            Stage stage = (Stage) signUpRegButton.getScene().getWindow();
+            stage.close();
             StaticMapController.playMapInGUI(student);
         }
     }
@@ -187,7 +190,6 @@ public class RegistrationController {
         if (!matcher.matches()){
             label.setText(warning);
             label.setTextFill(Color.color(1, 0, 0));
-            textField.clear();
             isCorrect = false;
         } else {
             label.setText("");
