@@ -4,10 +4,10 @@ import hibernateUtil.UserDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import model.Player;
 import model.Student;
 import model.User;
+import view.map.StaticMapController;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -67,14 +67,13 @@ public class RegistrationController {
     private static Properties warningProperties;
     private FileReader reader;
     private boolean isCorrect;
-    private final GameManager gameManager;
+
 
 
     public RegistrationController(){
         regexProperties = new Properties();
         warningProperties = new Properties();
         isCorrect = true;
-        gameManager = new GameManager();
 
         try {
             reader = new FileReader("src/main/resources/regex.properties");
@@ -112,7 +111,11 @@ public class RegistrationController {
 
     @FXML
     void initialize() {
-        signUpRegButton.setOnAction(event -> processUser());
+        signUpRegButton.setOnAction(event -> {
+            processUser();
+            isCorrect = true;
+        });
+
     }
 
     public void processUser(){
@@ -156,11 +159,14 @@ public class RegistrationController {
 
         if(isCorrect) {
             User user = new User(firstName, lastName, sex, email, login, password);
-            createStudent(user);
+            MissionManager manager = new MissionManager();
+            Student student = createStudent(user);
+    		manager.generateMissions(student);
+            StaticMapController.playMapInGUI(student);
         }
     }
 
-    private void createStudent(User user){
+    private Student createStudent(User user){
         UserDao userDao = new UserDao();
         Player player = new Player();
         user.setPlayer(player);
@@ -172,7 +178,7 @@ public class RegistrationController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        gameManager.newPlayer(student);
+        return student;
     }
 
     private void checkRegex(Type type, String input, TextField textField, Label label, String warning) {

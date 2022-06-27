@@ -73,10 +73,10 @@ public class ExamController implements Initializable {
 
     private final SeparatorFactory factory = new SeparatorFactory();
 
-    static public void playMissionInGUI(Mission mission, MissionManager missionManager) {
+    static public void playMissionInGUI(Student student) {
         URL url = ExamController.class.getResource("Exam.fxml");
         FXMLLoader loader = new FXMLLoader(url);
-        loader.setControllerFactory(controllerClass -> new ExamController(mission.getStudent(), mission.getTeacher(), missionManager));
+        loader.setControllerFactory(controllerClass -> new ExamController(student));
         try {
             loader.load();
         } catch (IOException e) {
@@ -89,10 +89,11 @@ public class ExamController implements Initializable {
         stage.showAndWait();
     }
 
-    public ExamController(Student student, Teacher teacher, MissionManager missionManager) {
-        this.missionManager = missionManager;
+    public ExamController(Student student) {
         this.student = student;
-        this.teacher = teacher;
+        this.teacher = student.getCurrentMission().getTeacher();
+        missionManager = new MissionManager();
+        teacher.setStudent(student);
     }
 
     public void getChoice(ActionEvent e) {
@@ -199,9 +200,9 @@ public class ExamController implements Initializable {
         }
         exitButton.setDisable(false);
         sendMessage(currentAnswer, false);
-        missionManager.analiseResult(currentAnswer, question);
+        missionManager.analiseResult(currentAnswer, question, student.getCurrentMission());
         sendMessage(teacher.say(), true);
-        if (missionManager.getMission().missionAvailable()) {
+        if (student.getCurrentMission().missionAvailable()) {
             updateQuestion();
         } else {
             finishMission();
@@ -213,7 +214,7 @@ public class ExamController implements Initializable {
     private void finishMission() {
         studentChoices.setDisable(true);
         SendButton.setDisable(true);
-        sendMessage(missionManager.getMission().getStateMission().getNormalName(), true);
+        sendMessage(student.getCurrentMission().getStateMission().getNormalName(), true);
     }
 
     private void closeWindow() {

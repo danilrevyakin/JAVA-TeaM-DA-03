@@ -15,7 +15,12 @@ public class MissionManager {
     private final TeacherManager teacherManager = new TeacherManager();
     private final StudentManager studentManager = new StudentManager();
     public static final int MAX_NUMBER_OF_MISSIONS = TeacherManager.NUMBER_OF_TEACHERS;  // Teachers are 10
-    private Mission mission;
+//    private Mission mission;
+//    public MissionManager(){
+//    }
+//    public MissionManager(Mission mission){
+//        this.mission = mission;
+//    }
     private Mission createMission(Student student, int missionsNum, Teacher teacher) {
         return new Mission(student, teacher, missionsNum);
     }
@@ -30,31 +35,31 @@ public class MissionManager {
         }
     }
 
-    public void openMission(Student student) {
-        final int unAvailableMission = -100;
-        int missionNumber = unAvailableMission;
-        final int EXIT = 0;
-
-        if (!student.hasAvailableMission()) {
-            consoleView.hasNoMission();
-            return;
-        }
-        for (; ; ) {
-//        	while (missionNumber < 0 || missionNumber > student.missions.size()){
-//                consoleView.choosingMission(student.missions);
-//                missionNumber = consoleView.missinNumScanner(missionNumber);
-//                if(missionNumber == EXIT) {
-//                	return;
-//                }
-//            }
-            missionNumber = 2;
-            mission = student.missions.get(missionNumber - 1);
-            if (mission.missionAvailable())
-                break;
-            else missionNumber = unAvailableMission;
-        }
-        startMission(student, mission);
-    }
+//    public void openMission(Student student) {
+//        final int unAvailableMission = -100;
+//        int missionNumber = unAvailableMission;
+//        final int EXIT = 0;
+//
+//        if (!student.hasAvailableMission()) {
+//            consoleView.hasNoMission();
+//            return;
+//        }
+//        for (; ; ) {
+////        	while (missionNumber < 0 || missionNumber > student.missions.size()){
+////                consoleView.choosingMission(student.missions);
+////                missionNumber = consoleView.missinNumScanner(missionNumber);
+////                if(missionNumber == EXIT) {
+////                	return;
+////                }
+////            }
+//            missionNumber = 2;
+//            mission = student.missions.get(missionNumber - 1);
+//            if (mission.missionAvailable())
+//                break;
+//            else missionNumber = unAvailableMission;
+//        }
+//        startMission(student, mission);
+//    }
 
     private void startMission(Student student, Mission mission) {
         if (!mission.missionAvailable()) {
@@ -67,10 +72,10 @@ public class MissionManager {
 
     public void playMission(Student student, Mission mission) {
         mission.getTeacher().setStudent(student);
-        ExamController.playMissionInGUI(mission, this);
+        ExamController.playMissionInGUI(student);
     }
 
-    public AnswerResult analiseResult(String studentAnswer, Question question){
+    public AnswerResult analiseResult(String studentAnswer, Question question, Mission mission){
         studentAnswer = studentAnswer.replaceAll(" ", "");
         String realAnswer = question.getAnswer().replaceAll(" ", "");
         if (studentAnswer.equalsIgnoreCase(realAnswer)){
@@ -104,20 +109,20 @@ public class MissionManager {
 
     private void setResultMission(Student student, Mission mission) {
         if (student.getHealth() <= 0) {
-            setMissionFailedState(student);
+            setMissionFailedState(student, mission);
             return;
         }else if(mission.getTeacher().hasQuestions()){
             return;
         }
-        setMissionSuccessfulState(student);
+        setMissionSuccessfulState(student, mission);
     }
 
-    private void setMissionFailedState(Student student){
+    private void setMissionFailedState(Student student, Mission mission){
         mission.setFailed();
         student.decreaseCounterAvailableMissions();
     }
 
-    private void setMissionSuccessfulState(Student student){
+    private void setMissionSuccessfulState(Student student, Mission mission){
         mission.setCompleted();
         student.getPlayer().setCompletedMissions(
                 student.getPlayer().getCompletedMissions()
@@ -129,7 +134,4 @@ public class MissionManager {
         student.decreaseCounterAvailableMissions();
     }
 
-    public Mission getMission() {
-        return mission;
-    }
 }

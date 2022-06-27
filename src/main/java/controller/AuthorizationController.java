@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Student;
 import model.User;
 import view.animations.Shake;
+import view.map.StaticMapController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,12 +34,11 @@ public class AuthorizationController {
 
     UserDao userDao;
     PlayerDao playerDao;
-    GameManager gameManager;
+
 
     public AuthorizationController() {
         userDao = new UserDao();
         playerDao = new PlayerDao();
-        gameManager = new GameManager();
     }
 
     @FXML
@@ -63,8 +63,12 @@ public class AuthorizationController {
             try {
                 Stage stage = (Stage) authButton.getScene().getWindow();
                 stage.close();
-                gameManager.selectCreatedPlayer(new Student(user.getPlayer(), user));
+                Student student = new Student(user.getPlayer(), user);
+                //gameManager.selectCreatedPlayer(student);
                 //openNewScene(); ТУТ МАЄ БУТИ .fxml МАПИ
+                MissionManager manager = new MissionManager();
+        		manager.generateMissions(student);
+                StaticMapController.playMapInGUI(student);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -13,13 +13,18 @@ public class StudentManager  {
         return consoleView.giveAnswer();
     }
 
-	public List<Student> sortStudents(List<Student> list){
-		return list.stream()
-				.sorted(Comparator.comparingInt(Student::getLevel)
-						.thenComparingInt(Student::getScore)
-						.thenComparingInt(Student::getMana)
-						.thenComparingInt(Student::getHealth)
-						.reversed())
-				.collect(Collectors.toList());
+	public void getAvailableMissions(Student student){
+//		MissionManager manager = new MissionManager();
+//		manager.generateMissions(student);
+		if (student.getPlayer().getCompletedMissions() != null) {
+
+			String[] completed = student.getPlayer().getCompletedMissions().split(",");
+			for (String s : completed) {
+				int value = Integer.parseInt(s);
+				student.missions.removeIf(mission -> mission.getTeacher().getId() == value);
+				student.decreaseCounterAvailableMissions();
+			}
+		}
 	}
+
 }

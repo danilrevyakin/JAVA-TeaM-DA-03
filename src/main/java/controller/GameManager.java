@@ -24,12 +24,12 @@ public class GameManager {
     public void newPlayer(Student student) {
         missionManager.generateMissions(student);
         inGame = true;
-        playerIsSelected(student);
+        //playerIsSelected(student);
     }
     
     public void selectCreatedPlayer(Student student) {
         getAvailableMissions(student);
-        playerIsSelected(student);
+        //playerIsSelected(student);
     }
 
     private void getAvailableMissions(Student student){
@@ -46,14 +46,14 @@ public class GameManager {
         }
     }
     
-    private void playerIsSelected(Student student) {
-    	inGame = true;
-        consoleView.getPersonalInfo(student);
-        missionManager.openMission(student);
-        while (inGame){
-            inGame = inGameMenu(student);
-        }
-    }
+//    private void playerIsSelected(Student student) {
+//    	inGame = true;
+//        consoleView.getPersonalInfo(student);
+//        missionManager.openMission(student);
+//        while (inGame){
+//            inGame = inGameMenu(student);
+//        }
+//    }
     
     private boolean inGameMenu(Student student) { // 1 SELECT MISSION, 2 Exit to mainMenu
         final int SELECT_MISSION = 1;
@@ -69,7 +69,7 @@ public class GameManager {
 
         consoleView.getPersonalInfo(student);
         if(choice == SELECT_MISSION){
-        	missionManager.openMission(student);
+        	//missionManager.openMission(student);
             return CONTINUE;
         }
 
