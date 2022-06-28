@@ -1,4 +1,4 @@
-package view.exam.grapchicFactoty;
+package view.exam.grapchicFactory;
 
 public class TextLabelFactory {
 

@@ -1,4 +1,4 @@
-package view.exam.grapchicFactoty;
+package view.exam.grapchicFactory;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;

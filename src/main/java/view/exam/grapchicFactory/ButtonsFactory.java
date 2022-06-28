@@ -1,4 +1,4 @@
-package view.exam.grapchicFactoty;
+package view.exam.grapchicFactory;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;

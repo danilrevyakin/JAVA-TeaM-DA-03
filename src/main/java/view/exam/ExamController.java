@@ -19,10 +19,11 @@ import javafx.stage.Stage;
 import model.Question;
 import model.Student;
 import model.Teacher;
-import view.exam.grapchicFactoty.ButtonsFactory;
-import view.exam.grapchicFactoty.MessageFactory;
-import view.exam.grapchicFactoty.PersonViewFactory;
-import view.exam.grapchicFactoty.SeparatorFactory;
+import view.StageFactory;
+import view.exam.grapchicFactory.ButtonsFactory;
+import view.exam.grapchicFactory.MessageFactory;
+import view.exam.grapchicFactory.PersonViewFactory;
+import view.exam.grapchicFactory.SeparatorFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,17 +80,8 @@ public class ExamController implements Initializable {
     private final SeparatorFactory factory = new SeparatorFactory();
 
     static public void playMissionInGUI(Student student) {
-        URL url = ExamController.class.getResource("Exam.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
-        loader.setControllerFactory(controllerClass -> new ExamController(student));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
+        Stage stage = (new StageFactory((new ExamController(student)),
+                "Exam.fxml", ExamController.class)).getStage();
         stage.setResizable(false);
         stage.showAndWait();
     }

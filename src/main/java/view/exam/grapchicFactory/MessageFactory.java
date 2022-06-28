@@ -1,4 +1,4 @@
-package view.exam.grapchicFactoty;
+package view.exam.grapchicFactory;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;

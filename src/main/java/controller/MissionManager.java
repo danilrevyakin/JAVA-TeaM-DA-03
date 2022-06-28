@@ -33,7 +33,7 @@ public class MissionManager {
             student.setHealth(Student.MAX_HEALTH / 2);
             student.decreaseLevelOn(1);
             return;
-        } else if (mission.getTeacher().hasQuestions()) {
+        } else if (mission.getTeacher().hasQuestions() && mission.getTeacher().getHealth() > 0) {
             return;
         }
         setMissionSuccessfulState(student, mission);

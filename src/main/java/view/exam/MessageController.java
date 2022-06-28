@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
-import view.exam.grapchicFactoty.TextLabelFactory;
+import view.exam.grapchicFactory.TextLabelFactory;
 
 public class MessageController {
 

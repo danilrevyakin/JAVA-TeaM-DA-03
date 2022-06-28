@@ -1,4 +1,4 @@
-package view.exam.grapchicFactoty;
+package view.exam.grapchicFactory;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
