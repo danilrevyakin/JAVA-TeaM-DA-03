@@ -17,15 +17,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import model.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 public class ExamController implements Initializable {
     @FXML
@@ -60,8 +60,11 @@ public class ExamController implements Initializable {
     private String currentAnswer;
 
     private final String pathToTeacherPhoto = "oldTeacher.png";
+    private final String pathToVladicPhoto = "Vladic.png";
+
     private final String pathToStudentPhoto = "studentBrown.png";
     private final String pathToExitPhoto = "EscapeFromIASA.png";
+    private final String pathToDanonPhoto = "Danon.jpeg";
 
     private Question question;
     private final Student student;
@@ -102,17 +105,61 @@ public class ExamController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        StudentPane.getChildren().add(getStudentView(student));
-        studentChoices.setOnAction(this::getChoice);
-        VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, true));
+        initStudentPane();
+        initTeacherPane();
+        initChat();
+        updateQuestion();
+    }
+
+    private void initTeacherPane(){
         exitButton = initExitButton();
         VBox box = new VBox();
+        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
         box.getChildren().add(getTeacherView(teacher));
         box.getChildren().add(exitButton);
         TeacherPane.getChildren().add(box);
         TeacherPane.setAlignment(Pos.TOP_CENTER);
         box.setAlignment(Pos.TOP_CENTER);
-        updateQuestion();
+    }
+
+    private void initChat(){
+        studentChoices.setOnAction(this::getChoice);
+        VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
+    }
+
+    private void initStudentPane(){
+        VBox box = new VBox();
+        Button manaButton = createManaButton();
+        manaButton.setMinWidth(120);
+        manaButton.setMinHeight(50);
+        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
+        box.getChildren().add(getStudentView(student));
+        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
+        box.getChildren().add(manaButton);
+        StudentPane.getChildren().add(box);
+        box.setAlignment(Pos.TOP_CENTER);
+        StudentPane.setAlignment(Pos.TOP_CENTER);
+    }
+
+
+
+    public Button createManaButton() {
+        Button button = new Button();
+        String style = null;
+        try {
+            style = new String(Files.readAllBytes(Paths.get("src/main/resources/view/exam/ManaButton.txt")), StandardCharsets.UTF_8);
+            style = style.replace("\n", "");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        button.setStyle(style);
+        button.setText("Use your mana");
+        button.setOnAction(e-> manaButtonAction());
+        return button;
+    }
+
+    private void manaButtonAction(){
+
     }
 
     public Button initExitButton() {
@@ -122,12 +169,12 @@ public class ExamController implements Initializable {
         imageView.setFitHeight(100);
         Button exitButton = new Button();
         exitButton.setGraphic(imageView);
-        exitButton.setOnAction(this::setActionExitButton);
+        exitButton.setOnAction(e-> closeWindow());
         return exitButton;
     }
 
     private void setActionExitButton(ActionEvent e) {
-        this.closeWindow();
+
     }
 
     private MessageController messageController;
@@ -144,7 +191,7 @@ public class ExamController implements Initializable {
         ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
         teacherController = (PersonController) controllerFactory.getController();
         List<String> teacherData = PersonController.getAdditionalDataOfTeacher(teacher);
-        PersonController.setPersonData(teacher, pathToTeacherPhoto, teacherData, teacherController);
+        PersonController.setPersonData(teacher, pathToVladicPhoto, teacherData, teacherController);
         return (VBox) controllerFactory.getPane();
     }
 
@@ -153,15 +200,15 @@ public class ExamController implements Initializable {
         ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
         studentController = (PersonController) controllerFactory.getController();
         List<String> studentData = PersonController.getAdditionalDataOfStudent(student);
-        PersonController.setPersonData(student, pathToStudentPhoto, studentData, studentController);
+        PersonController.setPersonData(student, pathToDanonPhoto, studentData, studentController);
         return (VBox) controllerFactory.getPane();
     }
 
 
     private void updatePlayers() {
-        PersonController.setPersonData(teacher, pathToTeacherPhoto,
+        PersonController.setPersonData(teacher, pathToVladicPhoto,
                 PersonController.getAdditionalDataOfTeacher(teacher), teacherController);
-        PersonController.setPersonData(student, pathToStudentPhoto,
+        PersonController.setPersonData(student, pathToDanonPhoto,
                 PersonController.getAdditionalDataOfStudent(student), studentController);
     }
 

@@ -2,11 +2,11 @@
     -fx-border-radius: 30px;
     -fx-background-radius: 30px;
     -fx-border-color: orange;
-    -fx-border-width: 3px;
+    -fx-border-width: 4px;
     -fx-font-weight: bold;
     -fx-font-size: 15;
     -fx-label-padding: 1px 2px;
-    -fx-background-color: gray;
+    -fx-background-color: #2E3348;
     -fx-font-family: "Times New Roman", sans-serif;
     -fx-text-fill: white;
 }

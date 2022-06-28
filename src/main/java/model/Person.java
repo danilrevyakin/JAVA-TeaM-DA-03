@@ -6,9 +6,7 @@ public abstract class Person implements Serializable {
     private String name;
     private String sex;
     private int health;
-    public static final boolean MALE = true;
-    public static final boolean FEMALE = false;
-    
+
     public Person(String name, String sex, int health) {
     	this.health = health;
     	this.name = name;

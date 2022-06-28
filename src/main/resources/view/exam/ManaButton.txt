@@ -1,0 +1,7 @@
+-fx-border-radius: 15px;
+-fx-background-radius: 20px;
+-fx-border-color: orange;
+-fx-border-width: 5px;
+-fx-font-weight: bold;
+-fx-background-color: #2E3348;
+-fx-text-fill: white;
