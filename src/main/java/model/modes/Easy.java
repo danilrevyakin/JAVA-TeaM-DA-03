@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Random;
 
 import model.Student;
-import view.ConsoleView;
 
 public class Easy implements Mode, Serializable {
 	static private final Random rand = new Random();

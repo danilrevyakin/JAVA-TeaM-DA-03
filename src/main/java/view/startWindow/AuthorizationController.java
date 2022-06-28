@@ -1,13 +1,9 @@
 package view.startWindow;
 
-import controller.MissionManager;
 import controller.factory.MissionFactory;
 import controller.hibernateUtil.PlayerDao;
 import controller.hibernateUtil.UserDao;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,10 +14,8 @@ import view.animations.Shake;
 import view.map.StaticMapController;
 
 import java.io.IOException;
-import java.net.URL;
 
-public class AuthorizationController {
-
+public class AuthorizationController{
     @FXML
     private Button authButton;
 
@@ -52,29 +46,23 @@ public class AuthorizationController {
             String loginText = loginField.getText().trim();
             String loginPassword = passwordField.getText().trim();
 
-            if (!loginText.equals("") && !loginPassword.equals("")){
+            if (!loginText.isEmpty() && !loginPassword.isEmpty()){
                 loginUser(loginText,loginPassword);
+            }else{
+                playAnimation();
             }
         });
 
-        loggingStatisticsButton.setOnAction(event -> {
-            loggingStatisticsButton.getScene().getWindow().hide();
-            URL url = StatisticsController.class.getResource("statistics.fxml");
-            FXMLLoader loader = new FXMLLoader(url);
+        loggingStatisticsButton.setOnAction(event -> WindowChange.openNewScene(
+                "statistics.fxml",
+                loggingStatisticsButton.getScene(),
+                StatisticsController.class.getName()
+        ));
 
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        });
-
-        openNewScene("signUp.fxml");
+        loggingSignUpButton.setOnAction(event -> WindowChange.openNewScene(
+                "signUp.fxml",
+                loggingSignUpButton.getScene(),
+                RegistrationController.class.getName()));
 
     }
 
@@ -93,29 +81,14 @@ public class AuthorizationController {
                 e.printStackTrace();
             }
         }else{
-            Shake userLoginAnim = new Shake(loginField);
-            Shake userPassAnim = new Shake(passwordField);
-            userLoginAnim.playAnim();
-            userPassAnim.playAnim();
+            playAnimation();
         }
     }
 
-    public void openNewScene(String window){
-        loggingSignUpButton.setOnAction(event -> {
-            loggingSignUpButton.getScene().getWindow().hide();
-            URL url = RegistrationController.class.getResource(window);
-            FXMLLoader loader = new FXMLLoader(url);
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        });
+    private void playAnimation(){
+        Shake userLoginAnim = new Shake(loginField);
+        Shake userPassAnim = new Shake(passwordField);
+        userLoginAnim.playAnim();
+        userPassAnim.playAnim();
     }
 }

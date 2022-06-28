@@ -1,9 +1,6 @@
 package view.map;
 
 import controller.MissionManager;
-import view.StageFactory;
-import view.exam.ExamController;
-import view.startWindow.RegistrationController;
 import controller.hibernateUtil.PlayerDao;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.BooleanBinding;
@@ -24,12 +21,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Student;
+import view.StageFactory;
+import view.startWindow.RegistrationController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class StaticMapController implements Initializable {
 
@@ -253,7 +251,6 @@ public class StaticMapController implements Initializable {
                 scene1.setStyle(s);
                 currentScene = 2;
                 player.setLayoutY(scene1.getHeight() - 10);
-                return;
             }
         }
     }

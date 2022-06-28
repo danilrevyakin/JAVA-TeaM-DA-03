@@ -6,14 +6,6 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class ConsoleView implements Serializable {
-    public String giveAnswer() {
-        System.out.print("Enter answer: ");
-        String answer;
-        Scanner in = new Scanner(System.in);
-        answer = in.nextLine();
-        return answer;
-    }
-
     public void correctAnswerOutput(Teacher teacher) {
         System.out.println("Correct! Now " + teacher.getName() + " has " + teacher.getHealth() + "HP");
     }
@@ -65,11 +57,6 @@ public class ConsoleView implements Serializable {
         System.out.println();
         return false;
     }
-
-
-
-
-
     static public String wrongMessage(){
         return "You are wrong";
     }

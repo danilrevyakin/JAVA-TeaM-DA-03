@@ -3,7 +3,10 @@ package controller.hibernateUtil;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public class UserDao implements DaoImpl<User> {
@@ -48,5 +51,15 @@ public class UserDao implements DaoImpl<User> {
                 .byNaturalId(User.class)
                 .using("login", login)
                 .load();
+    }
+
+    public List<String> findLogins(){
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("SELECT login FROM User").list();
+    }
+
+    public List<String> findEmails(){
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("SELECT email FROM User").list();
     }
 }

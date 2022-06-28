@@ -1,5 +1,6 @@
 package view;
 
+import controller.hibernateUtil.UserDao;
 import view.startWindow.AuthorizationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ public class Main extends Application {
         URL url = AuthorizationController.class.getResource("hello-view.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(url);
         Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-        stage.setTitle("App");
+        stage.setTitle("Escape from IASA");
         stage.setScene(scene);
         stage.show();
     }
