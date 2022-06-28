@@ -1,12 +1,10 @@
 package model;
 
-import controller.MissionManager;
+import controller.factory.MissionFactory;
 import view.ConsoleView;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Student extends Person implements Serializable {
@@ -17,7 +15,7 @@ public class Student extends Person implements Serializable {
     private final Player player;
     private final User user;
     private Mission currentMission;
-    private int counterAvailableMissions = MissionManager.MAX_NUMBER_OF_MISSIONS;
+    private int counterAvailableMissions = MissionFactory.MAX_NUMBER_OF_MISSIONS;
 
     private final ConsoleView consoleView = new ConsoleView();
     public Map<Integer, Mission> availableMissions;
@@ -126,11 +124,6 @@ public class Student extends Person implements Serializable {
         return user.getLogin();
     }
 
-
-
-    public User getUser() {
-        return user;
-    }
 
     public Player getPlayer() {
         return player;

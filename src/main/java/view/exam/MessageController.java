@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
+import view.grapchicFactoty.TextLabelFactory;
 
 public class MessageController {
 
@@ -24,7 +25,7 @@ public class MessageController {
     private final int maxCharactersInLabelLine = 30;
 
     public void setText(String stringMessage) {
-        LabelStringFormatter formatter = new LabelStringFormatter(maxCharactersInLabelLine, stringMessage);
+        TextLabelFactory formatter = new TextLabelFactory(maxCharactersInLabelLine, stringMessage);
         text.setText(formatter.getResult());
         labelHeight = text.getFont().getSize() * formatter.getCounterLinesInLabel() * 2.5;
         text.setMinHeight(labelHeight);

@@ -1,6 +1,7 @@
 package view.startWindow;
 
 import controller.MissionManager;
+import controller.factory.MissionFactory;
 import controller.hibernateUtil.UserDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -161,7 +162,7 @@ public class RegistrationController {
 
         if(isCorrect) {
             User user = new User(firstName, lastName, sex, email, login, password);
-            MissionManager manager = new MissionManager();
+            MissionFactory manager = new MissionFactory();
             Student student = createStudent(user);
     		manager.generateMissions(student);
             Stage stage = (Stage) signUpRegButton.getScene().getWindow();

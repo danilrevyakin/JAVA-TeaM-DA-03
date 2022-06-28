@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Probability;
+import model.additionalServices.Probability;
 import model.Question;
 import model.Teacher;
 import model.modes.VeryHard;
@@ -35,6 +35,4 @@ public final class Stickanov extends Teacher implements Serializable {
 		choices.remove(currentQuestion.getAnswer());
 		currentQuestion.setChoices(choices);
 	}
-
-
 }

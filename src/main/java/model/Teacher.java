@@ -1,6 +1,6 @@
 package model;
 
-import controller.Probability;
+import model.additionalServices.Probability;
 import model.modes.Easy;
 import model.modes.Mode;
 import view.ConsoleView;
@@ -24,9 +24,6 @@ public abstract class Teacher extends Person implements Serializable {
     private Student student;
     protected Mode mode = new Easy();
 
-    public ConsoleView getConsoleView() {
-        return consoleView;
-    }
     protected Random rand = new Random();
     ListIterator<Question> iterator;
 
@@ -55,20 +52,21 @@ public abstract class Teacher extends Person implements Serializable {
     }
 
     public Question giveNextQuestion() {
-        if (!iterator.hasNext()){
+        if (!iterator.hasNext()) {
             return null;
         }
         return iterator.next();
     }
+
     public Question givePreviousQuestion() {
-        if (!iterator.hasPrevious()){
+        if (!iterator.hasPrevious()) {
             return null;
         }
         return iterator.previous();
     }
 
     public Question givePreviousQuestionWithoutMovingIterator() {
-        if (!iterator.hasPrevious()){
+        if (!iterator.hasPrevious()) {
             return null;
         }
         Question q = iterator.previous();
@@ -84,7 +82,7 @@ public abstract class Teacher extends Person implements Serializable {
         }
         if (getHealth() > 0) consoleView.correctAnswerOutput(this);
         String reaction = correctStudentReaction();
-        if(reaction.length() >= 1){
+        if (reaction.length() >= 1) {
             message = reaction;
         }
     }
@@ -94,23 +92,22 @@ public abstract class Teacher extends Person implements Serializable {
         message = wrongStudentReaction();
     }
 
-    public void addNextQuestion(Question question){
+    public void addNextQuestion(Question question) {
         iterator.add(question);
         iterator.previous();
     }
 
-    protected String correctStudentReaction(){
-        if(Probability.eventProbability(correctSkillProbability))
+    protected String correctStudentReaction() {
+        if (Probability.eventProbability(correctSkillProbability))
             return mode.studentAnswerCorrect(student);
         return ConsoleView.correctMessage();
     }
 
-    protected String wrongStudentReaction(){
-        if(Probability.eventProbability(wrongSkillProbability))
+    protected String wrongStudentReaction() {
+        if (Probability.eventProbability(wrongSkillProbability))
             return mode.studentAnswerFalse(student);
         return ConsoleView.wrongMessage();
     }
-
 
 
     public Student getStudent() {
@@ -128,7 +125,7 @@ public abstract class Teacher extends Person implements Serializable {
                 '}';
     }
 
-    public boolean hasQuestions(){
+    public boolean hasQuestions() {
         return iterator.hasNext();
     }
 
@@ -140,13 +137,13 @@ public abstract class Teacher extends Person implements Serializable {
         return mode;
     }
 
-    public String getModeName(){
+    public String getModeName() {
         StringBuilder stringBuilder = new StringBuilder(mode.getClass().getName());
         return stringBuilder.substring(stringBuilder.lastIndexOf(".") + 1);
     }
 
-    public String say(){
-        if(!hasQuestions()){
+    public String say() {
+        if (!hasQuestions()) {
             message += "\nI have no questions for you(";
         }
         String currentMessage = message;
@@ -154,25 +151,18 @@ public abstract class Teacher extends Person implements Serializable {
         return currentMessage;
     }
 
-    public int getManaPrice(){
+    public int getManaPrice() {
         return this.manaPrice;
     }
 
-    public enum TransferManaStatus{
-        SUCCESSFUL_USED_MANA("Successful used mana"),
-        FAILED_USED_MANA("Failed used mana");
-        private final String statusName;
+    public enum TransferManaStatus {
+        SUCCESSFUL_USED_MANA,
 
-        TransferManaStatus(String statusName) {
-            this.statusName = statusName;
-        }
-
-        public String getStatusName() {
-            return statusName;
-        }
+        FAILED_USED_MANA
     }
-    public TransferManaStatus tryUseMana(){
-        if(student.getLevel() < minLevelForUsingMana){
+
+    public TransferManaStatus tryUseMana() {
+        if (student.getLevel() < minLevelForUsingMana) {
             message = "Your level is less then " + minLevelForUsingMana + "" +
                     ". You can't use mana now";
             return TransferManaStatus.FAILED_USED_MANA;
@@ -191,22 +181,20 @@ public abstract class Teacher extends Person implements Serializable {
         return TransferManaStatus.SUCCESSFUL_USED_MANA;
     }
 
-    protected void changeManaPrice(){
+    protected void changeManaPrice() {
         manaPrice += manaChangePrice;
     }
-    protected void makeWorkForMana(){
+
+    protected void makeWorkForMana() {
         message += "\nI have erased one wrong choice";
         Question currentQuestion = givePreviousQuestion();
         ArrayList<String> choices = currentQuestion.getChoices();
-        for (String choice : choices){
-            if(!choice.equals(currentQuestion.getAnswer())){
+        for (String choice : choices) {
+            if (!choice.equals(currentQuestion.getAnswer())) {
                 choices.remove(choice);
                 break;
             }
         }
         currentQuestion.setChoices(choices);
     }
-
-
-
 }

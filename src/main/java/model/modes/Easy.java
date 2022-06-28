@@ -8,7 +8,6 @@ import view.ConsoleView;
 
 public class Easy implements Mode, Serializable {
 	static private final Random rand = new Random();
-	ConsoleView consoleView = new ConsoleView();
 
 	@Override
 	public String studentAnswerCorrect(Student student) {

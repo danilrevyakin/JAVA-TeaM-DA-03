@@ -1,4 +1,4 @@
-package view.exam;
+package view.grapchicFactoty;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
@@ -16,6 +16,5 @@ public class SeparatorFactory {
         separator.setVisible(visible);
         return separator;
     }
-
 
 }

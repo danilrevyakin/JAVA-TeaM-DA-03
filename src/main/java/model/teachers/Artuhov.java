@@ -45,6 +45,4 @@ public final class Artuhov extends Teacher implements Serializable {
 		}
 		return "";
 	}
-
-
 }

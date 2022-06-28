@@ -18,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.*;
+import view.grapchicFactoty.GUIControllerFactory;
+import view.grapchicFactoty.SeparatorFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -74,6 +76,7 @@ public class ExamController implements Initializable {
     private PersonController teacherController;
     private final MissionManager missionManager;
     private Button exitButton;
+    private Button manaButton;
 
     private final SeparatorFactory factory = new SeparatorFactory();
 
@@ -100,9 +103,6 @@ public class ExamController implements Initializable {
         teacher.setStudent(student);
     }
 
-    public void getChoice(ActionEvent e) {
-        currentAnswer = studentChoices.getValue();
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -124,13 +124,12 @@ public class ExamController implements Initializable {
     }
 
     private void initChat(){
-        studentChoices.setOnAction(this::getChoice);
+        studentChoices.setOnAction(e->currentAnswer = studentChoices.getValue());
         VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
     }
-
     private void initStudentPane(){
         VBox box = new VBox();
-        Button manaButton = createManaButton();
+        manaButton = createManaButton();
         manaButton.setMinWidth(120);
         manaButton.setMinHeight(50);
         box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
@@ -146,7 +145,7 @@ public class ExamController implements Initializable {
 
     public Button createManaButton() {
         Button button = new Button();
-        String style = null;
+        String style;
         try {
             style = new String(Files.readAllBytes(Paths.get("src/main/resources/view/exam/ManaButton.txt")), StandardCharsets.UTF_8);
             style = style.replace("\n", "");
@@ -182,7 +181,7 @@ public class ExamController implements Initializable {
     private MessageController messageController;
 
     private HBox getMessageView(String stringMessage) {
-        ControllerFactory controllerFactory = new ControllerFactory("Message.fxml", this);
+        GUIControllerFactory controllerFactory = new GUIControllerFactory("Message.fxml", this);
         messageController = (MessageController) controllerFactory.getController();
         messageController.setText(stringMessage);
         return (HBox) controllerFactory.getPane();
@@ -190,7 +189,7 @@ public class ExamController implements Initializable {
 
 
     private VBox getTeacherView(Teacher teacher) {
-        ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
+        GUIControllerFactory controllerFactory = new GUIControllerFactory("Person.fxml", this);
         teacherController = (PersonController) controllerFactory.getController();
         List<String> teacherData = PersonController.getAdditionalDataOfTeacher(teacher);
         PersonController.setPersonData(teacher, pathToVladicPhoto, teacherData, teacherController);
@@ -199,7 +198,7 @@ public class ExamController implements Initializable {
 
 
     private VBox getStudentView(Student student) {
-        ControllerFactory controllerFactory = new ControllerFactory("Person.fxml", this);
+        GUIControllerFactory controllerFactory = new GUIControllerFactory("Person.fxml", this);
         studentController = (PersonController) controllerFactory.getController();
         List<String> studentData = PersonController.getAdditionalDataOfStudent(student);
         PersonController.setPersonData(student, pathToDanonPhoto, studentData, studentController);
@@ -251,16 +250,16 @@ public class ExamController implements Initializable {
         sendMessage(currentAnswer, false);
         missionManager.analiseResult(currentAnswer, question, student.getCurrentMission());
         sendMessage(teacher.say(), true);
+        updatePlayers();
         if (student.getCurrentMission().missionAvailable()) {
             updateQuestion();
-        } else {
-            finishMission();
             return;
         }
-        updatePlayers();
+        finishMission();
     }
 
     private void finishMission() {
+        manaButton.setDisable(true);
         studentChoices.setDisable(true);
         SendButton.setDisable(true);
         sendMessage(student.getCurrentMission().getStateMission().getNormalName(), true);

@@ -5,6 +5,8 @@ import java.util.List;
 
 import model.Question;
 import model.Teacher;
+import model.additionalServices.Probability;
+import model.modes.Medium;
 
 public final class Statckevich extends Teacher implements Serializable {
 
@@ -14,5 +16,14 @@ public final class Statckevich extends Teacher implements Serializable {
 		manaChangePrice = -5;
 	}
 
+	@Override
+	protected String wrongStudentReaction() {
+		if (Probability.eventProbability(75)) {
+			return super.wrongStudentReaction();
+		}
+		this.mode = new Medium();
+		manaPrice *= 1.25;
+		return "I guess You are bored. Maybe I should change my mode on Medium";
+	}
 
 }

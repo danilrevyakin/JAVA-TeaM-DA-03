@@ -1,6 +1,6 @@
 package controller;
 
-import model.Pair;
+import model.additionalServices.Pair;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class SQLiteJDBC{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Pair<Integer, String> pair = new Pair<>(id,sex);
+        Pair<Integer, String> pair = new Pair(id,sex);
         return pair;
     }
 }

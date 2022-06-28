@@ -1,4 +1,4 @@
-package controller;
+package model.additionalServices;
 
 import java.util.Random;
 
@@ -7,9 +7,6 @@ public class Probability {
 	
 	public static boolean eventProbability(int percent) {
 		float probability = percent * 0.01f;
-		if(rand.nextFloat() <= probability)
-			return true;
-		else
-			return false;
+		return (rand.nextFloat() <= probability);
 	}
 }

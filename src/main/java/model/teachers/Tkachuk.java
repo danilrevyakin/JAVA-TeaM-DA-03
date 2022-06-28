@@ -16,7 +16,7 @@ public final class Tkachuk extends Teacher implements Serializable {
 
 	@Override
 	protected String wrongStudentReaction() {
-		return super.correctStudentReaction() + "\nEverything is good. Don't worry, be happy";
+		return super.wrongStudentReaction() + "\nEverything is good. Don't worry, be happy";
 	}
 
 }

@@ -24,5 +24,4 @@ public class VeryHard implements Mode, Serializable {
 		student.setScore(score - (int)(score * 0.15f));
 		return "Professionals don't answer that way\nReduce your health and points by 15%";
 	}
-	
 }

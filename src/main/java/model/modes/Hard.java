@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class Hard implements Mode, Serializable {
 
-    private final ConsoleView consoleView = new ConsoleView();
     Random random = new Random();
     public String correctMessage(int k){
         return "I see you were preparing, +" + k + " points to your score!";
@@ -20,7 +19,7 @@ public class Hard implements Mode, Serializable {
     @Override
     public String studentAnswerCorrect(Student student) {
         int k = -2;
-        student.setScore(student.getScore()+k);
+        student.increaseScoreOn(-k);
         return correctMessage(k);
     }
 

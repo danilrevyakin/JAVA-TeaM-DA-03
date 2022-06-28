@@ -1,6 +1,6 @@
-package view.exam;
+package view.grapchicFactoty;
 
-public class LabelStringFormatter {
+public class TextLabelFactory {
 
     private final int maxCharactersInLabelLine;
     private String input;
@@ -8,7 +8,7 @@ public class LabelStringFormatter {
 
     private String result;
 
-    public LabelStringFormatter(int maxCharactersInLabelLine, String input) {
+    public TextLabelFactory(int maxCharactersInLabelLine, String input) {
         this.maxCharactersInLabelLine = maxCharactersInLabelLine;
         this.input = input;
         formatString();

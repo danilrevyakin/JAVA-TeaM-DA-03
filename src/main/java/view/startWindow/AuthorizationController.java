@@ -1,6 +1,7 @@
 package view.startWindow;
 
 import controller.MissionManager;
+import controller.factory.MissionFactory;
 import controller.hibernateUtil.PlayerDao;
 import controller.hibernateUtil.UserDao;
 import javafx.fxml.FXML;
@@ -85,8 +86,8 @@ public class AuthorizationController {
                 Stage stage = (Stage) authButton.getScene().getWindow();
                 stage.close();
                 Student student = new Student(user.getPlayer(), user);
-                MissionManager manager = new MissionManager();
-        		manager.generateMissions(student);
+                MissionFactory factory = new MissionFactory();
+        		factory.generateMissions(student);
                 StaticMapController.playMapInGUI(student);
             } catch (IOException e) {
                 e.printStackTrace();

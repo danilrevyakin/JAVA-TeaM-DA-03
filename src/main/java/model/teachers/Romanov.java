@@ -35,5 +35,4 @@ public final class Romanov extends Teacher implements Serializable {
 		return super.wrongStudentReaction() + RomanovDontLikeYourSpeech();
 	}
 
-
 }

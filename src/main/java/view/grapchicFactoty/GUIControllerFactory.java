@@ -1,26 +1,21 @@
-package view.exam;
+package view.grapchicFactoty;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 
 import java.io.IOException;
 
-public class ControllerFactory {
+public class GUIControllerFactory {
 
-    private FXMLLoader fxmlLoader;
-    private Pane pane;
+    private final FXMLLoader fxmlLoader;
+    private final Pane pane;
 
-    private Object controller;
+    private final Object controller;
 
-    private final String pathToFXML;
-    private final Object object;
 
-    public ControllerFactory(String pathToFXML, Object object) {
-        this.pathToFXML = pathToFXML;
-        this.object = object;
+    public GUIControllerFactory(String pathToFXML, Object objectReference) {
         fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(object.getClass().getResource(pathToFXML));
+        fxmlLoader.setLocation(objectReference.getClass().getResource(pathToFXML));
         try {
             pane = fxmlLoader.load();
         } catch (IOException e) {

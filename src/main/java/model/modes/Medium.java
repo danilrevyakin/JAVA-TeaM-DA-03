@@ -8,7 +8,6 @@ import java.util.Random;
 
 public class Medium implements Mode, Serializable {
 
-    private final ConsoleView consoleView = new ConsoleView();
     Random random = new Random();
 
     @Override

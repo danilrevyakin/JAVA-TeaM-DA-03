@@ -8,9 +8,9 @@ import java.util.Objects;
 public class Mission implements Serializable {
     private final int missionNumber;
     private final int playersNumber = 2;
-    private ArrayList<Person> people = new ArrayList<>(playersNumber);
-    private Teacher teacher;
-    private Student student;
+    private final ArrayList<Person> people = new ArrayList<>(playersNumber);
+    private final Teacher teacher;
+    private final Student student;
     private State stateMission;
 
     public enum State {
@@ -43,9 +43,7 @@ public class Mission implements Serializable {
     }
 
     public boolean missionAvailable() {
-        if (!Objects.equals(stateMission, State.MISSION_COMPLETED) && !Objects.equals(stateMission, State.MISSION_FAILED))
-            return true;
-        return false;
+        return  (!Objects.equals(stateMission, State.MISSION_COMPLETED) && !Objects.equals(stateMission, State.MISSION_FAILED));
     }
 
     public void setCompleted() {
@@ -58,10 +56,6 @@ public class Mission implements Serializable {
 
     public int getMissionNumber() {
         return missionNumber;
-    }
-
-    public List<Question> giveQuestion() {
-        return teacher.getQuestions();
     }
 
     public Teacher getTeacher() {
