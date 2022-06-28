@@ -2,11 +2,8 @@ package view.exam;
 
 import controller.MissionManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
@@ -25,7 +22,6 @@ import view.exam.grapchicFactory.MessageFactory;
 import view.exam.grapchicFactory.PersonViewFactory;
 import view.exam.grapchicFactory.SeparatorFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
