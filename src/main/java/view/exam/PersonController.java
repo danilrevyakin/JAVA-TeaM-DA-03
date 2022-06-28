@@ -15,6 +15,7 @@ import model.Teacher;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class PersonController {
     @FXML
@@ -28,7 +29,7 @@ public class PersonController {
     private LinkedList<Text> detailsList = new LinkedList<>();
 
     public void setAvatar(String path) {
-        Image image = new Image(getClass().getResourceAsStream(path));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
         Avatar.setImage(image);
     }
 
@@ -52,7 +53,8 @@ public class PersonController {
 
     public static List<String> getAdditionalDataOfTeacher(Teacher teacher){
         return List.of("Mode: " + teacher.getModeName(),
-                "Number of questions: " + teacher.getQuestions().size());
+                "Number of questions: " + teacher.getQuestions().size(),
+                        "Mana price: " + teacher.getManaPrice());
     }
 
 

@@ -11,6 +11,7 @@ import java.util.List;
 public final class Artuhov extends Teacher implements Serializable {
 	public Artuhov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 50, 50);
+		manaChangePrice = 50;
 	}
 
 	@Override
@@ -32,14 +33,14 @@ public final class Artuhov extends Teacher implements Serializable {
 	private String ArtuhovReactionOnBadGR(){
 		if(this.hasQuestions()){
 			String message = "Oh.., Ok, I let you read my book on next question";
-			Question task = this.giveNextQuestionWithoutDeletingOldMessage();
+			Question task = this.giveNextQuestion();
 			String question = task.getQuestion();
 			List<String> chars = Arrays.asList(question.split(""));
 			Collections.shuffle(chars);
 			String newQuestion = String.join("",chars);
 			newQuestion += "\nI hope you use program for circuitry to launching my book";
 			task.setQuestion(newQuestion);
-			givePreviousQuestionWithoutDeletingOldMessage();
+			givePreviousQuestion();
 			return message;
 		}
 		return "";

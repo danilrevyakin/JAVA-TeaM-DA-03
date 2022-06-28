@@ -19,6 +19,8 @@ public class Bokhonov extends Teacher implements Serializable {
     public Bokhonov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
         super(name, sex, questions, id, 40, 40);
         mode = new Medium();
+        manaPrice = 40;
+        manaChangePrice = 10;
     }
 
     @Override
@@ -53,6 +55,5 @@ public class Bokhonov extends Teacher implements Serializable {
         getStudent().increaseHealthOn(-getStudent().getHealth() / 2);
         return badNews;
     }
-
 
 }

@@ -27,15 +27,7 @@ public class Question implements Serializable{
     private String answer;
 
     @Transient
-    private List<String> choices;
-
-    public Question(String question, String options, int teacherID, String answer){
-        this.question = question;
-        this.options = options;
-        this.choices = Arrays.stream(options.split("//")).toList();
-        this.answer = answer;
-        this.teacherID = teacherID;
-    }
+    private ArrayList<String> choices;
 
     public void setQuestion(String question){
         this.question = question;
@@ -62,15 +54,12 @@ public class Question implements Serializable{
     public String getAnswer(){return answer;}
 
     public ArrayList<String> getChoices() {
-        ArrayList<String> variants;
-        if (options != null) {
-            variants = new ArrayList<>(Arrays.asList(options.split("//")));
-            Collections.shuffle(variants);
-            return variants;
+        if (this.choices != null){
+            return choices;
         }
-        else{
-            return (ArrayList<String>) choices;
-        }
+        choices = new ArrayList<>(Arrays.asList(options.split("//")));
+        Collections.shuffle(choices);
+        return choices;
     }
 
     public void setAnswer(String answer) {

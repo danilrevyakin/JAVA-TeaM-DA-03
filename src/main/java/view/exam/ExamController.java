@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ExamController implements Initializable {
@@ -159,11 +160,16 @@ public class ExamController implements Initializable {
     }
 
     private void manaButtonAction(){
-
+        Teacher.TransferManaStatus status = teacher.tryUseMana();
+        sendMessage(teacher.say(), true);
+        if(Teacher.TransferManaStatus.SUCCESSFUL_USED_MANA == status){
+            updateQuestion();
+            updatePlayers();
+        }
     }
 
     public Button initExitButton() {
-        Image image = new Image(getClass().getResourceAsStream(pathToExitPhoto));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathToExitPhoto)));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
@@ -171,10 +177,6 @@ public class ExamController implements Initializable {
         exitButton.setGraphic(imageView);
         exitButton.setOnAction(e-> closeWindow());
         return exitButton;
-    }
-
-    private void setActionExitButton(ActionEvent e) {
-
     }
 
     private MessageController messageController;

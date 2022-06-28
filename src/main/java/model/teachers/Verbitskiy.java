@@ -13,12 +13,13 @@ public final class Verbitskiy extends Teacher implements Serializable {
 	public Verbitskiy(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 70 , 70);
 		mode = new Medium();
+		manaPrice  = 80;
 	}
 
 	@Override
 	protected String wrongStudentReaction() {
-		addNextQuestion(givePreviousQuestionWithoutDeletingOldMessage());
-		giveNextQuestionWithoutDeletingOldMessage();
+		addNextQuestion(givePreviousQuestion());
+		giveNextQuestion();
 		return super.wrongStudentReaction() + repeat;
 	}
 

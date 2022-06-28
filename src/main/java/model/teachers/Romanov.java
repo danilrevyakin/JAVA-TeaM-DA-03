@@ -11,6 +11,7 @@ public final class Romanov extends Teacher implements Serializable {
 
 	public Romanov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 50, 75);
+		manaPrice = rand.nextInt(30) + 40;
 	}
 
 	public String RomanovLikeYourSpeech(int k){

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Student extends Person implements Serializable {
-    private static final int MAX_MANA = 100;
+    private static final int MAX_MANA = 500;
     private static final int MAX_LEVEL = 10;
     private static final int MAX_HEALTH = 50;
 
@@ -30,7 +30,7 @@ public class Student extends Person implements Serializable {
     }
 
     public void correctStudentAnswer(){
-        player.setMana(player.getMana() + 10);
+        increaseManaOn(30);
         player.setScore(player.getScore() + 10);
         player.setHealth(MAX_HEALTH);
 
@@ -125,6 +125,8 @@ public class Student extends Person implements Serializable {
     public String getLogin(){
         return user.getLogin();
     }
+
+
 
     public User getUser() {
         return user;

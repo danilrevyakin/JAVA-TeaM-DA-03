@@ -6,6 +6,7 @@ import model.modes.Mode;
 import view.ConsoleView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
@@ -14,6 +15,10 @@ public abstract class Teacher extends Person implements Serializable {
     private int id;
     protected final ConsoleView consoleView = new ConsoleView();
     protected String message;
+
+    protected int manaPrice = 45;
+    protected int manaChangePrice = 20;
+    protected int minLevelForUsingMana = 2;
     private final List<Question> questions;
 
     private Student student;
@@ -53,49 +58,40 @@ public abstract class Teacher extends Person implements Serializable {
         if (!iterator.hasNext()){
             return null;
         }
-        message = "";//message is new because of teacher give another question
         return iterator.next();
     }
     public Question givePreviousQuestion() {
         if (!iterator.hasPrevious()){
             return null;
         }
-        message = "";//message is new because of teacher give another question
         return iterator.previous();
     }
 
-    public Question giveNextQuestionWithoutDeletingOldMessage() {
-        if (!iterator.hasNext()){
-            return null;
-        }
-        return iterator.next();
-    }
-    public Question givePreviousQuestionWithoutDeletingOldMessage() {
+    public Question givePreviousQuestionWithoutMovingIterator() {
         if (!iterator.hasPrevious()){
             return null;
         }
-        return iterator.previous();
+        Question q = iterator.previous();
+        iterator.next();
+        return q;
     }
 
     public void correctStudentAnswer() {
         setHealth(getHealth() - 25);
         if (getHealth() <= 0) {
-            message += consoleView.teacherDefeat();
+            message = consoleView.teacherDefeat();
             return;
         }
         if (getHealth() > 0) consoleView.correctAnswerOutput(this);
         String reaction = correctStudentReaction();
         if(reaction.length() >= 1){
-            message += "\n" + reaction;
+            message = reaction;
         }
     }
 
     public void wrongStudentAnswer() {
         setHealth(getHealth() + 5);
-        String reaction = wrongStudentReaction();
-        if(reaction.length() >= 1){
-            message += reaction;
-        }
+        message = wrongStudentReaction();
     }
 
     public void addNextQuestion(Question question){
@@ -153,7 +149,64 @@ public abstract class Teacher extends Person implements Serializable {
         if(!hasQuestions()){
             message += "\nI have no questions for you(";
         }
-        return message;
+        String currentMessage = message;
+        message = "";
+        return currentMessage;
     }
+
+    public int getManaPrice(){
+        return this.manaPrice;
+    }
+
+    public enum TransferManaStatus{
+        SUCCESSFUL_USED_MANA("Successful used mana"),
+        FAILED_USED_MANA("Failed used mana");
+        private final String statusName;
+
+        TransferManaStatus(String statusName) {
+            this.statusName = statusName;
+        }
+
+        public String getStatusName() {
+            return statusName;
+        }
+    }
+    public TransferManaStatus tryUseMana(){
+        if(student.getLevel() < minLevelForUsingMana){
+            message = "Your level is less then " + minLevelForUsingMana + "" +
+                    ". You can't use mana now";
+            return TransferManaStatus.FAILED_USED_MANA;
+        } else if (student.getMana() < manaPrice) {
+            message = "You have less than " + manaPrice + " mana." +
+                    "You can't use mana now";
+            return TransferManaStatus.FAILED_USED_MANA;
+        } else if (givePreviousQuestionWithoutMovingIterator().getChoices().size() == 1) {
+            message = "You are very stupid. There is only correct answer";
+            return TransferManaStatus.FAILED_USED_MANA;
+        }
+        student.increaseManaOn(-manaPrice);
+        message = "You have received my special offer";
+        makeWorkForMana();
+        changeManaPrice();
+        return TransferManaStatus.SUCCESSFUL_USED_MANA;
+    }
+
+    protected void changeManaPrice(){
+        manaPrice += manaChangePrice;
+    }
+    protected void makeWorkForMana(){
+        message += "\nI have erased one wrong choice";
+        Question currentQuestion = givePreviousQuestion();
+        ArrayList<String> choices = currentQuestion.getChoices();
+        for (String choice : choices){
+            if(!choice.equals(currentQuestion.getAnswer())){
+                choices.remove(choice);
+                break;
+            }
+        }
+        currentQuestion.setChoices(choices);
+    }
+
+
 
 }
