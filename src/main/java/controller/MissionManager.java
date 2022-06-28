@@ -9,10 +9,9 @@ public class MissionManager {
         String realAnswer = question.getAnswer();
         if (studentAnswer.equalsIgnoreCase(realAnswer)) {
             correctAnswer(mission);
-            setResultMission(mission.getStudent(), mission);
-            return;
+        }else {
+            wrongAnswer(mission);
         }
-        wrongAnswer(mission);
         setResultMission(mission.getStudent(), mission);
     }
 
@@ -31,6 +30,8 @@ public class MissionManager {
     private void setResultMission(Student student, Mission mission) {
         if (student.getHealth() <= 0) {
             setMissionFailedState(student, mission);
+            student.setHealth(Student.MAX_HEALTH / 2);
+            student.decreaseLevelOn(1);
             return;
         } else if (mission.getTeacher().hasQuestions()) {
             return;

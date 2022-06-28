@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 public class Student extends Person implements Serializable {
-    private static final int MAX_MANA = 500;
-    private static final int MAX_LEVEL = 10;
-    private static final int MAX_HEALTH = 50;
+    public static final int MAX_MANA = 500;
+    public static final int MAX_LEVEL = 10;
+    public static final int MAX_HEALTH = 50;
 
     private final Player player;
     private final User user;
@@ -37,11 +37,11 @@ public class Student extends Person implements Serializable {
             player.setScore(player.getScore() - 50);
         }
 
-        if(player.getLevel() >= getMaxLevel()){
+        if(player.getLevel() >= Student.MAX_LEVEL){
             consoleView.victory();
         }
 
-        if (player.getMana() >= getMaxMana()){
+        if (player.getMana() >= Student.MAX_MANA){
             player.setMana(MAX_MANA);
         }
     }
@@ -92,13 +92,7 @@ public class Student extends Person implements Serializable {
     public void increaseManaOn(int points){
         this.setMana(getMana() + points);
     }
-    public int getMaxMana() {
-        return MAX_MANA;
-    }
 
-    public int getMaxLevel(){
-        return MAX_LEVEL;
-    }
 
     public int getMana() {
         return player.getMana();
@@ -124,7 +118,16 @@ public class Student extends Person implements Serializable {
         return user.getLogin();
     }
 
+    public void decreaseLevelOn(int levels){
+        this.setLevel(getLevel() - levels);
+        if(getLevel() <= 0){
+            setLevel(1);
+        }
+    }
 
+    public void setLevel( int level){
+        this.player.setLevel(level);
+    }
     public Player getPlayer() {
         return player;
     }
