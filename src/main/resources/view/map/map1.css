@@ -9,7 +9,17 @@
 -fx-text-fill: #fff;
 }
 
-#infoLabel{
-    -fx-color: #fff;
 
+#completed{
+    -fx-alignment: center;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-background-color:#fff;
+}
+
+#infoLabel{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color:#fff;
+    -fx-color:#000;
 }

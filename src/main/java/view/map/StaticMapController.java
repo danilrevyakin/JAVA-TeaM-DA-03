@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class StaticMapController implements Initializable {
 
@@ -91,7 +92,8 @@ public class StaticMapController implements Initializable {
 
     @FXML
     private AnchorPane scene1;
-
+    @FXML
+    private Label completed;
     @FXML
     public void start(ActionEvent e){
         player.setLayoutY(100);
@@ -157,7 +159,10 @@ public class StaticMapController implements Initializable {
             }
             if(e.getCode() == KeyCode.F1){
                 f1Pressed.set(true);
-                infoLabel.setText("Score:\nMana:");
+                infoLabel.setText("Score: " +student.getScore() +
+                        "\nMana: " + student.getMana() +
+                        "\nHealth: " + student.getHealth()+
+                        "\nLevel: " + student.getLevel());
             }
             
         });
@@ -328,12 +333,20 @@ public class StaticMapController implements Initializable {
                 }
             }
       if (currentMission != 0){
+          completed.setText("");
           timer.stop();
           noPress();
           player.setLayoutX(player.getLayoutX()+50); player.setLayoutY(player.getLayoutY()+50);
           //Check
-          if(currentMission != -1)
-              ConfirmBox.display("Enter " + currentMission + " mission?", student, currentMission);
+          if(currentMission != -1) {
+              if(student.availableMissions.get(currentMission).missionAvailable())
+                ConfirmBox.display("Enter " + currentMission + " mission?", student, currentMission);
+              else{
+                  System.out.println("Mission is completed!");
+                  completed.setText("Mission " + currentMission +" completed");
+                 // completed.setText("");
+              }
+          }
           else {
               //ConfirmBox.display("Exit to game menu?");
               PlayerDao playerDao = new PlayerDao();

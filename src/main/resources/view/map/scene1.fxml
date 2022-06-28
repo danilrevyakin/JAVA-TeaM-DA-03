@@ -20,6 +20,11 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="infoLabel" layoutX="1000.0" layoutY="100.0" prefWidth="35.0" text="Label" />
+      <Label fx:id="infoLabel" layoutX="1000.0" layoutY="100.0"  text="Label" />
+      <Label fx:id="completed"  text=""  textFill="RED">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
