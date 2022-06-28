@@ -1,33 +1,31 @@
 package view.exam;
 
 import controller.MissionManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.*;
-import view.grapchicFactoty.GUIControllerFactory;
-import view.grapchicFactoty.SeparatorFactory;
+import model.Question;
+import model.Student;
+import model.Teacher;
+import view.exam.grapchicFactoty.ButtonsFactory;
+import view.exam.grapchicFactoty.MessageFactory;
+import view.exam.grapchicFactoty.PersonViewFactory;
+import view.exam.grapchicFactoty.SeparatorFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ExamController implements Initializable {
@@ -103,7 +101,6 @@ public class ExamController implements Initializable {
         teacher.setStudent(student);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initStudentPane();
@@ -112,99 +109,31 @@ public class ExamController implements Initializable {
         updateQuestion();
     }
 
-    private void initTeacherPane(){
-        exitButton = initExitButton();
-        VBox box = new VBox();
-        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
-        box.getChildren().add(getTeacherView(teacher));
-        box.getChildren().add(exitButton);
-        TeacherPane.getChildren().add(box);
-        TeacherPane.setAlignment(Pos.TOP_CENTER);
-        box.setAlignment(Pos.TOP_CENTER);
+    private void initTeacherPane() {
+        exitButton = ButtonsFactory.initExitButton(pathToExitPhoto, e -> closeWindow(), this);
+        teacherController = (new PersonViewFactory(TeacherPane, teacher,
+                pathToVladicPhoto, exitButton, this)).getController();
     }
 
-    private void initChat(){
-        studentChoices.setOnAction(e->currentAnswer = studentChoices.getValue());
+    private void initStudentPane() {
+        manaButton = ButtonsFactory.createManaButton(e -> manaButtonAction());
+        studentController = (new PersonViewFactory(StudentPane, student,
+                pathToDanonPhoto, manaButton, this)).getController();
+    }
+
+    private void initChat() {
+        studentChoices.setOnAction(e -> currentAnswer = studentChoices.getValue());
         VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
     }
-    private void initStudentPane(){
-        VBox box = new VBox();
-        manaButton = createManaButton();
-        manaButton.setMinWidth(120);
-        manaButton.setMinHeight(50);
-        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
-        box.getChildren().add(getStudentView(student));
-        box.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, false));
-        box.getChildren().add(manaButton);
-        StudentPane.getChildren().add(box);
-        box.setAlignment(Pos.TOP_CENTER);
-        StudentPane.setAlignment(Pos.TOP_CENTER);
-    }
 
-
-
-    public Button createManaButton() {
-        Button button = new Button();
-        String style;
-        try {
-            style = new String(Files.readAllBytes(Paths.get("src/main/resources/view/exam/ManaButton.txt")), StandardCharsets.UTF_8);
-            style = style.replace("\n", "");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        button.setStyle(style);
-        button.setText("Use your mana");
-        button.setOnAction(e-> manaButtonAction());
-        return button;
-    }
-
-    private void manaButtonAction(){
+    private void manaButtonAction() {
         Teacher.TransferManaStatus status = teacher.tryUseMana();
         sendMessage(teacher.say(), true);
-        if(Teacher.TransferManaStatus.SUCCESSFUL_USED_MANA == status){
+        if (Teacher.TransferManaStatus.SUCCESSFUL_USED_MANA == status) {
             updateQuestion();
             updatePlayers();
         }
     }
-
-    public Button initExitButton() {
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathToExitPhoto)));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(150);
-        imageView.setFitHeight(100);
-        Button exitButton = new Button();
-        exitButton.setGraphic(imageView);
-        exitButton.setOnAction(e-> closeWindow());
-        return exitButton;
-    }
-
-    private MessageController messageController;
-
-    private HBox getMessageView(String stringMessage) {
-        GUIControllerFactory controllerFactory = new GUIControllerFactory("Message.fxml", this);
-        messageController = (MessageController) controllerFactory.getController();
-        messageController.setText(stringMessage);
-        return (HBox) controllerFactory.getPane();
-    }
-
-
-    private VBox getTeacherView(Teacher teacher) {
-        GUIControllerFactory controllerFactory = new GUIControllerFactory("Person.fxml", this);
-        teacherController = (PersonController) controllerFactory.getController();
-        List<String> teacherData = PersonController.getAdditionalDataOfTeacher(teacher);
-        PersonController.setPersonData(teacher, pathToVladicPhoto, teacherData, teacherController);
-        return (VBox) controllerFactory.getPane();
-    }
-
-
-    private VBox getStudentView(Student student) {
-        GUIControllerFactory controllerFactory = new GUIControllerFactory("Person.fxml", this);
-        studentController = (PersonController) controllerFactory.getController();
-        List<String> studentData = PersonController.getAdditionalDataOfStudent(student);
-        PersonController.setPersonData(student, pathToDanonPhoto, studentData, studentController);
-        return (VBox) controllerFactory.getPane();
-    }
-
 
     private void updatePlayers() {
         PersonController.setPersonData(teacher, pathToVladicPhoto,
@@ -213,9 +142,7 @@ public class ExamController implements Initializable {
                 PersonController.getAdditionalDataOfStudent(student), studentController);
     }
 
-
     private void updateQuestion() {
-        exitButton.setDisable(true);
         studentChoices.getItems().clear();
         question = teacher.giveNextQuestion();
         sendMessage(question.getQuestion(), true);
@@ -226,16 +153,8 @@ public class ExamController implements Initializable {
         if (message.length() <= 4 && isTeacher) {
             return;
         }
-        HBox hBox = new HBox();
-        if (isTeacher) {
-            hBox.setAlignment(Pos.CENTER_LEFT);
-        } else {
-            hBox.setAlignment(Pos.CENTER_RIGHT);
-        }
-        hBox.getChildren().add(getMessageView(message));
-        hBox.setMinHeight(messageController.getMinHeight());
-        hBox.setMinWidth(335);
-        VboxInScroll.getChildren().add(hBox);
+        HBox messageContainer = (new MessageFactory(message, isTeacher, this)).getMessageContainer();
+        VboxInScroll.getChildren().add(messageContainer);
         VboxInScroll.getChildren().add(factory.getSeparator(Orientation.VERTICAL, 20, true));
         ScrollChatBox.vvalueProperty().bind(VboxInScroll.heightProperty());
     }
@@ -246,7 +165,6 @@ public class ExamController implements Initializable {
         if (null == currentAnswer) {
             return;
         }
-        exitButton.setDisable(false);
         sendMessage(currentAnswer, false);
         missionManager.analiseResult(currentAnswer, question, student.getCurrentMission());
         sendMessage(teacher.say(), true);
@@ -260,6 +178,7 @@ public class ExamController implements Initializable {
 
     private void finishMission() {
         manaButton.setDisable(true);
+        exitButton.setDisable(false);
         studentChoices.setDisable(true);
         SendButton.setDisable(true);
         sendMessage(student.getCurrentMission().getStateMission().getNormalName(), true);

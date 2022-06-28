@@ -1,4 +1,4 @@
-package view.grapchicFactoty;
+package view.exam.grapchicFactoty;
 
 public class TextLabelFactory {
 
@@ -14,8 +14,8 @@ public class TextLabelFactory {
         formatString();
     }
 
-    private void formatString(){
-        if(input.length() < maxCharactersInLabelLine){
+    private void formatString() {
+        if (input.length() < maxCharactersInLabelLine) {
             result = input;
             return;
         }
@@ -23,11 +23,11 @@ public class TextLabelFactory {
         input = input.replaceAll("\n", ". ");
         String[] strings = input.split(" ");
         int lineLength = 0;
-        for(String word : strings){
-            if(lineLength + word.length() < maxCharactersInLabelLine){
+        for (String word : strings) {
+            if (lineLength + word.length() < maxCharactersInLabelLine) {
                 stringBuilder.append(" ");
                 lineLength++;
-            }else {
+            } else {
                 stringBuilder.append("\n");
                 counterLinesInLabel++;
                 lineLength = 0;

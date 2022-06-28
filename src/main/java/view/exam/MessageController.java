@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
-import view.grapchicFactoty.TextLabelFactory;
+import view.exam.grapchicFactoty.TextLabelFactory;
 
 public class MessageController {
 
@@ -35,7 +35,7 @@ public class MessageController {
         hBox.setMinWidth(maxCharactersInLabelLine * 10);
     }
 
-    public double getMinHeight(){
+    public double getMinHeight() {
         return labelHeight + border;
     }
 }

@@ -34,32 +34,32 @@ public class PersonController {
     }
 
     public void setDetails(List<String> details) {
-        if(detailsList.size() != 0){
+        if (detailsList.size() != 0) {
             Details.getChildren().removeAll(detailsList);
             detailsList.clear();
         }
-        for(String data : details){
+        for (String data : details) {
             Text text = new Text(data);
             detailsList.add(text);
             Details.getChildren().add(text);
         }
     }
 
-    public static List<String> getAdditionalDataOfStudent(Student student){
+    public static List<String> getAdditionalDataOfStudent(Student student) {
         return List.of("Mana: " + student.getMana(),
                 "Score: " + student.getScore(),
                 "Level: " + student.getLevel());
     }
 
-    public static List<String> getAdditionalDataOfTeacher(Teacher teacher){
+    public static List<String> getAdditionalDataOfTeacher(Teacher teacher) {
         return List.of("Mode: " + teacher.getModeName(),
                 "Number of questions: " + teacher.getQuestions().size(),
-                        "Mana price: " + teacher.getManaPrice());
+                "Mana price: " + teacher.getManaPrice());
     }
 
 
     static public void setPersonData(Person person, String pathToAvatar,
-                                     List<String> additionalDetails, PersonController controller){
+                                     List<String> additionalDetails, PersonController controller) {
         controller.setAvatar(pathToAvatar);
         List<String> list = new LinkedList<>();
         list.add(person.getName());

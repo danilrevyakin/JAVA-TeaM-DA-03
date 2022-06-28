@@ -1,16 +1,16 @@
-package view.grapchicFactoty;
+package view.exam.grapchicFactoty;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 
 public class SeparatorFactory {
 
-    public Separator getSeparator(Orientation orientation, double size, boolean visible){
+    public Separator getSeparator(Orientation orientation, double size, boolean visible) {
         Separator separator = new Separator();
         separator.setOrientation(orientation);
-        if(orientation == Orientation.VERTICAL){
+        if (orientation == Orientation.VERTICAL) {
             separator.setPrefHeight(size);
-        }else{
+        } else {
             separator.setPrefWidth(size);
         }
         separator.setVisible(visible);
