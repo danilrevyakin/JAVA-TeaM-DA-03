@@ -46,7 +46,7 @@
             <CheckBox fx:id="signUpFemale" layoutX="488.0" layoutY="118.0" mnemonicParsing="false" text="Female" textFill="SILVER" />
             <CheckBox fx:id="signUpOther" layoutX="605.0" layoutY="118.0" mnemonicParsing="false" text="Other" textFill="SILVER" />
             <Label fx:id="nameWarning" layoutX="50.0" layoutY="23.0" prefHeight="17.0" prefWidth="277.0" />
-            <Label fx:id="emailWarning" layoutX="50.0" layoutY="93.0" prefHeight="17.0" prefWidth="277.0" />
+            <Label fx:id="emailWarning" layoutX="50.0" layoutY="82.0" prefHeight="28.0" prefWidth="277.0" />
             <Label fx:id="loginWarning" layoutX="50.0" layoutY="168.0" prefHeight="17.0" prefWidth="277.0" />
             <Label fx:id="surnameWarning" layoutX="386.0" layoutY="23.0" prefHeight="17.0" prefWidth="277.0" />
             <Label fx:id="passwordWarning" layoutX="382.0" layoutY="168.0" prefHeight="17.0" prefWidth="284.0" />

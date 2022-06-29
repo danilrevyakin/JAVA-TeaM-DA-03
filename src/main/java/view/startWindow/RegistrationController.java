@@ -134,7 +134,7 @@ public class RegistrationController {
 
         String sex = setSex();
 
-        if (checkExistence(Type.login, login) || checkExistence(Type.email, email)) {
+        if (checkExistence(Type.login, login) && checkExistence(Type.email, email)) {
             isCorrect = false;
         }
 
@@ -186,11 +186,13 @@ public class RegistrationController {
             emailWarning.setText(warningProperties.getProperty("emailExists"));
             emailWarning.setTextFill(Color.color(1, 0.4, 0));
             return true;
-        } else if (type == Type.login && logins.contains(input)) {
+        }
+        if (type == Type.login && logins.contains(input)) {
             loginWarning.setText(warningProperties.getProperty("loginExists"));
             loginWarning.setTextFill(Color.color(1, 0.4, 0));
             return true;
-        } else return false;
+        }
+        return false;
     }
 
 
