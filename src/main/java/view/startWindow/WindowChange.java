@@ -23,6 +23,7 @@ public class WindowChange {
 
         Parent root = loader.getRoot();
         Stage stage = new Stage();
+        stage.setTitle("Escape from IASA");
         stage.setScene(new Scene(root));
         stage.show();
     }

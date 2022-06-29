@@ -64,6 +64,9 @@ public class RegistrationController {
     @FXML
     private Label signUpSexWarning;
 
+    @FXML
+    Button signUpGoBackButton;
+
     private static Properties regexProperties;
     private static Properties warningProperties;
     private boolean isCorrect;
@@ -104,6 +107,12 @@ public class RegistrationController {
             processUser();
             isCorrect = true;
         });
+
+        signUpGoBackButton.setOnAction(event -> WindowChange.openNewScene(
+                "hello-view.fxml",
+                signUpGoBackButton.getScene(),
+                AuthorizationController.class.getName()
+        ));
 
     }
 
