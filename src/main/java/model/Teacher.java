@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
-public abstract class Teacher extends Person implements Serializable {
+public abstract class Teacher extends Person{
     private int id;
     protected final ConsoleView consoleView = new ConsoleView();
     protected String message;

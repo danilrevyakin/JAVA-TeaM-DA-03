@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-public class Student extends Person implements Serializable {
+public class Student extends Person{
     public static final int MAX_MANA = 500;
     public static final int MAX_LEVEL = 10;
     public static final int MAX_HEALTH = 50;

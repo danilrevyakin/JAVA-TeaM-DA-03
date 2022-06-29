@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "questions_answers")
-public class Question implements Serializable{
+public class Question{
     @Id
     @Column(name = "id", nullable = false)
     private int id;

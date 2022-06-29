@@ -1,13 +1,10 @@
 package model.modes;
 
 import model.Student;
-import view.ConsoleView;
-
-import java.io.Serializable;
 import java.util.Random;
 
 
-public class Hard implements Mode, Serializable {
+public class Hard implements Mode{
 
     Random random = new Random();
     public String correctMessage(int k){

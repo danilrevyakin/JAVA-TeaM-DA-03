@@ -7,7 +7,7 @@ import model.Question;
 import model.Teacher;
 import model.modes.VeryHard;
 
-public final class Tkachuk extends Teacher implements Serializable {
+public final class Tkachuk extends Teacher{
 	public Tkachuk(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 80, 33);
 		mode = new VeryHard();

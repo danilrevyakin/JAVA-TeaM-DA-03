@@ -6,7 +6,7 @@ import java.util.List;
 import model.Question;
 import model.Teacher;
 
-public final class Romanov extends Teacher implements Serializable {
+public final class Romanov extends Teacher {
 	private final int manaDifference = 20;
 
 	public Romanov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {

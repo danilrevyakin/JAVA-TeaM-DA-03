@@ -1,11 +1,10 @@
 package model.modes;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import model.Student;
 
-public class Easy implements Mode, Serializable {
+public class Easy implements Mode{
 	static private final Random rand = new Random();
 
 	@Override

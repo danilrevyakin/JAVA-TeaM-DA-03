@@ -8,7 +8,7 @@ import model.Question;
 import model.Teacher;
 import model.modes.Medium;
 
-public class Bokhonov extends Teacher implements Serializable {
+public class Bokhonov extends Teacher {
     String superQuestion = "Ok, I have additional question for you: What year was Richter born?";
     final int correctAnsw = 1915;
     private boolean superQuestionIsUsed = false;

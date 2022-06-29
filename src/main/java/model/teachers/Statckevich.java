@@ -8,7 +8,7 @@ import model.Teacher;
 import model.additionalServices.Probability;
 import model.modes.Medium;
 
-public final class Statckevich extends Teacher implements Serializable {
+public final class Statckevich extends Teacher{
 
 	public Statckevich(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 33, 50);

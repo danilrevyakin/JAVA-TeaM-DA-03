@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 import java.util.List;
 
-public class Snizhko extends Teacher implements Serializable {
+public class Snizhko extends Teacher {
     public Snizhko(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
         super(name, sex, questions, id, 60, 45);
         manaPrice = 40;

@@ -7,7 +7,7 @@ import java.util.List;
 import model.Question;
 import model.Teacher;
 
-public final class Beznosic extends Teacher implements Serializable {
+public final class Beznosic extends Teacher {
 	private int counterOfCribbedLabs = 0;
 	public Beznosic(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id,75, 75);

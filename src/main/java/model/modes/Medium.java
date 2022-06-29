@@ -1,12 +1,9 @@
 package model.modes;
 
 import model.Student;
-import view.ConsoleView;
-
-import java.io.Serializable;
 import java.util.Random;
 
-public class Medium implements Mode, Serializable {
+public class Medium implements Mode {
 
     Random random = new Random();
 

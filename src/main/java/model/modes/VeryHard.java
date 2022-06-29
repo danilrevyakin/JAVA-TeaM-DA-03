@@ -1,11 +1,8 @@
 package model.modes;
 
 import model.Student;
-import view.ConsoleView;
 
-import java.io.Serializable;
-
-public class VeryHard implements Mode, Serializable {
+public class VeryHard implements Mode{
 
 	@Override
 	public String studentAnswerCorrect(Student student) {

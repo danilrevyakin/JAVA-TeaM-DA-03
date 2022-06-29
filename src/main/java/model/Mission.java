@@ -1,11 +1,9 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class Mission implements Serializable {
+public class Mission{
     private final int missionNumber;
     private final int playersNumber = 2;
     private final ArrayList<Person> people = new ArrayList<>(playersNumber);

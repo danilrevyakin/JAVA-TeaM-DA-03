@@ -9,7 +9,7 @@ import model.Question;
 import model.Teacher;
 import model.modes.VeryHard;
 
-public final class Stickanov extends Teacher implements Serializable {
+public final class Stickanov extends Teacher {
 	public Stickanov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 50, 100);
 		mode = new VeryHard();

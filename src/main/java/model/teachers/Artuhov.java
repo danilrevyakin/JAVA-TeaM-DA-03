@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public final class Artuhov extends Teacher implements Serializable {
+public final class Artuhov extends Teacher {
 	public Artuhov(String name, String sex, List<Question> questions, int id, int correctSkillProbability, int wrongSkillProbability) {
 		super(name, sex, questions, id, 50, 50);
 		manaChangePrice = 50;
