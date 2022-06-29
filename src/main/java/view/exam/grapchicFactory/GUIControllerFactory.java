@@ -24,10 +24,6 @@ public class GUIControllerFactory {
         controller = fxmlLoader.getController();
     }
 
-    public FXMLLoader getFxmlLoader() {
-        return fxmlLoader;
-    }
-
     public Pane getPane() {
         return pane;
     }

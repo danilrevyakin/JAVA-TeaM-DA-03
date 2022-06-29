@@ -17,7 +17,7 @@ import model.Question;
 import model.Student;
 import model.Teacher;
 import view.StageFactory;
-import view.exam.grapchicFactory.ButtonsFactory;
+import view.exam.grapchicFactory.ButtonsDirector;
 import view.exam.grapchicFactory.MessageFactory;
 import view.exam.grapchicFactory.PersonViewFactory;
 import view.exam.grapchicFactory.SeparatorFactory;
@@ -30,13 +30,7 @@ public class ExamController implements Initializable {
     private Pane BottomPane;
 
     @FXML
-    private VBox CenterPane;
-
-    @FXML
     private ChoiceBox<String> studentChoices;
-
-    @FXML
-    private HBox ReactBox;
 
     @FXML
     private ScrollPane ScrollChatBox;
@@ -50,18 +44,13 @@ public class ExamController implements Initializable {
     @FXML
     private StackPane TeacherPane;
 
-    @FXML
-    private Pane TopPane;
 
     @FXML
     private VBox VboxInScroll;
     private String currentAnswer;
 
-    private final String pathToTeacherPhoto = "oldTeacher.png";
     private final String pathToVladicPhoto = "Vladic.png";
 
-    private final String pathToStudentPhoto = "studentBrown.png";
-    private final String pathToExitPhoto = "EscapeFromIASA.png";
     private final String pathToDanonPhoto = "Danon.jpeg";
 
     private Question question;
@@ -98,13 +87,13 @@ public class ExamController implements Initializable {
     }
 
     private void initTeacherPane() {
-        exitButton = ButtonsFactory.initExitButton(pathToExitPhoto, e -> closeWindow(), this);
+        exitButton = ButtonsDirector.createExitButton(e -> closeWindow());
         teacherController = (new PersonViewFactory(TeacherPane, teacher,
                 pathToVladicPhoto, exitButton, this)).getController();
     }
 
     private void initStudentPane() {
-        manaButton = ButtonsFactory.createManaButton(e -> manaButtonAction());
+        manaButton = ButtonsDirector.createManaButton(e -> manaButtonAction());
         studentController = (new PersonViewFactory(StudentPane, student,
                 pathToDanonPhoto, manaButton, this)).getController();
     }
